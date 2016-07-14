@@ -45,7 +45,19 @@ return [
     */
 
     'connections' => [
-
+        
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('MONGO_HOST', 'localhost'),
+            'port'     => env('MONGO_PORT', 27017),
+            'database' => env('MONGO_DATABASE'),
+            'username' => env('MONGO_USERNAME'),
+            'password' => env('MONGO_PASSWORD'),
+            'options' => [
+                'database' => 'admin' // sets the authentication database required by mongo 3
+            ]
+        ],
+        
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
@@ -61,6 +73,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
+            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'prefix' => '',
             'strict' => false,
             'engine' => null,

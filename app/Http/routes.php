@@ -11,6 +11,48 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+// customer routes
+Route::auth();
+Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
+  Route::get('/', function(){
+    echo 'account' ;
+  });
+});
+  
+// admin routes
+Route::get('admin','Admin\AdminController@login');
+Route::get('admin/login','Admin\AdminController@login');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth','admin']], function() {
+
+  // dashboard
+  Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@show']);
+  Route::post('remember', ['uses' => 'DashboardController@remember']);
+  Route::get('remember', ['uses' => 'DashboardController@remember']);
+  
+  // shops
+  Route::resource('shops', 'ShopsController');
+  
+  // users
+  Route::resource('users', 'UsersController');
+  
+  // categories
+  Route::post('categories/save-order', ['uses' => 'CategoriesController@saveOrder']);
+  Route::resource('categories', 'CategoriesController');
+  
+  
+  // products
+  Route::resource('products', 'ProductsController');
+  
+  // customers
+  Route::resource('customers', 'CustomersController');
+  
+  // orders
+  Route::resource('orders', 'OrdersController');
+  
+  // pages
+  Route::resource('pages', 'PagesController');
+  
+  // blog
+  Route::resource('blog', 'BlogController');
+
 });

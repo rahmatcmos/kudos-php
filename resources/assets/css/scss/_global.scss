@@ -1,0 +1,32 @@
+body {
+  font: 80% / 20px "ars_maquette_proregular", sans-serif, Arial;
+  -webkit-font-smoothing: antialiased !important;
+  font-smooth: always !important;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  overflow-x: hidden;
+  background: $color1;
+}
+
+.adaptive {
+  @include adaptive;
+}
+
+.title {
+  background: #fff;
+  border-bottom: 1px solid darken($color1, 5%);
+  line-height: 70px;
+}
+
+section {
+  margin: 20px 0;
+}
+
+.title {
+  padding: 0 15px;
+}
+
+.panel {
+  padding: 15px;
+}

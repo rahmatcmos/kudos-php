@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 
 class AuthController extends Controller
 {
@@ -28,7 +31,8 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/account';
+    protected $redirectAfterLogout = '/login';
 
     /**
      * Create a new authentication controller instance.
@@ -68,5 +72,19 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+      $referer = parse_url($_SERVER['HTTP_REFERER']) ;
+      if (Auth::user()->isAdmin() && strpos($referer['path'], 'admin') !== false) {
+        return '/admin';
+      }
+      return $this->redirectTo ;
     }
 }
