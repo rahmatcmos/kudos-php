@@ -100,10 +100,8 @@ class CategoriesController extends AdminController
       $category = new category;
       $category->shop_id = Input::get('shop_id');
       $category->parent = Input::get('parent');
-      $data = [
-        'name' => Input::get('name')
-      ];
-      $category->$lang = $data ;
+      $data = Input::except(['shop_id', 'parent', '_token', '_method']) ;      
+      $category->$lang = $data ; 
       if($lang==config('app.locale')){
         $category->default = $data ;
       }
@@ -154,9 +152,8 @@ class CategoriesController extends AdminController
       $category = Category::find($id);
       $category->shop_id = Input::get('shop_id');
       $category->parent = Input::get('parent');
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['shop_id', 'parent', '_token', '_method']) ;
+      unset($data['shop_id'], $data['parent']) ;
       $category->$lang = $data ;
       if($lang==config('app.locale')){
         $category->default = $data ;

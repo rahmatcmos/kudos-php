@@ -51,9 +51,7 @@ class PagesController extends AdminController
       $lang = Session::get('language');
       $page = new page;
       $page->shop_id = Input::get('shop_id');
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['shop_id', '_token', '_method']) ;
       $page->$lang = $data ;
       if($lang==config('app.locale')){
         $page->default = $data ;
@@ -102,9 +100,7 @@ class PagesController extends AdminController
       $lang = Session::get('language');
       $page = Page::find($id);
       $page->shop_id = Input::get('shop_id');
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['shop_id', '_token', '_method']) ;
       $page->$lang = $data ;
       if($lang==config('app.locale')){
         $page->default = $data ;

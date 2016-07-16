@@ -10,4 +10,9 @@ class Product extends Moloquent {
   protected $connection = 'mongodb';
   protected $dates = ['deleted_at'];
   
+  /**
+   * allow filling of any amount of fields
+   */
+  protected $guarded = [];
+  
 }

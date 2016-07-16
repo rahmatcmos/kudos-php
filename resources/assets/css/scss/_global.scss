@@ -17,6 +17,9 @@ body {
   background: #fff;
   border-bottom: 1px solid darken($color1, 5%);
   line-height: 70px;
+  &:not(:first-of-type){
+    border-top: 1px solid darken($color1, 5%);
+  }
 }
 
 section {

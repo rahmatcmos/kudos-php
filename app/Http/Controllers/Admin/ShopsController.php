@@ -58,9 +58,7 @@ class ShopsController extends AdminController
       // store
       $lang = Session::get('language');
       $shop = new Shop;
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['_token', '_method']) ;
       $shop->$lang = $data ;
       if($lang==config('app.locale')){
         $shop->default = $data ;
@@ -108,9 +106,7 @@ class ShopsController extends AdminController
       // store
       $lang = Session::get('language');
       $shop = Shop::find($id);
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['_token', '_method']) ;
       $shop->$lang = $data ;
       if($lang==config('app.locale')){
         $shop->default = $data ;

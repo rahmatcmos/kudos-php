@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\User;
+use App\Models\Address;
+use App\Models\Order;
 use Validator ;
 use Input ;
 use Session ;
@@ -38,9 +40,6 @@ class CustomersController extends AdminController
    */
   public function store( )
   {
-   
-    $verifier = App::make('validation.presence');
-    $verifier->setConnection('mongodb'); 
     // validate
     $rules = [
       'first_name'      => 'required',
@@ -48,7 +47,6 @@ class CustomersController extends AdminController
       'email'           => 'required|email|unique:mongodb.customers',
     ];
     $validator = Validator::make(Input::all(), $rules);
-    $validator->setPresenceVerifier($verifier);
     if ($validator->fails()) {
       return Redirect::to('admin/customers/create')
         ->withErrors($validator)
@@ -79,7 +77,9 @@ class CustomersController extends AdminController
   public function edit( $id )
   {
     $customer = User::find($id) ;
-    return view('admin/customers/edit', ['customer' => $customer]);
+    $addresses = Address::where('customer_id', '=', $customer->id)->get() ;
+    $orders = Order::where('customer_id', '=', $customer->id)->get() ;
+    return view('admin/customers/edit', ['customer' => $customer, 'addresses' => $addresses, 'orders' => $orders]);
   }
   
   /**

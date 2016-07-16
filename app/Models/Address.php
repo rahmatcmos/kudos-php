@@ -14,4 +14,20 @@ class Address extends Model {
      */
   protected $table = 'addresses';
   
+  /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+  protected $fillable = [
+    'customer_id',
+    'address1',
+    'address2',
+    'address3',
+    'town',
+    'county',
+    'postcode',
+    'country'
+  ];
+  
 }

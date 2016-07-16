@@ -58,9 +58,7 @@ class ProductsController extends AdminController
       $product = new product;
       $product->shop_id = Input::get('shop_id');
       $product->categories = Input::get('categories');
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['shop_id', 'categories', '_token', '_method']) ;
       $product->$lang = $data ;
       if($lang==config('app.locale')){
         $product->default = $data ;
@@ -111,9 +109,7 @@ class ProductsController extends AdminController
       $product = Product::find($id);
       $product->shop_id = Input::get('shop_id');
       $product->categories = Input::get('categories');
-      $data = [
-        'name' => Input::get('name')
-      ];
+      $data = Input::except(['shop_id', 'categories', '_token', '_method']) ;
       $product->$lang = $data ;
       if($lang==config('app.locale')){
         $product->default = $data ;
