@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- css -->
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="/build/admin/css/all.css">
  
 </head>
 
@@ -67,7 +67,7 @@
   </div>
   
   <!-- js -->
-  <script src="/assets/js/app.js"></script>
+  <script src="/build/admin/js/all.js"></script>
   
   @yield('foot')
 

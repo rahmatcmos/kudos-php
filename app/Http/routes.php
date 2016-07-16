@@ -11,13 +11,20 @@
 |
 */
 
-// customer routes
 Route::auth();
-Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
-  Route::get('/', function(){
-    echo 'account' ;
+
+// frontend routes
+Route::group(['namespace' => 'Themes\\'.config('app.theme')], function() {
+  Route::get('/', ['uses' => 'HomeController@index']);
+  
+  // customer routes
+  Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
+    Route::get('/', function(){
+      echo 'account' ;
+    });
   });
-});
+  
+}); 
   
 // admin routes
 Route::get('admin','Admin\AdminController@login');
