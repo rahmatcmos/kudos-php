@@ -15,12 +15,14 @@
     <div class="container-fluid">
       <!-- if there are creation errors, they will show here -->
       {{ Html::ul($errors->all()) }}
-      {{ Form::open(['url' => 'customers']) }}
+      {{ Form::open(['url' => 'admin/customers']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('first_name', trans('customers.first name')) }}
         {{ Form::text('first_name', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('last_name', trans('customers.last name')) }}
         {{ Form::text('last_name', '', ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('telephone', trans('customers.telephone')) }}
+        {{ Form::text('telephone', '', ['class' => 'form-control']) }}
         {{ Form::label('email', trans('customers.email')) }}
         {{ Form::email('email', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::submit(trans('crud.create'), ['class' => 'btn btn-primary']) }}

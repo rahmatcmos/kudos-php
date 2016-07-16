@@ -46,7 +46,7 @@ class UsersController extends AdminController
   {
     // validate
     $rules = [
-      'name'       => 'required',
+      'first_name'       => 'required',
       'email'      => 'required|email|unique:users',
       'password'   => 'required'
     ];
@@ -58,8 +58,10 @@ class UsersController extends AdminController
     } else {
       // store
       $user = new user;
-      $user->name = Input::get('name') ;
+      $user->first_name = Input::get('first_name') ;
+      $user->last_name = Input::get('last_name') ;
       $user->email = Input::get('email') ;
+      $user->admin = 1 ;
       $user->password = Hash::make(Input::get('password')) ;
       $user->save();
 
@@ -93,7 +95,7 @@ class UsersController extends AdminController
   {
     // validate
     $rules = [
-      'name'       => 'required',
+      'first_name'       => 'required',
       'email'      => 'email|unique:users,email,'.$id
     ];
     $validator = Validator::make(Input::all(), $rules);
@@ -104,8 +106,10 @@ class UsersController extends AdminController
     } else {
       // store
       $user = User::find($id);
-      $user->name = Input::get('name');
+      $user->first_name = Input::get('first_name') ;
+      $user->last_name = Input::get('last_name') ;
       $user->email = Input::get('email');
+      $user->admin = 1 ;
       if(Input::get('password'))
         $user->password = Hash::make(Input::get('password')) ;
       $user->save();

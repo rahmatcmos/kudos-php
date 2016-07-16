@@ -16,8 +16,10 @@
       <!-- if there are creation errors, they will show here -->
       {{ Html::ul($errors->all()) }}
       {{ Form::open(['url' => 'admin/users']) }}
-        {{ Form::label('name', trans('users.name')) }}
-        {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('first_name', trans('users.first name')) }}
+        {{ Form::text('first_name', '', ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('last_name', trans('users.last name')) }}
+        {{ Form::text('last_name', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('email', trans('users.email')) }}
         {{ Form::email('email', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('password', trans('users.password')) }}

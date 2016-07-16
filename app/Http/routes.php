@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   
   // customers
   Route::resource('customers', 'CustomersController');
+  Route::resource('addresses', 'AddressesController');
   
   // orders
   Route::resource('orders', 'OrdersController');

@@ -8,7 +8,7 @@
           <h1>{{ trans('customers.customers') }}</h1>
         </div>
         <div class="col-md-3 text-right">
-          <a href="/customers/create" class="btn btn-success">{{ trans('crud.create') }}</a>
+          <a href="/admin/customers/create" class="btn btn-success">{{ trans('crud.create') }}</a>
         </div>
       </div>
     </div>
@@ -26,8 +26,8 @@
         <tbody>
           @foreach ($customers as $customer)
           <tr>
-            <td><a href="/customers/{{ $customer->id }}/edit">{{ $customer->first_name }} {{ $customer->last_name }}</a></td>
-            <td><a href="/customers/{{ $customer->id }}/edit">{{ $customer->email }}</a></td>
+            <td><a href="/admin/customers/{{ $customer->id }}/edit">{{ $customer->first_name }} {{ $customer->last_name }}</a></td>
+            <td><a href="/admin/customers/{{ $customer->id }}/edit">{{ $customer->email }}</a></td>
           </tr>    
           @endforeach
         </tbody>

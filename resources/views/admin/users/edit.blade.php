@@ -21,8 +21,10 @@
     <div class="container-fluid">
       {{ Html::ul($errors->all(), ['class' => 'alert alert-warning']) }}
       {{ Form::model($user, ['url' => 'admin/users/'.$user->id, 'method' => 'PUT']) }}
-        {{ Form::label('name', trans('users.name')) }}
-        {{ Form::text('name', $user->name, ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('first_name', trans('users.first name')) }}
+        {{ Form::text('first_name', $user->first_name, ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('last_name', trans('users.last name')) }}
+        {{ Form::text('last_name', $user->last_name, ['class' => 'form-control']) }}
         {{ Form::label('email', trans('users.email')) }}
         {{ Form::email('email', $user->email, ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('password', trans('users.new password')) }}

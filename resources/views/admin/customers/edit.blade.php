@@ -5,10 +5,10 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-9">
-          <h1><a href="/customers">{{ trans('customers.customers') }}</a> > {{ trans('crud.edit') }}</h1>
+          <h1><a href="/admin/customers">{{ trans('customers.customers') }}</a> > {{ trans('crud.edit') }}</h1>
         </div>
         <div class="col-md-3 text-right">
-          {{ Form::open(['url' => 'customers/' . $customer->id]) }}
+          {{ Form::open(['url' => 'admin/customers/' . $customer->id]) }}
             {{ Form::hidden('_method', 'DELETE') }}
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#address">{{ trans('crud.add') }} {{ trans('address.address') }}</button>
             {{ Form::submit(trans('crud.delete'), ['class' => 'btn btn-danger']) }}
@@ -22,12 +22,14 @@
     <div class="container-fluid">
       <!-- if there are creation errors, they will show here -->
       {{ Html::ul($errors->all()) }}
-      {{ Form::model($customer, ['url' => 'customers/'.$customer->id, 'method' => 'PUT']) }}
+      {{ Form::model($customer, ['url' => 'admin/customers/'.$customer->id, 'method' => 'PUT']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('first_name', trans('customers.first name')) }}
         {{ Form::text('first_name', $customer->first_name, ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('last_name', trans('customers.last name')) }}
         {{ Form::text('last_name', $customer->last_name, ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('telephone', trans('customers.telephone')) }}
+        {{ Form::text('telephone', $customer->telephone, ['class' => 'form-control']) }}
         {{ Form::label('email', trans('customers.email')) }}
         {{ Form::email('email', $customer->email, ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::submit(trans('crud.edit'), ['class' => 'btn btn-primary']) }}
