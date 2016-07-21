@@ -1,0 +1,30 @@
+/**
+*  Theme Name: Kudos
+*  Author: Trevor Sewell
+*  Author URI: http://kudos.agency
+*  Description: Styles for Kudos
+*  Version: 1.0
+*  License: GNU General Public License v2 or later
+*  License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+@import 'theme' ;
+@import 'reset' ;
+@import 'layout' ;
+@import 'mixins' ;
+@import 'typography' ;
+@import 'global' ;
+@import 'layout' ;
+@import 'header' ;
+@import 'nav' ;
+ 
+@import 'forms' ;
+@import 'dates' ;
+@import 'buttons' ;
+@import 'tabs' ;
+@import 'tables' ;
+@import 'alerts' ;
+@import 'sortables' ;
+
+@import 'page.dashboard' ;   
+@import 'page.categories' ; 

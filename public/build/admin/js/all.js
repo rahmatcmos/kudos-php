@@ -3406,4 +3406,46 @@ return t.parent().is(".ui-effects-wrapper")&&(t.parent().replaceWith(t),(t[0]===
 	);
 }));
 
+(function($, window, document) {
+  $(function(){
+  
+    $('.btn-danger, a.text-danger').click( function(e){
+      e.preventDefault() ;
+      
+      if (window.confirm("Are you sure?")) {
+        $(this).closest('form').submit() ; 
+      }
+    }) ; 
+  
+  });
+}(window.jQuery, window, document)); 
+(function($, window, document) {
+  $(function(){
+    
+    // nav
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      var state = $('#wrapper').hasClass('toggled') ;
+      $.post( "/admin/remember", { toggled: state } );
+    });
+    
+    // shop
+    $("#select-shops").change(function() {
+      var id = $(this).val() ;
+      $.post( "/admin/remember", { shop: id }, function() {
+        window.location.replace("/admin"); 
+      });
+    }); 
+    
+    // lang
+    $("#select-language").change(function() {
+      var id = $(this).val() ;
+      $.post( "/admin/remember", { language: id }, function() {
+        location.reload() ; 
+      });
+    });
+  
+  });
+}(window.jQuery, window, document)); 
 //# sourceMappingURL=all.js.map

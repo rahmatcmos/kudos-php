@@ -1,7 +1,7 @@
 (function($, window, document) {
   $(function(){
   
-    $('.btn-danger').click( function(e){
+    $('.btn-danger, a.text-danger').click( function(e){
       e.preventDefault() ;
       
       if (window.confirm("Are you sure?")) {

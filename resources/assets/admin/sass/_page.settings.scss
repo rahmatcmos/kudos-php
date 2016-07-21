@@ -1,0 +1,22 @@
+body.settings{
+  #themes{
+    ul{
+      li{
+        border-bottom: 1px solid darken($color1, 5%);
+        line-height: 40px ;
+        margin: 0 ;
+        div{
+          padding: 0 ;
+        }
+        &:last-of-type{
+          border-bottom: 0 ;
+        }
+        a,
+        strong{
+          display: inline-block ;
+          font-weight: bold ;
+        }
+      }
+    }
+  }
+}

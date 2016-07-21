@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Themes\Basic;
+namespace App\Http\Controllers\Simple;
 use App\Models\Language ;
 use Redirect ;
 use Session ;

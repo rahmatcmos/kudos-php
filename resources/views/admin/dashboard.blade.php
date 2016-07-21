@@ -16,41 +16,25 @@
   
   <section class="container-fluid">
     
-    <div class="row">
-      <div class="col-lg-8">
-        <canvas id="visitors-sales" width="1080" height="400"></canvas>
+    <div class="white-panel">
+    
+      <div class="row">
+        <div class="col-lg-8">
+          <canvas id="visitors-sales" width="1080" height="400"></canvas>
+        </div>
+        <div class="col-lg-4">
+          <canvas id="conversions" width="800" height="500"></canvas>
+        </div>
       </div>
-      <div class="col-lg-4">
-        <canvas id="conversions" width="800" height="500"></canvas>
-      </div>
+      
+      <hr>
+    
     </div>
     
-    <hr>
-    
-    <p class="form-inline">
+    <!--<p class="form-inline">
       {{ trans('dashboard.enter ga') }} <input type="text" class="form-control" placeholder="UA-XXXXX-X">
     </p>
     
-    <!--<ul class="row">
-      <li class="col-md-2">
-        <div style="background: #FF5454">#FF5454</div>
-      </li>
-      <li class="col-md-2">
-        <div style="background: #FABB3D">#FABB3D</div>
-      </li>
-      <li class="col-md-2">
-        <div style="background: #99C83D">#99C83D</div>
-      </li>
-      <li class="col-md-2">
-        <div style="background: #1E8FC6">#1E8FC6</div>
-      </li>
-      <li class="col-md-2">
-        <div style="background: #219FDD">#219FDD</div>
-      </li>
-      <li class="col-md-2">
-        <div style="background: #36A9E1">#36A9E1</div>
-      </li>
-    </ul>
     <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">-->
     
   </section>

@@ -49,7 +49,7 @@ class PagesController extends AdminController
     } else {
       // store
       $lang = Session::get('language');
-      $page = new page;
+      $page = new Page;
       $page->shop_id = Input::get('shop_id');
       $data = Input::except(['shop_id', '_token', '_method']) ;
       $page->$lang = $data ;

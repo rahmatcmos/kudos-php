@@ -33,3 +33,9 @@ section {
 .panel {
   padding: 15px;
 }
+
+.white-panel{
+  padding: 15px ;
+  background: #fff ;
+  border: 1px solid darken($color1, 5%);
+}

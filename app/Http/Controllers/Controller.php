@@ -17,12 +17,5 @@ class Controller extends BaseController
     
     public function __construct()
     {      
-      // if session is not set reset the session for the language
-      if ( !Session::has('language')){
-        Session::put('language', config('app.locale')) ;
-      }
-      
-      view()->share('languages', $this->languages);
-      view()->share('language', Session::get('language')) ;
     }
 }

@@ -55,7 +55,7 @@ class ProductsController extends AdminController
       
       // store
       $lang = Session::get('language');
-      $product = new product;
+      $product = new Product;
       $product->shop_id = Input::get('shop_id');
       $product->categories = Input::get('categories');
       $data = Input::except(['shop_id', 'categories', '_token', '_method']) ;

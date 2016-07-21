@@ -97,7 +97,7 @@ class CategoriesController extends AdminController
     } else {
       // store
       $lang = Session::get('language');
-      $category = new category;
+      $category = new Category;
       $category->shop_id = Input::get('shop_id');
       $category->parent = Input::get('parent');
       $data = Input::except(['shop_id', 'parent', '_token', '_method']) ;      

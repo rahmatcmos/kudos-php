@@ -19,14 +19,14 @@ elixir(function(mix) {
     './node_modules/font-awesome/css/font-awesome.min.css',
     './resources/assets/admin/css/third-party/*.css', 
     './resources/assets/admin/css/modules/*.css'
-  ], 'public/build/admin/css');
+  ], './public/build/admin/css');
   mix.scripts([
     './node_modules/jquery/dist/jquery.min.js',
     './node_modules/bootstrap/dist/js/bootstrap.min.js',
     './node_modules/chart.js/dist/Chart.min.js',
     './resources/assets/admin/js/third-party/*.js',
     './node_modules/nestedSortable/jquery.mjs.nestedSortable.js',
-    './resources/assetsadmin/js/modules/*.js'
-  ], 'public/build/admin/js');
+    './resources/assets/admin/js/modules/*.js'
+  ], './public/build/admin/js');
     
 });

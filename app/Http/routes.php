@@ -13,8 +13,10 @@
 
 Route::auth();
 
+//Route::get('/', ['uses' => 'Basic\HomeController@index']);
+
 // frontend routes
-Route::group(['namespace' => 'Themes\\'.config('app.theme')], function() {
+Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function() {
   Route::get('/', ['uses' => 'HomeController@index']);
   
   // customer routes
@@ -35,6 +37,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@show']);
   Route::post('remember', ['uses' => 'DashboardController@remember']);
   Route::get('remember', ['uses' => 'DashboardController@remember']);
+  
+  // settings
+  Route::resource('settings', 'SettingsController');
   
   // shops
   Route::resource('shops', 'ShopsController');
