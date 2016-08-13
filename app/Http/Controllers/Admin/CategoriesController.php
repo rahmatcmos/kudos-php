@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Category;
+use App\Http\Traits\Media;
 use Validator ;
 use Input ;
 use Session ;
 use Redirect ;
+use Storage ;
 
 class CategoriesController extends AdminController
 {
+  
+  use Media ;
   
   public function __construct()
   {
@@ -34,7 +38,7 @@ class CategoriesController extends AdminController
    * @param array categories
    * @param string parent id
    * 
-   * @return Response
+   * @return Array
    */
   private function sortCategories(Array $categories, $parent = NULL)
   {
@@ -100,7 +104,9 @@ class CategoriesController extends AdminController
       $category = new Category;
       $category->shop_id = Input::get('shop_id');
       $category->parent = Input::get('parent');
-      $data = Input::except(['shop_id', 'parent', '_token', '_method']) ;      
+      $category->slug = Input::get('slug');
+      $category->products = [];
+      $data = Input::except(['shop_id', 'parent', 'slug', '_token', '_method']) ;      
       $category->$lang = $data ; 
       if($lang==config('app.locale')){
         $category->default = $data ;
@@ -125,7 +131,8 @@ class CategoriesController extends AdminController
     $categories = Category::where('shop_id', '=', Session::get('shop'))->orderBy('order', 'asc')->get() ;
     $categories = $this->sortCategories($categories->toArray()) ;
     $category = Category::find($id) ;
-    return view('admin/categories/edit', ['category' => $category, 'categories' => $categories]);
+    $files = $this->getFiles('images/categories/'.$category->id);
+    return view('admin/categories/edit', ['category' => $category, 'categories' => $categories, 'files' => $files]);
   }
   
   /**
@@ -152,7 +159,8 @@ class CategoriesController extends AdminController
       $category = Category::find($id);
       $category->shop_id = Input::get('shop_id');
       $category->parent = Input::get('parent');
-      $data = Input::except(['shop_id', 'parent', '_token', '_method']) ;
+      $category->slug = Input::get('slug');
+      $data = Input::except(['shop_id', 'parent', 'slug', '_token', '_method']) ;
       unset($data['shop_id'], $data['parent']) ;
       $category->$lang = $data ;
       if($lang==config('app.locale')){

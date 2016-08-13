@@ -28,7 +28,7 @@
     border-color: $red ;
     &:hover{
       background: darken($red, 10%) ;
-      border-color: darken($red, 10%) ;
+      border-color: darken($red, 10%) ; 
     }
   }
 }

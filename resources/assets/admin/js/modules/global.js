@@ -24,6 +24,47 @@
         location.reload() ; 
       });
     });
+    
+    // are you sure?, when danger is present
+    $('.btn-danger, a.text-danger').click( function(e){
+      e.preventDefault() ;
+      if (window.confirm("Are you sure?")) {
+        $(this).closest('form').submit() ; 
+      }
+    }) ;
+    
+    // wysiwyg
+    $('.wysiwyg').summernote({
+      height: 300,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'italic', 'underline', 'clear']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'hr']],
+        ['view', ['fullscreen', 'codeview']]
+      ]
+    });
+    
+    // dropzone
+    if( $('#kudos-dropzone').length ){
+      Dropzone.autoDiscover = false;
+      var kudosDropzone = new Dropzone('#kudos-dropzone', {
+        maxFilesize: 2, // MB
+        acceptedFiles: '.png,.jpg'
+      }) ; ;
+      kudosDropzone.on('success', function(file) {
+        kudosDropzone.removeFile(file);
+      });
+      kudosDropzone.on('queuecomplete', function() {
+        var id = $('#thumbnails').data('id') ;
+        var type = $('#thumbnails').data('type') ;
+        var model = $('#thumbnails').data('model') ;
+        $.get( '/admin/media/thumbnails/'+id+'/'+model+'/'+type, function( data ) {
+          $('#thumbnails').html( data );
+        });
+      });
+    }
   
   });
 }(window.jQuery, window, document)); 

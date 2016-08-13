@@ -76,7 +76,20 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Application Currency Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application currency determines the default currency that will be used.
+    | You are free to set this value to any of the currency which exists
+    | within the ISO 4217 standard.
+    |
+    */
+
+    'currency' => env('APP_CURRENCY', 'GBP'),
 
     /*
     |--------------------------------------------------------------------------
@@ -159,6 +172,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -221,7 +235,8 @@ return [
         'Moloquent' => 'Jenssegers\Mongodb\Eloquent\Model',
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Input' => Illuminate\Support\Facades\Input::class
+        'Input' => Illuminate\Support\Facades\Input::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

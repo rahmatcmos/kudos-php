@@ -12,17 +12,12 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-  mix.sass('./../../resources/assets/themes/basic/sass/app.scss', './../../resources/assets/themes/basic/css/modules');
-    
-  mix.styles([
-    './node_modules/bootstrap/dist/css/bootstrap.min.css',
-    './node_modules/font-awesome/css/font-awesome.min.css',
-    './../../resources/assets/themes/basic/css/third-party/*.css', 
-    './../../resources/assets/themes/basic/css/modules/*.css'
-  ], './../../public/build/themes/basic/css');
-  mix.scripts([
-    './../../resources/assets/themes/basic/js/third-party/*.js',
-    './../../resources/assets/themes/basic/js/modules/*.js'
-  ], './../../public/build/themes/basic/js');
-    
+  mix
+    .sass(
+      './../../resources/assets/themes/basic/sass/app.scss', 
+      './../../resources/assets/themes/basic/css/modules')
+    .styles([
+      './node_modules/bootstrap/dist/css/bootstrap.min.css',
+      './../../resources/assets/themes/basic/css/modules/*.css'
+    ], './../../public/build/themes/basic/css');
 });

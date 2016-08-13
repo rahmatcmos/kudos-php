@@ -19,6 +19,8 @@
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('name', trans('pages.name')) }}
         {{ Form::text('name', '', ['class' => 'form-control']) }}
+        {{ Form::label('content', trans('fields.content')) }}
+        <textarea class="input-block-level wysiwyg" name="content" rows="18"></textarea>
         {{ Form::submit(trans('crud.create'), ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}
     </div>

@@ -1,0 +1,40 @@
+footer{
+  padding: 20px 0 ;
+  background: $color2 ;
+  color: $color1 ;
+  dl{
+    dt{
+      text-transform: uppercase ;
+      margin-bottom: 10px ;
+    }
+    dd{
+      color: darken($color4, 10%) ;
+      font-size: 90% ;
+      > a{
+        color: darken($color4, 10%) ;
+      }
+      ul{
+        margin: 10px 0 ;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  footer{
+    padding: 60px 0 ;
+    dl{
+      &:first-of-type{
+        dd{
+          padding-right: 80px ;
+          &:first-of-type{
+            margin-bottom: 15px ;
+          }
+          a{
+            color: $color1 ;
+          }
+        }
+      }
+    }
+  }
+}

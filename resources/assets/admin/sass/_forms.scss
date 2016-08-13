@@ -1,10 +1,22 @@
 form{
-  label{
-    margin-bottom: 3px ;
-  }
   input,
   select,
   textarea{
     margin-bottom: 15px ;
   }
+}
+label{
+  margin-bottom: 3px ;
+  font-weight: bold ;
+}
+
+.note-editor{
+  padding: 0;
+  border-color: #ccc;
+}
+
+#kudos-dropzone{
+  border: 1px solid #ccc ;
+  border-radius: 5px ;
+  min-height: auto ;
 }

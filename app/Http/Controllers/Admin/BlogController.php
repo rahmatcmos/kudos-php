@@ -51,7 +51,8 @@ class BlogController extends AdminController
       $lang = Session::get('language');
       $blog = new Blog;
       $blog->shop_id = Input::get('shop_id');
-      $data = Input::except(['shop_id', '_token', '_method']) ;
+      $blog->slug = Input::get('slug');
+      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
       $blog->$lang = $data ;
       if($lang==config('app.locale')){
         $blog->default = $data ;
@@ -100,7 +101,8 @@ class BlogController extends AdminController
       $lang = Session::get('language');
       $blog = Blog::find($id);
       $blog->shop_id = Input::get('shop_id');
-      $data = Input::except(['shop_id', '_token', '_method']) ;
+      $blog->slug = Input::get('slug');
+      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
       $blog->$lang = $data ;
       if($lang==config('app.locale')){
         $blog->default = $data ;

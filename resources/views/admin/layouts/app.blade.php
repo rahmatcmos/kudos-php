@@ -34,6 +34,7 @@
           @endforeach
         </select>
       </li>
+      <li><a href="/admin/currencies"><i class="fa fa-money"></i></a></li>
       <li><a href="/admin/settings"><i class="fa fa-cog"></i></a></li>
       <li><a href="/admin/users"><i class="fa fa-user"></i></a></li>
       <li><a href="/logout"><i class="fa fa-sign-out"></i></a></li>
@@ -57,7 +58,7 @@
       </nav>
     </aside>
   
-    <div id="content">
+    <div id="content-area">
       @if(Session::has('success'))<div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>@endif
       @if(Session::has('info'))<div class="alert alert-info" role="alert">{{ Session::get('info') }}</div>@endif
       @if(Session::has('warning'))<div class="alert alert-warning" role="alert">{{ Session::get('warning') }}</div>@endif

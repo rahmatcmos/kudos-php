@@ -19,12 +19,12 @@
     background: $orange ;
     border-color: $orange ;
     &:hover{
-      background: darken($orange, 10%) ;
+      background: darken($orange, 10%) ; 
       border-color: darken($orange, 10%) ;
     }
   }
   &.btn-danger{
-    background: $red ;
+    background: $red ; 
     border-color: $red ;
     &:hover{
       background: darken($red, 10%) ;

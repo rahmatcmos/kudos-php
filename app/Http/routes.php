@@ -13,18 +13,32 @@
 
 Route::auth();
 
-//Route::get('/', ['uses' => 'Basic\HomeController@index']);
-
 // frontend routes
 Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function() {
   Route::get('/', ['uses' => 'HomeController@index']);
   
-  // customer routes
+  // categories
+  Route::resource('categories', 'CategoriesController');
+  
+  // products
+  Route::resource('products', 'ProductsController');
+  
+  // basket
+  
+  // checkout
+  
+  // account
   Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
     Route::get('/', function(){
       echo 'account' ;
     });
   });
+  
+  // pages
+  Route::resource('pages', 'PagesController');
+  
+  // blog
+  Route::resource('blog', 'BlogController');
   
 }); 
   
@@ -39,7 +53,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   Route::get('remember', ['uses' => 'DashboardController@remember']);
   
   // settings
+  Route::post('settings/theme-install', ['uses' => 'SettingsController@themeInstall']);
+  Route::post('settings/theme-uninstall', ['uses' => 'SettingsController@themeUninstall']);
   Route::resource('settings', 'SettingsController');
+  
+  // currencies
+  Route::resource('currencies', 'CurrenciesController');
+  
+  // media
+  Route::post('media/delete', 'MediaController@delete')->name('delete');
+  Route::post('media/default/{id}/{type}', 'MediaController@default')->name('default');
+  Route::post('media/upload/images/{dir}/{id}', 'MediaController@uploadImages')->name('upload');
+  Route::get('media/thumbnails/{id}/{model?}/{type?}', 'MediaController@getThumbnails')->name('thumbnails');
   
   // shops
   Route::resource('shops', 'ShopsController');

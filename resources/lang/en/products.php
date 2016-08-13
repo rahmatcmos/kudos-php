@@ -5,5 +5,8 @@ return [
   'product' => 'Product',
   
   // labels
-  'name' => 'Name'
+  'name' => 'Name',
+  'price' => 'Price',
+  'rrp' => 'RRP',
+  'sale price' => 'Sale price'
 ];

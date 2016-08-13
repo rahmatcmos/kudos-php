@@ -1,70 +1,46 @@
-header {
-  
-  select{
-    height: 24px !important ;
-    font-size: 100% !important ;
-    display: inline !important ;
-  }
-  
-  ol {
-    display: inline-block;
-    padding: 0 10px;
-    position: relative;
-
-    ol {
-      display: none;
-      position: absolute;
-      top: 50px;
-      left: 0;
-    }
-
-    > li {
-      color: #fff;
-
-      a {
-        color: #fff;
+header{
+  line-height: 120px ;
+  ul{
+    li{
+      a{
+        color: $color2  ;
+        .fa-stack{
+          color: $color3 ;
+        }
       }
     }
   }
+}
 
-  ul {
-    position: absolute;
-    top: 0;
-    right: 0px;
-
-    li {
-      display: block;
-      float: left;
-      color: #fff;
-      &:first-of-type{
-        margin-right: 10px ;
+@media (min-width: 992px) {
+  header{
+    text-align: right ;
+    ul{
+      li{
+        margin-left: 40px ;
+        &:first-of-type{
+          float: left ;
+          margin-left: 0 ;
+          font-size: 200% ;
+        }
+        &.search{
+          position: relative ;
+          input{
+            height: 36px ;
+            border-color: $color3  ;
+            padding-right: 40px ;
+            min-width: 300px ;
+          }
+          .fa-stack{
+            position: absolute ;
+            top: -3px ;
+            right: 0 ;
+            .fa-square{
+              color: $color3  ;
+            }
+          }
+        }
       }
-      a {
-        display: block;
-        color: #fff;
-        padding: 0 15px;
-        font-size: 120% ;
-      }
-    }
-  }
-
-  #menu-toggle {
-    display: inline-block;
-    width: 50px;
-    text-align: center;
-    border-right: 1px solid lighten($color3, 10%);
-    color: #fff;
-    position: relative;
-
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0px;
-      bottom: 0;
-      width: 1px;
-      background: darken($color3, 10%) ;
     }
   }
 }

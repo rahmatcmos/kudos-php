@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Themes\Basic;
 use Illuminate\Http\Request;
 use Session ;
 
-class HomeController extends \App\Http\Controllers\Controller
+class HomeController extends ThemeController
 {  
     /**
      * Show the homepage.

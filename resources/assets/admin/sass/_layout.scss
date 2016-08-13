@@ -39,13 +39,13 @@ aside {
   width: 250px;
 }
 
-#content {
+#content-area {
   width: 100%;
   position: absolute;
   padding: 46px 0;
 }
 
-#wrapper.toggled #content {
+#wrapper.toggled #content-area {
   position: absolute;
   margin-right: -240px;
 }
@@ -55,7 +55,7 @@ aside {
     padding-left: 50px;
   }
 
-  #content {
+  #content-area {
     padding-right: 50px;
   }
 
@@ -81,12 +81,12 @@ aside {
     width: 50px;
   }
 
-  #content {
+  #content-area {
     padding: 46px 0 0;
     position: relative;
   }
 
-  #wrapper.toggled #content {
+  #wrapper.toggled #content-area {
     position: relative;
     margin-right: 0;
   }

@@ -12,6 +12,12 @@ use Redirect ;
 class ProductsController extends AdminController
 {
   use CategoriesTrait ;
+  
+  public function __construct()
+  {
+    parent::__construct() ;
+    view()->share('body_class', 'products');
+  }
 
   /**
    * List all products
@@ -44,7 +50,7 @@ class ProductsController extends AdminController
   {
     // validate
     $rules = [
-      'name'       => 'required'
+      'name' => 'required'
     ];
     $validator = Validator::make(Input::all(), $rules);
     if ($validator->fails()) {
@@ -57,13 +63,34 @@ class ProductsController extends AdminController
       $lang = Session::get('language');
       $product = new Product;
       $product->shop_id = Input::get('shop_id');
+      $product->slug = Input::get('slug');
       $product->categories = Input::get('categories');
-      $data = Input::except(['shop_id', 'categories', '_token', '_method']) ;
+      $product->price = Input::get('price');
+      $product->rrp = Input::get('rrp');
+      $product->salePrice = Input::get('salePrice');
+      $data = Input::except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
       $product->$lang = $data ;
       if($lang==config('app.locale')){
         $product->default = $data ;
       }
       $product->save();
+      
+      // add product id to each category
+      // TODO: test later to see what query method is fastest
+      if(Input::has('categories')){
+        $categories = Input::get('categories');
+        foreach($categories as $category){
+          $c = Category::find($category) ;
+          $products = $c->products ;
+          if(!empty($products)){
+            array_push($products, $product->id) ;
+            $c->products = array_unique($products) ;
+          } else {
+             $c->products = [$product->id] ;
+          }
+          $c->save() ;
+        }
+      }
 
       // redirect
       Session::flash('success',  trans('products.product').' '.trans('crud.created'));
@@ -108,13 +135,34 @@ class ProductsController extends AdminController
       $lang = Session::get('language');
       $product = Product::find($id);
       $product->shop_id = Input::get('shop_id');
+      $product->slug = Input::get('slug');
       $product->categories = Input::get('categories');
-      $data = Input::except(['shop_id', 'categories', '_token', '_method']) ;
+      $product->price = Input::get('price');
+      $product->rrp = Input::get('rrp');
+      $product->salePrice = Input::get('salePrice');
+      $data = Input::except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
       $product->$lang = $data ;
       if($lang==config('app.locale')){
         $product->default = $data ;
       }
       $product->save();
+      
+      // add product id to each category
+      // TODO: test later to see what query method is fastest
+      if(Input::has('categories')){
+        $categories = Input::get('categories');
+        foreach($categories as $category){
+          $c = Category::find($category) ;
+          $products = $c->products ;
+          if(!empty($products)){
+            array_push($products, $product->id) ;
+            $c->products = array_unique($products) ;
+          } else {
+             $c->products = [$product->id] ;
+          }
+          $c->save() ;
+        }
+      }
 
       // redirect
       Session::flash('success', trans('products.product').' '.trans('crud.updated'));
