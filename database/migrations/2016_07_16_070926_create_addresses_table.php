@@ -35,6 +35,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('adresses');
+        Schema::drop('addresses');
     }
 }
