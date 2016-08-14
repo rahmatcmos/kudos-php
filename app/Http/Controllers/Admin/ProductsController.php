@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Traits\CategoriesTrait;
+use App\Http\Traits\Media;
 use Validator ;
 use Input ;
 use Session ;
@@ -12,6 +13,7 @@ use Redirect ;
 class ProductsController extends AdminController
 {
   use CategoriesTrait ;
+  use Media ;
   
   public function __construct()
   {
@@ -109,7 +111,8 @@ class ProductsController extends AdminController
   {
     $categories = $this->category_select() ;
     $product = Product::find($id) ; 
-    return view('admin/products/edit', ['product' => $product, 'categories' => $categories]);
+    $files = $this->getFiles('images/products/'.$product->id.'/'.key(config('filesystems.image_sizes')));
+    return view('admin/products/edit', ['product' => $product, 'categories' => $categories, 'files' => $files]);
   }
   
   /**

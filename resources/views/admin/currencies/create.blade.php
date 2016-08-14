@@ -14,8 +14,6 @@
   <section>
     <div class="container-fluid">
       {{ Form::open(['url' => 'admin/currencies']) }}
-        {{ Form::label('code', trans('currencies.code')) }}
-        {{ Form::text('code', '', ['class' => 'form-control']) }}
         {{ Form::label('currency', trans('currencies.currency')) }}
         {{ Form::text('currency', '', ['class' => 'form-control']) }}
         {{ Form::label('rate', trans('currencies.rate')) }}

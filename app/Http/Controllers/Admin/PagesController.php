@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Page;
+use App\Http\Traits\Media;
 use Validator ;
 use Input ;
 use Session ;
@@ -9,6 +10,8 @@ use Redirect ;
 
 class PagesController extends AdminController
 {
+  use Media ; 
+  
   /**
    * List all pages
    *
@@ -75,7 +78,8 @@ class PagesController extends AdminController
   public function edit( $id )
   {
     $page = Page::find($id) ;
-    return view('admin/pages/edit', ['page' => $page]);
+    $files = $this->getFiles('images/pages/'.$page->id.'/'.key(config('filesystems.image_sizes')));
+    return view('admin/pages/edit', ['page' => $page, 'files' => $files]);
   }
   
   /**

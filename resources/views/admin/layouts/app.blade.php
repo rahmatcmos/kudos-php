@@ -26,6 +26,7 @@
       @endif
       </li>
     </ol>
+    <a href="/">GOTO SITE</a>
     <ul>
       <li>
         <select class="form-control" id="select-language">

@@ -9,5 +9,6 @@ return [
   'created' => 'Created',
   'updated' => 'Updated',
   'deleted' => 'Deleted',
-  'none' => 'None'
+  'none' => 'None',
+  'failed' => 'failed to complete'
 ];

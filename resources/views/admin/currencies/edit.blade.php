@@ -20,8 +20,6 @@
   <section>
     <div class="container-fluid">
       {{ Form::model($currency, ['url' => 'admin/currencies/'.$currency->id, 'method' => 'PUT']) }}
-        {{ Form::label('code', trans('currencies.code')) }}
-        {{ Form::text('code', $currency->code, ['class' => 'form-control']) }}
         {{ Form::label('currency', trans('currencies.currency')) }}
         {{ Form::text('currency', $currency->currency, ['class' => 'form-control']) }}
         {{ Form::label('rate', trans('currencies.rate')) }}

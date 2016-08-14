@@ -19,6 +19,7 @@ elixir(function(mix) {
     './node_modules/font-awesome/css/font-awesome.min.css',
     './node_modules/summernote/dist/summernote.css',
     './node_modules/dropzone/dist/dropzone.css',
+    './node_modules/swipebox/src/css/swipebox.min.css',
     './resources/assets/admin/css/third-party/*.css', 
     './resources/assets/admin/css/modules/*.css'
   ], './public/build/admin/css');
@@ -30,6 +31,7 @@ elixir(function(mix) {
     './node_modules/chart.js/dist/Chart.min.js',
     './resources/assets/admin/js/third-party/*.js',
     './node_modules/nestedSortable/jquery.mjs.nestedSortable.js',
+    './node_modules/swipebox/src/js/jquery.swipebox.min.js',
     './resources/assets/admin/js/modules/*.js'
   ], './public/build/admin/js');
     

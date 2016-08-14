@@ -10,12 +10,13 @@
     "summernote": "^0.8.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "laravel-elixir": "^5.0.0",
     "bootstrap": "^3.3.6",
     "chart.js": "^2.1.6",
     "font-awesome": "^4.6.1",
+    "gulp": "^3.9.1",
     "jquery": "^2.2.3",
-    "jquery-match-height": "^0.7.0"
+    "jquery-match-height": "^0.7.0",
+    "laravel-elixir": "^5.0.0",
+    "swipebox": "^1.4.6"
   }
 }

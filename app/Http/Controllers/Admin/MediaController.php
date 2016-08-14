@@ -5,6 +5,7 @@ use App\Http\Traits\Media;
 use Input ;
 use Storage ;
 use Redirect ;
+use Image ; 
 
 class MediaController extends AdminController
 {
@@ -22,10 +23,27 @@ class MediaController extends AdminController
   public function uploadImages( $dir, $id )
   {
     $file = Input::file('file'); 
+
     Storage::disk('public')->put(
       'images/'.$dir.'/'.$id.'/'.basename($file->getClientOriginalName()),
       file_get_contents($file)
     );
+
+    // resizing
+    foreach(config('filesystems.image_sizes') as $name => $size){
+      $thumb = Image::make(Input::file('file'))->resize($size[0], null, function ($constraint) {
+        $constraint->aspectRatio();
+      });
+      if($thumb->height()>$size[1]){
+        $offset = floor(($thumb->height()-$size[1])/2);
+        $thumb->crop( $size[0], $size[1], 0, $offset) ;
+      }
+      $thumb->stream() ;
+      Storage::disk('public')->put(
+        'images/'.$dir.'/'.$id.'/'.$name.'/'.basename($file->getClientOriginalName()),
+        $thumb->__toString()
+      ) ;
+    }
   }
   
   /**
@@ -54,6 +72,12 @@ class MediaController extends AdminController
   {
     $file = Input::get('file'); 
     Storage::disk('public')->delete( $file ) ;
+    
+    // resized images
+    $path_parts = pathinfo($file);
+    foreach(config('filesystems.image_sizes') as $name => $size){
+      Storage::disk('public')->delete( $path_parts['dirname'].'/'.$name.'/'.$path_parts['basename'] ) ;
+    }
     return Redirect::back() ;
   }
   

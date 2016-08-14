@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Blog;
+use App\Http\Traits\Media;
 use Validator ;
 use Input ;
 use Session ;
@@ -9,6 +10,8 @@ use Redirect ;
 
 class BlogController extends AdminController
 {
+  use Media ;
+  
    /**
    * List all blog
    *
@@ -75,7 +78,8 @@ class BlogController extends AdminController
   public function edit( $id )
   {
     $blog = Blog::find($id) ;
-    return view('admin/blog/edit', ['blog' => $blog]);
+    $files = $this->getFiles('images/blogs/'.$blog->id.'/'.key(config('filesystems.image_sizes')));
+    return view('admin/blog/edit', ['blog' => $blog, 'files' => $files]);
   }
   
   /**

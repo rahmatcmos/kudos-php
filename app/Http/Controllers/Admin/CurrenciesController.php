@@ -9,6 +9,35 @@ use Redirect ;
 class CurrenciesController extends AdminController
 {
   /**
+   * Automatically get currency rates from fixer.io
+   *
+   * @return Redirect
+   */
+  public function auto()
+  {
+    $url = 'http://api.fixer.io/latest?base='.env('APP_CURRENCY');
+    $rates = json_decode(file_get_contents($url), true);
+    if($rates){
+      $currency = Currency::firstOrNew([ 
+        'currency'  => env('APP_CURRENCY'),
+        'rate'      => 1
+      ]);
+      $currency->save() ;
+      foreach($rates['rates'] as $code => $rate){
+        $currency = Currency::firstOrNew([ 
+          'currency'  => $code
+        ]);
+        $currency->rate = $rate ;
+        $currency->save() ;
+      }
+      Session::flash('success',  trans('currencies.currency').' '.trans('crud.updated'));
+      return Redirect::to('admin/currencies');
+    }
+    Session::flash('danger',  trans('currencies.currencies').' '.trans('crud.failed'));
+    return Redirect::to('admin/currencies');
+  }
+  
+  /**
    * List all currencies
    *
    * @return Response

@@ -1,0 +1,26 @@
+#thumbnails{
+  > div{
+    position: relative ;
+    margin: 15px 0 ;
+    .btn{
+      position: absolute ;
+      top: 0px ;
+      right: 15px ;
+      padding: 0 ;
+      text-align: center ;
+      width: 30px ;
+      font-size: 90% ;
+      line-height: 30px ;
+      border-radius: 0;
+    }
+    .btn-primary{
+      right: 45px ;
+    }
+    input[type=image]{
+      outline: 5px solid darken($color1, 10%) ;
+      &.default{
+        outline: 5px solid $green ;
+      }
+    }
+  }
+}

@@ -23,9 +23,11 @@
       border-color: darken($orange, 10%) ;
     }
   }
-  &.btn-danger{
+  &.btn-danger,
+  &.btn-red{
     background: $red ;
     border-color: $red ;
+    color: #fff ;
     &:hover{
       background: darken($red, 10%) ;
       border-color: darken($red, 10%) ; 

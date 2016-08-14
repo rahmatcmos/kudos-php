@@ -42,6 +42,9 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   
 }); 
   
+// auto update currencies - should be secured in some way if you are using your own (manual) currency rates
+Route::get('admin/currencies/auto', 'Admin\CurrenciesController@auto');
+
 // admin routes
 Route::get('admin','Admin\AdminController@login');
 Route::get('admin/login','Admin\AdminController@login');

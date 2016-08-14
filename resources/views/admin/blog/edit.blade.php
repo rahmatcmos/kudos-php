@@ -21,28 +21,27 @@
     <div class="container-fluid">
       <!-- if there are creation errors, they will show here -->
       {{ Html::ul($errors->all()) }}
-      
       <div class="row">
         <div class="col-md-4">
-          {{ Form::label('images', trans('fields.images')) }}
-          <!--<div class="row thumbs">
-            <div class="col-md-4">
-              <img src="http://placehold.it/800x450" class="img-responsive">
+          {{ Form::label('images', trans('fields.images')) }} ({{ trans('fields.click default')}})
+          <div class="row thumbs" id="thumbnails" data-id="{{ $blog->id }}" data-type="images" data-model="blogs">
+            @foreach ($files as $file)
+            <div class="col-md-6 col-lg-4">
+              <a href="/uploads/{{ $file }}" class="btn btn-primary swipebox" target="_blank"><i class="fa fa-eye"></i></a>
+              {{ Form::open(['url' => 'admin/media/delete']) }}
+                {{ Form::hidden('file', $file ) }}
+                {{ Form::submit('X', ['class' => 'btn btn-red']) }}
+              {{ Form::close() }}
+              {{ Form::open(['url' => 'admin/media/default/'.$blog->id.'/blog']) }}
+                {{ Form::hidden('file', $file ) }}
+                <input type="image" src="/uploads/{{ $file }}" class="img-responsive {{ isset($blog->defaultImage) && $blog->defaultImage == $file ? 'default' : '' }}">
+              {{ Form::close() }}
             </div>
-            <div class="col-md-4">
-              <img src="http://placehold.it/800x450" class="img-responsive">
-            </div>
-            <div class="col-md-4">
-              <img src="http://placehold.it/800x450" class="img-responsive">
-            </div>
-             <div class="col-md-4">
-              <img src="http://placehold.it/800x450" class="img-responsive">
-            </div>
-            <div class="col-md-4">
-              <img src="http://placehold.it/800x450" class="img-responsive">
-            </div>
-          </div>-->
-          <form action="/file-upload" class="dropzone" id="kudos-dropzone"></form>
+            @endforeach
+          </div>
+          <form action="/admin/media/upload/images/blogs/{{ $blog->id }}" class="dropzone" id="kudos-dropzone">
+            {!! Form::token() !!}
+          </form>
         </div>
         <div class="col-md-8">
         {{ Form::model($blog, ['url' => 'admin/blog/'.$blog->id, 'method' => 'PUT']) }}

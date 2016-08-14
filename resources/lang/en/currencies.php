@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'currencies' => 'Currency',
+  'currencies' => 'Currencies',
   'currency' => 'Currency',
   
   // labels
