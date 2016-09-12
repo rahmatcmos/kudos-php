@@ -23,7 +23,21 @@
       {{ Html::ul($errors->all()) }}
       {{ Form::model($shop, ['url' => 'admin/shops/'.$shop->id, 'method' => 'PUT']) }}
         {{ Form::label('name', trans('shops.shop_name')) }}
-        {{ Form::text('name', isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'], ['class' => 'form-control']) }}
+        {{ Form::text('name', isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'], ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('root', trans('shops.root')) }}
+        @if($categories)
+          <select name="root" class="form-control">
+            @foreach ($categories as $cat)
+              @include('admin.shops.partials.option', ['cat' => $cat])
+            @endforeach
+          </select>
+        @else
+          <select name="root" class="form-control" disabled>
+            <option>{{ trans('crud.not available') }}</option>
+          </select>
+        @endif
+        {{ Form::label('url', trans('fields.url')) }}
+        {{ Form::url('url', $shop->url, ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::submit(trans('crud.edit'), ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}
     </div>

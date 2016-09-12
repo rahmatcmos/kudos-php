@@ -20,12 +20,16 @@
         <thead>
           <tr>
             <th>{{ trans('shops.name') }}</th>
+            <th>{{ trans('shops.root') }}</th>
+            <th>{{ trans('fields.url') }}</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($shops as $shop)
           <tr>
             <td><a href="/admin/shops/{{ $shop->id }}/edit">{{ isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'] }}</a></td>
+            <td><a href="/admin/shops/{{ $shop->id }}/edit">{{ !empty($shop->root) ? trans('crud.edit') : trans('crud.notset') }}</a></td>
+            <td><a href="{{ $shop->url }}" target="_blank">{{ $shop->url }}</a></td>
           </tr>    
           @endforeach
         </tbody>

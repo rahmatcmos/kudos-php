@@ -32,6 +32,7 @@ class AdminController extends \App\Http\Controllers\Controller
       if ( !Session::has('shop') || Shop::where('_id', '=', Session::get('shop'))->count()==0 ){
         $shop = Shop::first() ;
         Session::put('shop', $shop->id) ;
+        Session::put('shop_url', $shop->url) ;
       }
       
       // if session is not set reset the session for the language

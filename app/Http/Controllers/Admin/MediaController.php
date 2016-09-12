@@ -57,10 +57,11 @@ class MediaController extends AdminController
    */
   public function getThumbnails( $id, $model='products', $type='images' )
   {
-    $files = $this->getFiles($type.'/'.$model.'/'.$id);
+    $file_size = key(config('filesystems.image_sizes')) ;
+    $files = $this->getFiles($type.'/'.$model.'/'.$id.'/'.$file_size);
     $class = 'App\\Models\\'.str_singular(ucfirst($model)) ;
     $item = $class::find($id) ;
-    return view('admin/media/thumbs', ['files' => $files, 'item' => $item, 'id' => $id, 'model' => str_singular($model)]);
+    return view('admin/media/thumbs', ['files' => $files, 'item' => $item, 'id' => $id, 'model' => str_singular($model), 'file_size' => $file_size]);
   }
   
   /**

@@ -17,7 +17,7 @@
   <section>
     <div class="container-fluid">
       <p>Whilst you can manually update currency data it is recommended that you automatically fill currency rates.</p>
-      <p>If you wish to automatically update currency rates you should set a cron to <a href="#">{{ url('/') }}/admin/currencies/automatic</a></p>
+      <p>If you wish to automatically update currency rates you should set a cron to <a href="/admin/currencies/auto">{{ url('/') }}/admin/currencies/auto</a></p>
       <hr>
       <table class="table table-bordered">
         <thead>

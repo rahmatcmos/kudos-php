@@ -41,7 +41,7 @@
       var thumb = $(this) ;
       var url = $(this).closest('form').attr('action') ;
       var token = thumb.prev().prev().val() ;
-      $.post(url, { '_token': token })
+      $.post(url, { '_token': token, 'file': thumb.data('src') })
       .done(function() {
         $('#thumbnails input[type=image]').removeClass('default') ;
         thumb.addClass('default') ;

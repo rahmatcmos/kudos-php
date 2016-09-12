@@ -10,5 +10,8 @@ return [
   'updated' => 'Updated',
   'deleted' => 'Deleted',
   'none' => 'None',
-  'failed' => 'failed to complete'
+  'failed' => 'failed to complete',
+  'Choose once saved' => 'Choose once saved',
+  'not available' => 'not available',
+  'notset' => 'NOT SET'
 ];

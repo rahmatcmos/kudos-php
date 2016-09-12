@@ -17,7 +17,13 @@
       {{ Html::ul($errors->all()) }}
       {{ Form::open(['url' => 'admin/shops']) }}
         {{ Form::label('name', trans('shops.shop_name')) }}
-        {{ Form::text('name', '', ['class' => 'form-control']) }}
+        {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('root', trans('shops.root')) }}
+        <select name="root" class="form-control" disabled>
+          <option>{{ trans('crud.Choose once saved') }}</option>
+        </select>
+        {{ Form::label('url', trans('fields.url')) }}
+        {{ Form::url('url', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::submit(trans('crud.create'), ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}
     </div>

@@ -78,8 +78,9 @@ class BlogController extends AdminController
   public function edit( $id )
   {
     $blog = Blog::find($id) ;
-    $files = $this->getFiles('images/blogs/'.$blog->id.'/'.key(config('filesystems.image_sizes')));
-    return view('admin/blog/edit', ['blog' => $blog, 'files' => $files]);
+    $file_size = key(config('filesystems.image_sizes')) ;
+    $files = $this->getFiles('images/blogs/'.$blog->id.'/'.$file_size);
+    return view('admin/blog/edit', ['blog' => $blog, 'files' => $files, 'file_size' => $file_size]);
   }
   
   /**

@@ -78,8 +78,9 @@ class PagesController extends AdminController
   public function edit( $id )
   {
     $page = Page::find($id) ;
-    $files = $this->getFiles('images/pages/'.$page->id.'/'.key(config('filesystems.image_sizes')));
-    return view('admin/pages/edit', ['page' => $page, 'files' => $files]);
+    $file_size = key(config('filesystems.image_sizes')) ;
+    $files = $this->getFiles('images/pages/'.$page->id.'/'.$file_size);
+    return view('admin/pages/edit', ['page' => $page, 'files' => $files, 'file_size' => $file_size]);
   }
   
   /**

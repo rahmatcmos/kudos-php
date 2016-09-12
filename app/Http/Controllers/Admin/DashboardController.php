@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use DB ;
 use Redis ;
+use App\Models\Shop;
 
 class DashboardController extends AdminController
 {  
@@ -24,7 +25,11 @@ class DashboardController extends AdminController
       if( $request->has('toggled') )  $request->session()->put('toggled', $request->input('toggled') );
       
       // toggle shop 
-      if( $request->has('shop') )  $request->session()->put('shop', $request->input('shop') );
+      if( $request->has('shop') ){
+        $shop = Shop::find($request->input('shop')) ;
+        $request->session()->put('shop', $shop->id );
+        $request->session()->put('shop_url', $shop->url );
+      }
       
       // toggle language 
       if( $request->has('language') )  $request->session()->put('language', $request->input('language') );

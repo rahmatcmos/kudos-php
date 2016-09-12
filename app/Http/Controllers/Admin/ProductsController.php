@@ -26,9 +26,9 @@ class ProductsController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index($page=1, $orderBy='created_at', $orderDir='DESC', $limit=100)
   {
-    $products = Product::where('shop_id', '=', Session::get('shop'))->get();
+    $products = Product::where('shop_id', '=', Session::get('shop'))->orderBy($orderBy, $orderDir)->skip(($page*$limit)-$limit)->take($limit)->get();
     return view('admin/products/index', ['products' => $products]);
   }
   
@@ -111,8 +111,9 @@ class ProductsController extends AdminController
   {
     $categories = $this->category_select() ;
     $product = Product::find($id) ; 
-    $files = $this->getFiles('images/products/'.$product->id.'/'.key(config('filesystems.image_sizes')));
-    return view('admin/products/edit', ['product' => $product, 'categories' => $categories, 'files' => $files]);
+    $file_size = key(config('filesystems.image_sizes')) ;
+    $files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
+    return view('admin/products/edit', ['product' => $product, 'categories' => $categories, 'files' => $files, 'file_size' => $file_size]);
   }
   
   /**

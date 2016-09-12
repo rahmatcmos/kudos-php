@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Shop;
+use App\Models\Category;
 use Validator ;
 use Input ;
 use Session ;
@@ -58,7 +59,8 @@ class ShopsController extends AdminController
       // store
       $lang = Session::get('language');
       $shop = new Shop;
-      $data = Input::except(['_token', '_method']) ;
+      $data = Input::except(['root', 'url','_token', '_method']) ;
+      $shop->url = Input::get('url');
       $shop->$lang = $data ;
       if($lang==config('app.locale')){
         $shop->default = $data ;
@@ -81,7 +83,9 @@ class ShopsController extends AdminController
   public function edit( $id )
   {
     $shop = Shop::find($id) ;
-    return view('admin/shops/edit', ['shop' => $shop]);
+    $categories = Category::where('shop_id', '=', $id)->orderBy('order', 'asc')->get() ;
+    $categories = $this->sortCategories($categories->toArray()) ;
+    return view('admin/shops/edit', ['shop' => $shop, 'categories' => $categories]);
   }
   
   /**
@@ -106,7 +110,9 @@ class ShopsController extends AdminController
       // store
       $lang = Session::get('language');
       $shop = Shop::find($id);
-      $data = Input::except(['_token', '_method']) ;
+      $data = Input::except(['root', 'url','_token', '_method']) ;
+      $shop->root = Input::get('root');
+      $shop->url = Input::get('url');
       $shop->$lang = $data ;
       if($lang==config('app.locale')){
         $shop->default = $data ;
@@ -135,5 +141,25 @@ class ShopsController extends AdminController
     // redirect
     Session::flash('success',  trans('shops.shop').' '.trans('crud.deleted'));
     return Redirect::to('admin/shops');
+  }
+  
+  /*
+   * sort categories
+   *
+   * @param array categories
+   * @param string parent id
+   * 
+   * @return Array
+   */
+  private function sortCategories(Array $categories, $parent = NULL)
+  {
+    $return = [] ;
+    foreach ($categories as $k => $v) {
+      if ($v['parent'] == $parent) {
+        $return[$v['_id']] = $v; 
+        $return[$v['_id']]['children'] = $this->sortCategories($categories, $v['_id']);    
+      }
+    }
+    return $return ;
   }
 }

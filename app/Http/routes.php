@@ -81,6 +81,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   
   
   // products
+  Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index');
   Route::resource('products', 'ProductsController');
   
   // customers

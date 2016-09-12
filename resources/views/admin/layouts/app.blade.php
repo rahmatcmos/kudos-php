@@ -20,13 +20,17 @@
       @if( !isset($shop_remove) )
         <select class="form-control" id="select-shops">
           @foreach ($select_shops as $shop)
-          <option value="{{ $shop->id }}" {{ session('shop')==$shop->id ? 'selected="selected"' : '' }}>{{ isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'] }}</option>   
+          <option value="{{ $shop->id }}" {{ session('shop')==$shop->id ? 'selected="selected"' : '' }}>
+            {{ isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'] }}
+          </option>   
           @endforeach
         </select>
       @endif
       </li>
     </ol>
-    <a href="/">GOTO SITE</a>
+    @if( !isset($shop_remove) )
+      <a href="{{ session('shop_url') }}" target="_blank">{{ trans('shops.visit') }}</a>
+    @endif
     <ul>
       <li>
         <select class="form-control" id="select-language">
