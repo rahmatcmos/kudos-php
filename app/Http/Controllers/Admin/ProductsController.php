@@ -29,14 +29,15 @@ class ProductsController extends AdminController
   public function index()
   {
     // pagination
-    if (!Session::has('order_by')) Session::put('product.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put('product.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put('product.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put('product.order_dir', Input::get('order_dir')) ;
+    $session_type = 'product' ;
+    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
+    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
+    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
+    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
     
     $limit = Session::get('limit') ;
     $products = Product::where('shop_id', '=', Session::get('shop'))
-      ->orderBy(Session::get('language').'.'.Session::get('product.order_by'), Session::get('product.order_dir'))
+      ->orderBy(Session::get('language').'.'.Session::get($session_type.'.order_by'), Session::get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('admin/products/index', ['products' => $products]);
   }

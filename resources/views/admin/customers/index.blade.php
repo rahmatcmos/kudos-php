@@ -5,7 +5,13 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-9">
-          <h1>{{ trans('customers.customers') }}</h1>
+          <h1>
+            {{ ($customers->currentPage()-1) * $customers->perPage() + 1 }}
+            to
+            {{ min($customers->total(), $customers->currentPage() * $customers->perPage()) }}
+            of 
+            {{ $customers->total() }}
+            {{ trans('customers.customers') }}</h1>
         </div>
         <div class="col-md-3 text-right">
           <a href="/admin/customers/create" class="btn btn-success">{{ trans('crud.create') }}</a>
@@ -19,8 +25,18 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>{{ trans('customers.name') }}</th>
-            <th>{{ trans('customers.email') }}</th>
+            <th>
+              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=first_name&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}" 
+                class="order-{{ session('customer.order_by') == 'first_name' ? session('customer.order_dir') : '' }}">
+                {{ trans('customers.name') }}
+              </a>
+            </th>
+            <th>
+              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=email&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}" 
+                class="order-{{ session('customer.order_by') == 'email' ? session('customer.order_dir') : '' }}">
+              {{ trans('customers.email') }}
+              </a>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +48,7 @@
           @endforeach
         </tbody>
       </table>
+      {{ $customers->appends(['order_by' => session('customer.order_by'), 'order_dir' => session('customer.order_dir')] )->links() }}
     </div>
   </section>
     

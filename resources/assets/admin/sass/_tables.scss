@@ -15,23 +15,27 @@ table {
       a {
         display: block;
         position: relative;
-        padding: 10px;
+        padding: 5px;
         color: #fff;
-
         &:hover {
           color: #fff;
           background: #1E8FC6;
         }
         &:after {
-          content: "\f0d7"; 
+          content: "\f0d9\20\f0da"; 
           font-family: FontAwesome; 
           position: absolute;
-          top: 10px;
+          top: 5px;
           right: 10px;
         }
         &.order-asc{
           &:after {
             content: "\f0d8"; 
+          }
+        }
+        &.order-desc{
+          &:after {
+            content: "\f0d7"; 
           }
         }
       }

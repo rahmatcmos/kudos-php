@@ -19,7 +19,17 @@ class CustomersController extends AdminController
    */
   public function index()
   {
-    $customers = User::where('shop_id', '=', Session::get('shop'))->get() ;
+    // pagination
+    $session_type = 'customer' ;
+    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
+    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
+    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
+    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    
+    $limit = Session::get('limit') ;
+    $customers = User::where('shop_id', '=', Session::get('shop'))
+      ->orderBy(Session::get($session_type.'.order_by'), Session::get($session_type.'.order_dir'))
+      ->paginate($limit);
     return view('admin/customers/index', ['customers' => $customers]);
   }
   
