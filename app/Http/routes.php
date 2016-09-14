@@ -81,7 +81,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   
   
   // products
-  Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index');
+  //Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index')->where('page', '[0-9]+');;
   Route::resource('products', 'ProductsController');
   
   // customers

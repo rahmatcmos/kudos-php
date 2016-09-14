@@ -26,9 +26,18 @@ class ProductsController extends AdminController
    *
    * @return Response
    */
-  public function index($page=1, $orderBy='created_at', $orderDir='DESC', $limit=100)
+  public function index()
   {
-    $products = Product::where('shop_id', '=', Session::get('shop'))->orderBy($orderBy, $orderDir)->skip(($page*$limit)-$limit)->take($limit)->get();
+    // pagination
+    if (!Session::has('order_by')) Session::put('product.order_by', 'created_at') ;
+    if (!Session::has('order_dir')) Session::put('product.order_dir', 'desc') ;
+    if (Input::get('order_by')) Session::put('product.order_by', Input::get('order_by')) ;
+    if (Input::get('order_dir')) Session::put('product.order_dir', Input::get('order_dir')) ;
+    
+    $limit = Session::get('limit') ;
+    $products = Product::where('shop_id', '=', Session::get('shop'))
+      ->orderBy(Session::get('language').'.'.Session::get('product.order_by'), Session::get('product.order_dir'))
+      ->paginate($limit);
     return view('admin/products/index', ['products' => $products]);
   }
   

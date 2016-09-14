@@ -5,7 +5,14 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-9">
-          <h1>{{ trans('products.products') }}</h1>
+          <h1>
+            {{ ($products->currentPage()-1) * $products->perPage() + 1 }}
+            to
+            {{ min($products->total(), $products->currentPage() * $products->perPage()) }}
+            of 
+            {{ $products->total() }}
+            {{ trans('products.products') }}
+          </h1>
         </div>
         <div class="col-md-3 text-right">
           <a href="/admin/products/create" class="btn btn-success">{{ trans('crud.create') }}</a>
@@ -19,7 +26,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>{{ trans('products.name') }}</th>
+            <th><a href="/admin/products?page={{ $products->currentPage() }}&order_by=name&order_dir={{ session('product.order_dir') == 'asc' ? 'desc' : 'asc' }}" class="order-{{ session('product.order_dir') }}">{{ trans('products.name') }}</a></th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +37,7 @@
           @endforeach
         </tbody>
       </table>
+      {{ $products->appends(['order_by' => session('product.order_by'), 'order_dir' => session('product.order_dir')] )->links() }}
     </div>
   </section>
     

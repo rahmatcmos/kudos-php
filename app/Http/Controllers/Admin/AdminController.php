@@ -40,6 +40,11 @@ class AdminController extends \App\Http\Controllers\Controller
         Session::put('language', config('app.locale')) ;
       }
       
+      // if limit is not set default pagination limit
+      if ( !Session::has('limit')){
+        Session::put('limit', 100) ;
+      }
+      
       view()->share('select_shops', $shops);
       view()->share('languages', Language::LANGUAGES);
       view()->share('language', Session::get('language')) ;
