@@ -1,3 +1,12 @@
+h1,
+h2,
+h3{
+  &.heading{
+    font-weight: bold ;
+    margin-bottom: 20px ; 
+  }
+}
+
 p{
   &.clear-search{
     margin-bottom: 15px;

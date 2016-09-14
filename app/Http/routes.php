@@ -29,9 +29,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   
   // account
   Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
-    Route::get('/', function(){
-      echo 'account' ;
-    });
+    Route::get('/','AccountController@dashboard');
   });
   
   // pages

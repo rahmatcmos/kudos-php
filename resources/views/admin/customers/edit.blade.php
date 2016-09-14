@@ -51,13 +51,8 @@
   @endif
   
   @if(!$addresses->isEmpty())
-  <div class="title row">
-    <div class="col-md-12">
-      <h2>{{ trans('customers.customers') }} {{ trans('address.addresses') }}</h2>
-    </div>
-  </div>
   <section class="container-fluid">
-    <h2></h2>
+    <h2 class="heading">{{ trans('customers.customers') }} {{ trans('address.addresses') }}</h2>
     <div class="row">
       @foreach ($addresses as $address)
       <address class="col-md-4 col-lg-3">
