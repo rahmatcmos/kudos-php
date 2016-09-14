@@ -26,10 +26,19 @@ class CustomersController extends AdminController
     if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
     if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
     
-    $limit = Session::get('limit') ;
+    $limit = 1 ; //Session::get('limit') ;
     $customers = User::where('shop_id', '=', Session::get('shop'))
+      ->where(function($query) {
+        if (Input::get('search')){
+          return $query->where('first_name', 'LIKE', '%'.Input::get('search').'%')
+            ->orWhere('last_name', 'LIKE', '%'.Input::get('search').'%')
+            ->orWhere('email', 'LIKE', '%'.Input::get('search').'%') ;
+        }
+        return ;
+      })
       ->orderBy(Session::get($session_type.'.order_by'), Session::get($session_type.'.order_dir'))
       ->paginate($limit);
+    $customers->search = Input::get('search') ;
     return view('admin/customers/index', ['customers' => $customers]);
   }
   

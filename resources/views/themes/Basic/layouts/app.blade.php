@@ -20,27 +20,15 @@
       <li><a href="/">Basic Theme</a></li>
       <li class="search">
         <input type="text" class="form-control" placeholder="Enter Keyword(s)">
-        <span class="fa-stack fa-lg">
-          <i class="fa fa-square fa-stack-2x"></i>
-          <i class="fa fa-search fa-stack-1x fa-inverse"></i>
-        </span>
       </li>
       <li>
         <a href="/account">
           My Account 
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-square fa-stack-2x"></i>
-            <i class="fa fa-user fa-stack-1x fa-inverse"></i>
-          </span>
         </a>
       </li>
       <li>
         <a href="/basket">
           My Basket <span class="badge">42</span>
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-square fa-stack-2x"></i>
-            <i class="fa fa-shopping-basket fa-stack-1x fa-inverse"></i>
-          </span>
         </a>
       </li>
     </ul>    
@@ -55,16 +43,6 @@
       <li><a href="/pages/contact-us">Contact Us</a></li>
     </ul>
   </nav>
-  
-  <!--<div id="ctas">
-    <div class="container">
-      <ul class="row text-center">
-        <li class="col-md-4"><i class="fa fa-truck"></i> Free UK delivery*</li>
-        <li class="col-md-4"><i class="fa fa-lock"></i> 100% Secure Payment <i class="fa fa-credit-card-alt"></i> <i class="fa fa-cc-paypal"></i> <i class="fa fa-cc-stripe"></i></li>
-        <li class="col-md-4"><i class="fa fa-thumbs-up"></i> Free returns within 30 days</li>
-      </ul>
-    </div>
-  </div>-->
   
   <div class="container">
     @if(Session::has('success'))<div class="alert alert-success" role="alert">{{ Session::get('success') }}</div>@endif

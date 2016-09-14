@@ -22,6 +22,12 @@
   
   <section>
     <div class="container-fluid">
+      {{ Form::open(['method' => 'get', 'url' => 'admin/customers']) }}
+        {{ Form::text('search', '', ['class' => 'form-control', 'placeholder' => trans('search.search').'...']) }}
+      {{ Form::close() }}
+      @if( $customers->search )
+        <p class="clear-search"><a href="/admin/customers" class="btn btn-red">clear search for "{{ $customers->search }}"</a></p>
+      @endif
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -48,7 +54,7 @@
           @endforeach
         </tbody>
       </table>
-      {{ $customers->appends(['order_by' => session('customer.order_by'), 'order_dir' => session('customer.order_dir')] )->links() }}
+      {{ $customers->appends(['search' => $customers->search, 'order_by' => session('customer.order_by'), 'order_dir' => session('customer.order_dir')] )->links() }}
     </div>
   </section>
     
