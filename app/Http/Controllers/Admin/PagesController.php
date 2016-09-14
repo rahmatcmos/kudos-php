@@ -19,7 +19,20 @@ class PagesController extends AdminController
    */
   public function index()
   {
-    $pages = Page::where('shop_id', '=', Session::get('shop'))->get() ;
+    // pagination
+    $session_type = 'page' ;
+    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
+    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
+    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
+    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    
+    $limit = Session::get('limit') ;
+    $orderby = Session::get($session_type.'.order_by') == 'created_at'
+      ? Session::get($session_type.'.order_by')
+      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $pages = Page::where('shop_id', '=', Session::get('shop'))
+      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+      ->paginate($limit);
     return view('admin/pages/index', ['pages' => $pages]);
   }
   

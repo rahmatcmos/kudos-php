@@ -36,8 +36,11 @@ class ProductsController extends AdminController
     if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
     
     $limit = Session::get('limit') ;
+    $orderby = Session::get($session_type.'.order_by') == 'created_at'
+      ? Session::get($session_type.'.order_by')
+      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
     $products = Product::where('shop_id', '=', Session::get('shop'))
-      ->orderBy(Session::get('language').'.'.Session::get($session_type.'.order_by'), Session::get($session_type.'.order_dir'))
+      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('admin/products/index', ['products' => $products]);
   }
