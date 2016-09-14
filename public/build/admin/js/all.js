@@ -12163,7 +12163,8 @@ return t.parent().is(".ui-effects-wrapper")&&(t.parent().replaceWith(t),(t[0]===
         ['table', ['table']],
         ['insert', ['link', 'hr']],
         ['view', ['fullscreen', 'codeview']]
-      ]
+      ],
+      disableDragAndDrop: true
     });
   
   });

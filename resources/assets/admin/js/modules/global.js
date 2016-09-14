@@ -43,7 +43,8 @@
         ['table', ['table']],
         ['insert', ['link', 'hr']],
         ['view', ['fullscreen', 'codeview']]
-      ]
+      ],
+      disableDragAndDrop: true
     });
   
   });
