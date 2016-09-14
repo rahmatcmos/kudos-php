@@ -32,13 +32,13 @@
         <thead>
           <tr>
             <th>
-              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=first_name&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}" 
+              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=first_name&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $customers->search }}" 
                 class="order-{{ session('customer.order_by') == 'first_name' ? session('customer.order_dir') : '' }}">
                 {{ trans('customers.name') }}
               </a>
             </th>
             <th>
-              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=email&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}" 
+              <a href="/admin/customers?page={{ $customers->currentPage() }}&order_by=email&order_dir={{ session('customer.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $customers->search }}" 
                 class="order-{{ session('customer.order_by') == 'email' ? session('customer.order_dir') : '' }}">
               {{ trans('customers.email') }}
               </a>

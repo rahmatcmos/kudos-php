@@ -33,7 +33,7 @@
         <thead>
           <tr>
             <th>
-              <a href="/admin/products?page={{ $products->currentPage() }}&order_by=name&order_dir={{ session('product.order_dir') == 'asc' ? 'desc' : 'asc' }}" 
+              <a href="/admin/products?page={{ $products->currentPage() }}&order_by=name&order_dir={{ session('product.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $products->search }}" 
                 class="order-{{ session('product.order_by') == 'name' ? session('product.order_dir') : '' }}">
                 {{ trans('products.name') }}
               </a>

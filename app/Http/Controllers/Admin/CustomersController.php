@@ -26,7 +26,7 @@ class CustomersController extends AdminController
     if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
     if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
     
-    $limit = 1 ; //Session::get('limit') ;
+    $limit = Session::get('limit') ;
     $customers = User::where('shop_id', '=', Session::get('shop'))
       ->where(function($query) {
         if (Input::get('search')){

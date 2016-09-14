@@ -28,9 +28,6 @@ class ProductsController extends AdminController
    */
   public function index()
   {
-    // search
-    //if (Input::get('search')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
-    
     // pagination
     $session_type = 'product' ;
     if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
@@ -54,7 +51,7 @@ class ProductsController extends AdminController
       })
       ->orderBy($orderby, Session::get($session_type.'.order_dir'))
       ->paginate($limit);
-      $products->search = Input::get('search') ;
+    $products->search = Input::get('search') ;
     return view('admin/products/index', ['products' => $products]);
   }
   
