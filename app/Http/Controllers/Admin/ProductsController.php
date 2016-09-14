@@ -28,6 +28,9 @@ class ProductsController extends AdminController
    */
   public function index()
   {
+    // search
+    //if (Input::get('search')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    
     // pagination
     $session_type = 'product' ;
     if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
@@ -35,13 +38,23 @@ class ProductsController extends AdminController
     if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
     if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
     
-    $limit = Session::get('limit') ;
+    $limit = 1 ; //Session::get('limit') ;
     $orderby = Session::get($session_type.'.order_by') == 'created_at'
       ? Session::get($session_type.'.order_by')
       : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
-    $products = Product::where('shop_id', '=', Session::get('shop'))
+      
+    // query products with conditional search  
+    $products = Product::where('shop_id',Session::get('shop'))
+      ->where(function($query) {
+        if (Input::get('search')){
+          
+          return $query->where('en.name', 'LIKE', '%'.Input::get('search').'%') ;
+        }
+        return ;
+      })
       ->orderBy($orderby, Session::get($session_type.'.order_dir'))
       ->paginate($limit);
+      $products->search = Input::get('search') ;
     return view('admin/products/index', ['products' => $products]);
   }
   

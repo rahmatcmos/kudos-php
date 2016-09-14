@@ -30,7 +30,7 @@ class PagesController extends AdminController
     $orderby = Session::get($session_type.'.order_by') == 'created_at'
       ? Session::get($session_type.'.order_by')
       : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
-    $pages = Page::where('shop_id', '=', Session::get('shop'))
+    $pages = Page::where('shop_id', Session::get('shop'))
       ->orderBy($orderby, Session::get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('admin/pages/index', ['pages' => $pages]);

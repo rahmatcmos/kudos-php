@@ -23,6 +23,12 @@
   
   <section>
     <div class="container-fluid">
+      {{ Form::open(['method' => 'get', 'url' => 'admin/products']) }}
+        {{ Form::text('search', '', ['class' => 'form-control', 'placeholder' => trans('search.search').'...']) }}
+      {{ Form::close() }}
+      @if( $products->search )
+        <p class="clear-search"><a href="/admin/products" class="btn btn-red">clear search for "{{ $products->search }}"</a></p>
+      @endif
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -42,7 +48,7 @@
           @endforeach
         </tbody>
       </table>
-      {{ $products->appends(['order_by' => session('product.order_by'), 'order_dir' => session('product.order_dir')] )->links() }}
+      {{ $products->appends(['search' => $products->search, 'order_by' => session('product.order_by'), 'order_dir' => session('product.order_dir')] )->links() }}
     </div>
   </section>
     
