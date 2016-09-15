@@ -23,7 +23,7 @@
       </li>
       <li>
         <a href="/basket">
-          Basket <span class="badge">0</span>
+          Basket (&pound;0.00) <span class="badge">0</span>
         </a>
       </li>
     </ul>    

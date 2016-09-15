@@ -8,11 +8,11 @@
         </dl>
         <dl class="col-md-4">
           <dt>NAVIGATION</dt>
-          <dd><a href="/categories">Categories</a></dd>
-          <dd><a href="/pages/about-us">About Us</a></dd>
+          <dd><a href="/products">Products</a></dd>
           <dd><a href="/pages/terms-and-conditions">T&Cs</a></dd>
           <dd><a href="/blog">Blog</a></dd>
-          <dd><a href="/pages/contact-us">Contact Us</a></dd>
+          <dd><a href="/account">Account</a></dd>
+          <dd><a href="/basket">Basket</a></dd>
         </dl>
         <dl class="col-md-4">
           <dt>MORE ABOUT KUDOS</dt>

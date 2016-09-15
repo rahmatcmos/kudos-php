@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   Route::resource('products', 'ProductsController');
   
   // basket
+  Route::resource('basket', 'BasketController');
   
   // checkout
   
@@ -37,7 +38,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   
   // blog
   Route::resource('blog', 'BlogController');
-  
+
 }); 
   
 // auto update currencies - should be secured in some way if you are using your own (manual) currency rates
