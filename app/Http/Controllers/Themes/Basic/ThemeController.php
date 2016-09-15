@@ -21,6 +21,11 @@ class ThemeController extends \App\Http\Controllers\Controller
         Session::put('language', config('app.locale')) ;
       }
       
+      // if session is not set reset the session for the basket
+      if ( !Session::has('basket')){
+        Session::put('basket', []) ;
+      }
+      
       $categories = Category::where('shop_id', Session::get('shop'))->orderBy('order', 'asc')->get() ;
     
       view()->share('language', Session::get('language')) ;

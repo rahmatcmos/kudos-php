@@ -10,8 +10,9 @@
       <p>{{ isset($product->$language['excerpt']) ? $product->$language['excerpt'] : $product->default['excerpt'] }}</p>
       {!! isset($product->rrp) ? '<p>RRP: &pound;'.$product->rrp.'</p>' : '' !!}
       <p>Price: &pound;{!! isset($product->salePrice) ? '<strike>'.$product->price.'</strike> &pound;'.$product->salePrice : $product->price !!}</p>
-      {{ Form::open(['url' => 'basket/add']) }}
+      {{ Form::open(['url' => 'basket']) }}
         {{ Form::hidden('id',  $product['id']) }}
+        {{ Form::hidden('price',  isset($product->salePrice) ? $product->salePrice : $product->price) }}
         {{ Form::submit('Add to Basket', ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}
     </div>
