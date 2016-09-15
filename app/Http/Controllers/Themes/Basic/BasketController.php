@@ -22,7 +22,9 @@ class BasketController extends ThemeController
     foreach($basket as $id => $item){
       $subtotal += $item['qty'] * $item['price'] ; 
     }
-    return view('themes/basic/basket/index', ['subtotal' => $subtotal]);
+    $qtyRange = range(0,10) ;
+    unset($qtyRange[0]) ;
+    return view('themes/basic/basket/index', ['subtotal' => $subtotal, 'qtyRange' => $qtyRange]);
   }
   
   /**
@@ -49,12 +51,29 @@ class BasketController extends ThemeController
   /**
    * remove from Basket
    *
+   * @param string $id
+   *
    * @return Redirect
    */
-  public function destroy()
+  public function destroy($id)
   {
     $basket = Session::get('basket') ;
-    unset($basket[Input::get('id')]) ;
+    unset($basket[$id]) ;
+    Session::put('basket', $basket) ;
+    return Redirect::to('basket');
+  }
+  
+  /**
+   * update Quantity
+   *
+   * @param string $id
+   *
+   * @return Redirect
+   */
+  public function update($id)
+  {
+    $basket = Session::get('basket') ;
+    $basket[$id]['qty'] = Input::get('qty') ;
     Session::put('basket', $basket) ;
     return Redirect::to('basket');
   }
