@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Themes\Basic;
 use Illuminate\Http\Request;
+use App\Models\Product;
 use Session ;
 
 class HomeController extends ThemeController
@@ -13,7 +14,8 @@ class HomeController extends ThemeController
      */
     public function index()
     {
-      return view('themes/basic/home');
+      $products = Product::where('shop_id', Session::get('shop'))->get() ;
+      return view('themes/basic/home', ['products' => $products]);
     }
 
 }

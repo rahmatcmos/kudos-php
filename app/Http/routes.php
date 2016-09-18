@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   Route::resource('basket', 'BasketController');
   
   // checkout
+  Route::resource('checkout', 'CheckoutController');
   
   // account
   Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {

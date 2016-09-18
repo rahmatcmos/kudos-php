@@ -26,6 +26,18 @@ class ThemeController extends \App\Http\Controllers\Controller
         Session::put('basket', []) ;
       }
       
+      // share basket count/total for header
+      $subtotal = 0 ;
+      $count = 0 ;
+      if(!empty(Session::get('basket'))){
+        foreach(Session::get('basket') as $id => $item){
+          $subtotal += $item['qty'] * $item['price'] ; 
+          $count += $item['qty'] ;
+        }
+        Session::put('basketCount', $count) ;
+        Session::put('basketSubtotal', $subtotal) ;
+      }
+      
       $categories = Category::where('shop_id', Session::get('shop'))->orderBy('order', 'asc')->get() ;
     
       view()->share('language', Session::get('language')) ;

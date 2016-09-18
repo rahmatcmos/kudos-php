@@ -23,7 +23,7 @@
       </li>
       <li>
         <a href="/basket">
-          Basket (&pound;0.00) <span class="badge">0</span>
+          Basket (&pound;{{ number_format(session('basketSubtotal'), 2) }}) <span class="badge">{{ session('basketCount') }}</span>
         </a>
       </li>
     </ul>    
@@ -32,7 +32,7 @@
   <nav>
     <ul class="container list-inline text-center">
       <li><a href="/products">Products</a></li>
-      <li><a href="/pages/terms-and-conditions">T&C's</a></li>
+      <li><a href="/pages/info">Theme Info</a></li>
       <li><a href="/blog">Blog</a></li>
       <li><a href="/account">Account</a></li>
     </ul>

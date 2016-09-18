@@ -16,15 +16,11 @@ class BasketController extends ThemeController
    */
   public function index()
   {
-    // get subtotal
-    $basket = Session::get('basket') ;
-    $subtotal = 0 ;
-    foreach($basket as $id => $item){
-      $subtotal += $item['qty'] * $item['price'] ; 
-    }
+    // set subtotal/count
+    $this->totals() ;
     $qtyRange = range(0,10) ;
     unset($qtyRange[0]) ;
-    return view('themes/basic/basket/index', ['subtotal' => $subtotal, 'qtyRange' => $qtyRange]);
+    return view('themes/basic/basket/index', ['subtotal' => Session::get('basketSubtotal'), 'qtyRange' => $qtyRange]);
   }
   
   /**
@@ -45,6 +41,7 @@ class BasketController extends ThemeController
       ] ;
     }
     Session::put('basket', $basket) ;
+    $this->totals() ;
     return Redirect::to('basket');
   }
   
@@ -60,6 +57,7 @@ class BasketController extends ThemeController
     $basket = Session::get('basket') ;
     unset($basket[$id]) ;
     Session::put('basket', $basket) ;
+    $this->totals() ;
     return Redirect::to('basket');
   }
   
@@ -75,7 +73,27 @@ class BasketController extends ThemeController
     $basket = Session::get('basket') ;
     $basket[$id]['qty'] = Input::get('qty') ;
     Session::put('basket', $basket) ;
+    $this->totals() ;
     return Redirect::to('basket');
+  }
+  
+  /**
+   * update totals/count
+   *
+   * @return
+   */
+  public function totals()
+  {
+    $basket = Session::get('basket') ;
+    $subtotal = 0 ;
+    $count = 0 ;
+    foreach($basket as $id => $item){
+      $subtotal += $item['qty'] * $item['price'] ; 
+      $count += $item['qty'] ; 
+    }
+    Session::put('basketCount', $count) ;
+    Session::put('basketSubtotal', $subtotal) ;
+    return ;
   }
 
 }
