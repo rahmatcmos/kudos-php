@@ -1,7 +1,7 @@
 @extends('themes.Basic.layouts.full')
 
 @section('content')
-  <h1>Basket</h1>
+  <h1>{{ trans('basket.basket') }}</h1>
   @if(empty(session('basket')))
     <p>{{ trans('basket.empty') }}</p>
   @else
@@ -44,7 +44,7 @@
     </p>
     <p class="text-right">
       <a href="/checkout" class="btn btn-success">
-        trans('checkout.checkout')
+        {{ trans('checkout.checkout') }}
       </a>
     </p>
     @endif

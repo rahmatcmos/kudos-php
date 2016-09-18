@@ -8,7 +8,7 @@
         </dl>
         <dl class="col-md-4">
           <dt>NAVIGATION</dt>
-          <dd><a href="/products">Products</a></dd>
+          <dd><a href="/">Products</a></dd>
           <dd><a href="/pages/info">Theme Info</a></dd>
           <dd><a href="/blog">Blog</a></dd>
           <dd><a href="/account">Account</a></dd>

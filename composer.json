@@ -5,12 +5,14 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "predis/predis": "^1.1",
-        "jenssegers/mongodb": "^3.0",
-        "laravelcollective/html": "5.2.*",
-        "intervention/image": "^2.3"
+      "php": ">=5.5.9",
+      "laravel/framework": "5.2.*",
+      "predis/predis": "^1.1",
+      "jenssegers/mongodb": "^3.0",
+      "laravelcollective/html": "5.2.*",
+      "intervention/image": "^2.3",
+      "ignited/laravel-omnipay": "2.*",
+      "omnipay/omnipay": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
