@@ -8,16 +8,6 @@ use Session ;
 
 class CategoriesController extends ThemeController
 {
-
-  /**
-   * List all categories
-   *
-   * @return Response
-   */
-  public function index()
-  {
-    return view('themes/basic/categories/index');
-  }
   
   /**
    * Show Category

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Themes\Basic;
+use Illuminate\Routing\Route;
 use App\Models\Shop;
 use App\Models\Category;
 use Session ;
@@ -8,7 +9,7 @@ use Session ;
 class ThemeController extends \App\Http\Controllers\Controller
 {
     
-    public function __construct()
+    public function __construct(Route $route)
     {    
       // if session is not set or the shop doesn't exist reset the session for the shop
       if ( !Session::has('shop') || Shop::where('_id', '=', Session::get('shop'))->count()==0 ){
@@ -30,10 +31,19 @@ class ThemeController extends \App\Http\Controllers\Controller
         ]) ;
       }
       
+      // global list of categories
       $categories = Category::where('shop_id', Session::get('shop'))->orderBy('order', 'asc')->get() ;
     
+      // share globals
       view()->share('language', Session::get('language')) ;
       view()->share('categories', $categories) ;
+      
+      // add controller & action to the body class
+      $currentAction = $route->getActionName() ;
+      list($controller, $method) = explode('@', $currentAction) ;
+      $controller = preg_replace('/.*\\\/', '', $controller) ;
+    	$action = preg_replace('/.*\\\/', '', $method) ;
+      view()->share('body_class', $controller.'-'.$action);
     }
 
 }

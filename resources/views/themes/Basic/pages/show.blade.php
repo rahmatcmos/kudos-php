@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.app')
+@extends('themes.Basic.layouts.full')
 
 @section('content')
 <h1>{{ $page[$language]['name'] }}</h1>
