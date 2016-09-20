@@ -3,16 +3,14 @@
 return [
 
 	// The default gateway to use
-	'default' => 'paypal',
+	'default' => 'stripe',
 
 	// Add in each gateway here
 	'gateways' => [
-		'paypal' => [
-			'driver'  => 'PayPal_Express',
+		'stripe' => [
+			'driver'  => 'Stripe',
 			'options' => [
-				'solutionType'   => '',
-				'landingPage'    => '',
-				'headerImageUrl' => ''
+  			'apiKey' => 'sk_test_uoJ2kbxQ0ZvVTeIA00OPGdT7'
 			]
 		]
 	]

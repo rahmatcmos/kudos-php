@@ -10,5 +10,6 @@ return [
   'last name' => 'Last name',
   'email' => 'Email',
   'password' => 'Password',
-  'new password' => 'Enter or a new password or leave blank to remain the same'
+  'new password' => 'Enter or a new password or leave blank to remain the same',
+  'telephone' => 'Telephone',
 ];

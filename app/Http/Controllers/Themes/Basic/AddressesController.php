@@ -1,14 +1,35 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Themes\Basic;
 use App\Models\Address;
+use Illuminate\Support\Facades\Auth;
 use Input ;
 use Redirect ;
 use Session ;
 
-class AddressesController extends AdminController
+class AddressesController extends ThemeController
 {
- 
+  
+  /**
+   * List addresses
+   * 
+   * @return Response
+   */
+  public function index( )
+  {
+    $addresses = Address::where('customer_id', Auth::user()->id)->get() ;
+    return view('themes/basic/addresses/index', ['addresses' => $addresses]);
+  }
+  
+  /**
+   * add address
+   *
+   * @return Response
+   */
+  public function create()
+  {
+    return view('themes/basic/addresses/create');
+  }
  
   /**
    * Edit an address
@@ -20,7 +41,7 @@ class AddressesController extends AdminController
   public function edit( $id )
   {
     $address = Address::find($id) ;
-    return view('admin/addresses/edit', ['address' => $address]);
+    return view('themes/basic/addresses/edit', ['address' => $address]);
   }
    
   /**
@@ -30,8 +51,10 @@ class AddressesController extends AdminController
    */
   public function store( )
   {
-    Address::create(Input::all());
-    return Redirect::back();
+    $data = Input::all() ;
+    $data['customer_id'] = Auth::user()->id ;
+    Address::create($data);
+    return Redirect::to('/account/addresses');
   }
   
   /**

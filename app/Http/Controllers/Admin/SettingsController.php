@@ -6,7 +6,6 @@ use Validator ;
 use Input ;
 use Session ;
 use Redirect ;
-use File ;
 
 class SettingsController extends AdminController
 {
@@ -27,9 +26,7 @@ class SettingsController extends AdminController
   public function index()
   {
     $settings = Setting::where('shop_id', Session::get('shop'))->first() ;
-    $path = base_path().'/themes' ;
-    $themes = File::directories($path);
-    return view('admin/settings/edit', ['settings' => $settings, 'themes' => $themes]);
+    return view('admin/settings/edit', ['settings' => $settings]);
   }
   
   /**

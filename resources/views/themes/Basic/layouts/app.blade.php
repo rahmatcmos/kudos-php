@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <aside class="col-md-3">
-        @if(session('basketCount')>0)
+        @if(session('basket')['count']>0)
         <p>
           <a href="/checkout" class="btn btn-success">
             {{ trans('checkout.checkout') }}

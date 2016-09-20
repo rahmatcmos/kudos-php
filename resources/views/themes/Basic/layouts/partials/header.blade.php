@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/build/themes/basic/css/all.css">
   
   @yield('head')
- 
+  
 </head>
 
 <body class="{{ isset($body_class) ? $body_class : '' }}">
@@ -23,7 +23,7 @@
       </li>
       <li>
         <a href="/basket">
-          Basket (&pound;{{ number_format(session('basketSubtotal'), 2) }}) <span class="badge">{{ session('basketCount') }}</span>
+          Basket (&pound;{{ number_format(session('basket')['subtotal'], 2) }}) <span class="badge">{{ session('basket')['count'] }}</span>
         </a>
       </li>
     </ul>    

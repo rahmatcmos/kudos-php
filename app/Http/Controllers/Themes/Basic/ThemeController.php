@@ -23,19 +23,11 @@ class ThemeController extends \App\Http\Controllers\Controller
       
       // if session is not set reset the session for the basket
       if ( !Session::has('basket')){
-        Session::put('basket', []) ;
-      }
-      
-      // share basket count/total for header
-      $subtotal = 0 ;
-      $count = 0 ;
-      if(!empty(Session::get('basket'))){
-        foreach(Session::get('basket') as $id => $item){
-          $subtotal += $item['qty'] * $item['price'] ; 
-          $count += $item['qty'] ;
-        }
-        Session::put('basketCount', $count) ;
-        Session::put('basketSubtotal', $subtotal) ;
+        Session::put('basket', [
+          'subtotal' => 0,
+          'count' => 0,
+          'items' => []
+        ]) ;
       }
       
       $categories = Category::where('shop_id', Session::get('shop'))->orderBy('order', 'asc')->get() ;

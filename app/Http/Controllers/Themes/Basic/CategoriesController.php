@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Themes\Basic;
 use App\Models\Category;
 use App\Models\Product;
-use Validator ;
 use Input ;
 use Session ;
-use Redirect ;
 
 class CategoriesController extends ThemeController
 {

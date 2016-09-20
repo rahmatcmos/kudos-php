@@ -20,7 +20,7 @@ class BasketController extends ThemeController
     $this->totals() ;
     $qtyRange = range(0,10) ;
     unset($qtyRange[0]) ;
-    return view('themes/basic/basket/index', ['subtotal' => Session::get('basketSubtotal'), 'qtyRange' => $qtyRange]);
+    return view('themes/basic/basket/index', ['subtotal' => Session::get('basket')['subtotal'], 'qtyRange' => $qtyRange]);
   }
   
   /**
@@ -31,10 +31,10 @@ class BasketController extends ThemeController
   public function store()
   {
     $basket = Session::get('basket') ;
-    if(isset($basket[Input::get('id')])){
-      $basket[Input::get('id')]['qty']++ ;
+    if(isset($basket['items'][Input::get('id')])){
+      $basket['items'][Input::get('id')]['qty']++ ;
     } else {
-      $basket[Input::get('id')] = [
+      $basket['items'][Input::get('id')] = [
         'price' => Input::get('price'),
         'qty'   => 1,
         'product' => Product::find(Input::get('id'))->toArray()
@@ -55,7 +55,7 @@ class BasketController extends ThemeController
   public function destroy($id)
   {
     $basket = Session::get('basket') ;
-    unset($basket[$id]) ;
+    unset($basket['items'][$id]) ;
     Session::put('basket', $basket) ;
     $this->totals() ;
     return Redirect::to('basket');
@@ -71,7 +71,7 @@ class BasketController extends ThemeController
   public function update($id)
   {
     $basket = Session::get('basket') ;
-    $basket[$id]['qty'] = Input::get('qty') ;
+    $basket['items'][$id]['qty'] = Input::get('qty') ;
     Session::put('basket', $basket) ;
     $this->totals() ;
     return Redirect::to('basket');
@@ -87,12 +87,12 @@ class BasketController extends ThemeController
     $basket = Session::get('basket') ;
     $subtotal = 0 ;
     $count = 0 ;
-    foreach($basket as $id => $item){
+    foreach($basket['items'] as $id => $item){
       $subtotal += $item['qty'] * $item['price'] ; 
       $count += $item['qty'] ; 
     }
-    Session::put('basketCount', $count) ;
-    Session::put('basketSubtotal', $subtotal) ;
+    Session::put('basket.count', $count) ;
+    Session::put('basket.subtotal', $subtotal) ;
     return ;
   }
 

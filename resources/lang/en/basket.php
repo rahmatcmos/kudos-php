@@ -2,5 +2,6 @@
 return [
   'basket' => 'Basket',
   'price' => 'Price',
-  'quantity' => 'Qunatity'
+  'quantity' => 'Quantity',
+  'empty' => 'Your basket is empty'
 ];

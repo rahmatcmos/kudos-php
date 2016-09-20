@@ -2,7 +2,7 @@
 
 @section('content')
   <h1>{{ trans('basket.basket') }}</h1>
-  @if(empty(session('basket')))
+  @if(empty(session('basket')['items']))
     <p>{{ trans('basket.empty') }}</p>
   @else
     <ul class="row">
@@ -14,7 +14,7 @@
       </li>
     </ul>
     <hr>
-    @foreach(session('basket') as $id => $item)
+    @foreach(session('basket')['items'] as $id => $item)
     <ul class="row">
       <li class="col-md-7">
         <h2>
@@ -40,7 +40,7 @@
     @endforeach
     @if(!empty(session('basket')))
     <p class="text-right">
-      Subtotal: &pound;{{ number_format($subtotal, 2) }}
+      {{ trans('orders.subtotal') }}: &pound;{{ number_format($subtotal, 2) }}
     </p>
     <p class="text-right">
       <a href="/checkout" class="btn btn-success">

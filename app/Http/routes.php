@@ -26,12 +26,24 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   // basket
   Route::resource('basket', 'BasketController');
   
-  // checkout
-  Route::resource('checkout', 'CheckoutController');
-  
   // account
   Route::group(['prefix' => 'account', 'middleware' => 'auth'], function() {
-    Route::get('/','AccountController@dashboard');
+    
+    // order
+    Route::get('/','OrdersController@index');
+    Route::resource('orders', 'OrdersController');
+    
+    // settings
+    Route::resource('settings', 'UserController');
+    
+    //addresses
+    Route::resource('addresses', 'AddressesController');
+    
+  });
+  
+  // checkout
+  Route::group(['middleware' => 'auth'], function() {
+    Route::resource('checkout', 'CheckoutController');
   });
   
   // pages

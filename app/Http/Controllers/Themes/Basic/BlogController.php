@@ -14,6 +14,7 @@ class BlogController extends ThemeController
   public function index()
   {
     $blogs = Blog::all() ;
+    view()->share('body_class', 'blog');
     return view('themes/basic/blog/index', ['blogs' => $blogs]);
   }
   
@@ -26,6 +27,7 @@ class BlogController extends ThemeController
   {
     $blog = Blog::where('slug', $slug)->first() ;
     if(!$blog) \App::abort(404);
+    view()->share('body_class', 'article');
     return view('themes/basic/blog/show', ['blog' => $blog]);
   }
 

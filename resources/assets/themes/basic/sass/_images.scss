@@ -1,0 +1,15 @@
+.img-responsive{
+  &.full{
+    width: 100% ;
+  }
+  &.half{
+    width: 50% ;
+  }
+  &.pull-left{
+    margin: 5px 15px 15px 0 ;
+  }
+  &.pull-right{
+    margin: 5px 0 15px 15px ;
+  }
+
+}

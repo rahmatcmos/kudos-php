@@ -12,7 +12,7 @@
       "laravelcollective/html": "5.2.*",
       "intervention/image": "^2.3",
       "ignited/laravel-omnipay": "2.*",
-      "omnipay/omnipay": "*"
+      "omnipay/stripe": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
