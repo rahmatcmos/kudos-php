@@ -9,6 +9,7 @@ return [
   'created' => 'Created',
   'updated' => 'Updated',
   'deleted' => 'Deleted',
+  'change' => 'Change',
   'none' => 'None',
   'failed' => 'failed to complete',
   'Choose once saved' => 'Choose once saved',
