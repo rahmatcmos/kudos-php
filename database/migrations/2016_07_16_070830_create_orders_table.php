@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->integer('billing_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('users');
             $table->decimal('total', 15, 2);
+            $table->blob('basket');
             $table->timestamps();
             $table->softDeletes();
         });

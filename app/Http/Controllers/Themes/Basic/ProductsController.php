@@ -11,6 +11,17 @@ class ProductsController extends ThemeController
 {
   
   /**
+   * Show all products
+   *
+   * @return Response
+   */
+  public function index()
+  {
+    $products = Product::where('shop_id', Session::get('shop'))->get() ;
+    return view('themes/basic/home', ['products' => $products]);
+  }
+  
+  /**
    * Show Product
    *
    * @return Response

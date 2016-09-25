@@ -15,7 +15,7 @@ Route::auth();
 
 // frontend routes
 Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function() {
-  Route::get('/', ['uses' => 'HomeController@index']);
+  Route::get('/', 'ProductsController@index');
   
   // categories
   Route::resource('categories', 'CategoriesController');
@@ -64,13 +64,13 @@ Route::get('admin/login','Admin\AdminController@login');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth','admin']], function() {
 
   // dashboard
-  Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@show']);
-  Route::post('remember', ['uses' => 'DashboardController@remember']);
-  Route::get('remember', ['uses' => 'DashboardController@remember']);
+  Route::get('/dashboard', 'DashboardController@show');
+  Route::post('remember', 'DashboardController@remember');
+  Route::get('remember', 'DashboardController@remember');
   
   // settings
-  Route::post('settings/theme-install', ['uses' => 'SettingsController@themeInstall']);
-  Route::post('settings/theme-uninstall', ['uses' => 'SettingsController@themeUninstall']);
+  Route::post('settings/theme-install', 'SettingsController@themeInstall');
+  Route::post('settings/theme-uninstall', 'SettingsController@themeUninstall');
   Route::resource('settings', 'SettingsController');
   
   // currencies
@@ -89,12 +89,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   Route::resource('users', 'UsersController');
   
   // categories
-  Route::post('categories/save-order', ['uses' => 'CategoriesController@saveOrder']);
+  Route::post('categories/save-order', 'CategoriesController@saveOrder');
   Route::resource('categories', 'CategoriesController');
   
   
   // products
-  //Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index')->where('page', '[0-9]+');;
+  //Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index')->where('page', '[0-9]+');
   Route::resource('products', 'ProductsController');
   
   // customers

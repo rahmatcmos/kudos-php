@@ -69,6 +69,7 @@ class CheckoutController extends ThemeController
       $order->shipping_id = $input['shipping_id'] ;
       $order->billing_id = $input['billing_id'] ;
       $order->total = $basket['subtotal'];
+      $order->basket = serialize($basket);
       $order->save();
       
       // save order items
