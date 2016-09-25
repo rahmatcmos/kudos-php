@@ -21,6 +21,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   Route::resource('categories', 'CategoriesController');
   
   // products
+  Route::get('products/search/{category?}', 'ProductsController@search');
   Route::resource('products', 'ProductsController');
   
   // basket

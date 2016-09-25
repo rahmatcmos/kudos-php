@@ -19,7 +19,9 @@
     <ul class="list-inline">
       <li><a href="/">Basic Theme</a></li>
       <li class="search">
-        <input type="text" class="form-control" placeholder="Enter Keyword(s)">
+        {{ Form::open(['url' => 'products/search', 'method' => 'get']) }}
+          <input type="text" name="query"class="form-control" placeholder="Enter Keyword(s)">
+        {{ Form::close() }}
       </li>
       <li>
         <a href="/basket">
