@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "de99ea3f861cb7e5192b0b0d643d1b1e",
-    "content-hash": "a4e7fd194736903c8943712595f35a9f",
+    "hash": "d73653d22c25217bb02317ad8541ff24",
+    "content-hash": "eb8bb49a66c1cb4ed29e4b164b29303b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -897,17 +897,87 @@
             "time": "2016-08-10 08:55:11"
         },
         {
-            "name": "mongodb/mongodb",
-            "version": "1.0.2",
+            "name": "magyarjeti/laravel-lipsum",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mongodb/mongo-php-library.git",
-                "reference": "faf8a1d86b5c10684ef91fa6c81475b0c7f95240"
+                "url": "https://github.com/magyarjeti/laravel-lipsum.git",
+                "reference": "defb47d4931cd6ba724e0f62e037c5c463e12431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/faf8a1d86b5c10684ef91fa6c81475b0c7f95240",
-                "reference": "faf8a1d86b5c10684ef91fa6c81475b0c7f95240",
+                "url": "https://api.github.com/repos/magyarjeti/laravel-lipsum/zipball/defb47d4931cd6ba724e0f62e037c5c463e12431",
+                "reference": "defb47d4931cd6ba724e0f62e037c5c463e12431",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=4.0",
+                "magyarjeti/loripsum-client": "v2.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Magyarjeti\\LaravelLipsum": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Lorem ipsum generator for Laravel Framework",
+            "time": "2015-02-09 13:54:32"
+        },
+        {
+            "name": "magyarjeti/loripsum-client",
+            "version": "v2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magyarjeti/loripsum-client.git",
+                "reference": "ce686fb76ee41baeb65fb8c9474dbbad7e54a03e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magyarjeti/loripsum-client/zipball/ce686fb76ee41baeb65fb8c9474dbbad7e54a03e",
+                "reference": "ce686fb76ee41baeb65fb8c9474dbbad7e54a03e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.2",
+                "phpunit/phpunit": "4.3.1",
+                "squizlabs/php_codesniffer": "2.0.0RC2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Magyarjeti\\Loripsum": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Lorem ipsum generator.",
+            "keywords": [
+                "ipsum",
+                "lipsum",
+                "lorem",
+                "loripsum"
+            ],
+            "time": "2014-10-09 15:07:00"
+        },
+        {
+            "name": "mongodb/mongodb",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mongodb/mongo-php-library.git",
+                "reference": "3c742f3ceffc4dc67fee02dc6ebfc2e7cb403b7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/3c742f3ceffc4dc67fee02dc6ebfc2e7cb403b7c",
+                "reference": "3c742f3ceffc4dc67fee02dc6ebfc2e7cb403b7c",
                 "shasum": ""
             },
             "require": {
@@ -949,7 +1019,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2016-03-30 19:10:28"
+            "time": "2016-09-23 19:38:29"
         },
         {
             "name": "monolog/monolog",
@@ -1271,16 +1341,16 @@
         },
         {
             "name": "omnipay/stripe",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/omnipay-stripe.git",
-                "reference": "3d21b68403fb4214cbee07d0c4be55a1bb0b1805"
+                "reference": "6eab75f838e11e2c951af52cf3939aeb37d11059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/3d21b68403fb4214cbee07d0c4be55a1bb0b1805",
-                "reference": "3d21b68403fb4214cbee07d0c4be55a1bb0b1805",
+                "url": "https://api.github.com/repos/thephpleague/omnipay-stripe/zipball/6eab75f838e11e2c951af52cf3939aeb37d11059",
+                "reference": "6eab75f838e11e2c951af52cf3939aeb37d11059",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1394,7 @@
                 "payment",
                 "stripe"
             ],
-            "time": "2016-08-06 04:11:43"
+            "time": "2016-09-14 09:11:40"
         },
         {
             "name": "paragonie/random_compat",
@@ -1476,22 +1546,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/5277094ed527a1c4477177d102fe4c53551953e0",
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1505,12 +1583,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-09-19 16:02:08"
         },
         {
             "name": "psy/psysh",
@@ -3842,7 +3921,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "magyarjeti/laravel-lipsum": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

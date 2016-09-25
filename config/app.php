@@ -187,6 +187,7 @@ return [
          * Form / HTML
          */
         Collective\Html\HtmlServiceProvider::class,
+        'Magyarjeti\LaravelLipsum\LipsumServiceProvider',
 
     ],
 
@@ -239,6 +240,7 @@ return [
         'Input' => Illuminate\Support\Facades\Input::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
+        'Lipsum' => 'Magyarjeti\LaravelLipsum\LipsumFacade'
     ],
 
 ];

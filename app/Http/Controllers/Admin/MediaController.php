@@ -47,6 +47,39 @@ class MediaController extends AdminController
   }
   
   /**
+   * Generate a random image
+   *
+   * @param string $dir
+   * @param string $id
+   * 
+   * @return none
+   */
+  public function generateImages( $dir, $id, $file )
+  {
+    $file = Image::make($file);
+
+    Storage::disk('public')->put(
+      'images/'.$dir.'/'.$id.'/image'.$id.'.jpg',
+      $file->stream()
+    );
+
+    // resizing
+    foreach(config('filesystems.image_sizes') as $name => $size){
+      $thumb = $file->resize($size[0], null, function ($constraint) {
+        $constraint->aspectRatio();
+      });
+      if($thumb->height()>$size[1]){
+        $offset = floor(($thumb->height()-$size[1])/2);
+        $thumb->crop( $size[0], $size[1], 0, $offset) ;
+      }
+      Storage::disk('public')->put(
+        'images/'.$dir.'/'.$id.'/'.$name.'/image'.$id.'.jpg',
+        $thumb->stream()
+      ) ;
+    }
+  }
+  
+  /**
    * Return Thumbnails
    *
    * @param string $id

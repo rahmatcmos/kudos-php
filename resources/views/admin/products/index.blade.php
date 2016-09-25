@@ -6,11 +6,13 @@
       <div class="row">
         <div class="col-md-9">
           <h1>
-            {{ ($products->currentPage()-1) * $products->perPage() + 1 }}
-            to
-            {{ min($products->total(), $products->currentPage() * $products->perPage()) }}
-            of 
-            {{ $products->total() }}
+            @if($products->total()>0)
+              {{ ($products->currentPage()-1) * $products->perPage() + 1 }}
+              to
+              {{ min($products->total(), $products->currentPage() * $products->perPage()) }}
+              of 
+              {{ $products->total() }}
+            @endif
             {{ trans('products.products') }}
           </h1>
         </div>

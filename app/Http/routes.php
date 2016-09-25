@@ -80,6 +80,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   Route::post('media/delete', 'MediaController@delete')->name('delete');
   Route::post('media/default/{id}/{type}', 'MediaController@default')->name('default');
   Route::post('media/upload/images/{dir}/{id}', 'MediaController@uploadImages')->name('upload');
+  Route::get('media/generate/images/{dir}/{id}/{file}', 'MediaController@generateImages')->name('generate');
   Route::get('media/thumbnails/{id}/{model?}/{type?}', 'MediaController@getThumbnails')->name('thumbnails');
   
   // shops

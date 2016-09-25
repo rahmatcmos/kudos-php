@@ -6,11 +6,13 @@
       <div class="row">
         <div class="col-md-9">
           <h1>
-            {{ ($customers->currentPage()-1) * $customers->perPage() + 1 }}
-            to
-            {{ min($customers->total(), $customers->currentPage() * $customers->perPage()) }}
-            of 
-            {{ $customers->total() }}
+            @if($customers->total()>0)
+              {{ ($customers->currentPage()-1) * $customers->perPage() + 1 }}
+              to
+              {{ min($customers->total(), $customers->currentPage() * $customers->perPage()) }}
+              of 
+              {{ $customers->total() }}
+            @endif
             {{ trans('customers.customers') }}</h1>
         </div>
         <div class="col-md-3 text-right">

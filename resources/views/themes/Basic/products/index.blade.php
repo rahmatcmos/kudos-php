@@ -4,10 +4,11 @@
 <ul class="row">
   @foreach ($products as $product)
     <li class="col-md-3">
-      <img src="/uploads/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive">
+      <a href="/products/{{ $product->slug }}"><img src="/uploads/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
-      {!! $product[$language]['content'] !!}
-      <a href="/products/{{ $product->slug }}" class="btn btn-primary">View Details</a>
+      <p>Price: &pound;{!! isset($product->salePrice) ? '<strike>'.$product->price.'</strike> &pound;'.$product->salePrice : $product->price !!}</p>
+      <a href="/products/{{ $product->slug }}" class="btn btn-primary full">View Details</a>
+      <hr>
     </li>
   @endforeach
 </ul>

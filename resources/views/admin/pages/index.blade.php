@@ -6,11 +6,13 @@
       <div class="row">
         <div class="col-md-9">
           <h1>
-            {{ ($pages->currentPage()-1) * $pages->perPage() + 1 }}
-            to
-            {{ min($pages->total(), $pages->currentPage() * $pages->perPage()) }}
-            of 
-            {{ $pages->total() }}
+            @if($pages->total()>0)
+              {{ ($pages->currentPage()-1) * $pages->perPage() + 1 }}
+              to
+              {{ min($pages->total(), $pages->currentPage() * $pages->perPage()) }}
+              of 
+              {{ $pages->total() }}
+            @endif
             {{ trans('pages.pages') }}
           </h1>
         </div>

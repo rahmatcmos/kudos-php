@@ -71,15 +71,15 @@ return [
     |
     | Here you can configure image sizes for your application
     | uploaded images will be resized by intervention
-    | please arrange smallest to largest
+    | please arrange largest to smallest
     | for more information see http://image.intervention.io/api/resize
     |
     */
 
     'image_sizes' => [
-      'thumb' => [160, 90],
+      'large' => [800,600],
       'medium' => [400, 225],
-      'large' => [800,600]
+      'thumb' => [160, 90],
     ],
 
 

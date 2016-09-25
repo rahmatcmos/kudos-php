@@ -6,11 +6,13 @@
       <div class="row">
         <div class="col-md-9">
           <h1>
-            {{ ($blog->currentPage()-1) * $blog->perPage() + 1 }}
-            to
-            {{ min($blog->total(), $blog->currentPage() * $blog->perPage()) }}
-            of 
-            {{ $blog->total() }}
+            @if($blog->total()>0)
+              {{ ($blog->currentPage()-1) * $blog->perPage() + 1 }}
+              to
+              {{ min($blog->total(), $blog->currentPage() * $blog->perPage()) }}
+              of 
+              {{ $blog->total() }}
+            @endif
             {{ trans('blog.articles') }}
           </h1>
         </div>
