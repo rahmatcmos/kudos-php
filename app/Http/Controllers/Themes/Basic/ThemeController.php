@@ -17,6 +17,11 @@ class ThemeController extends \App\Http\Controllers\Controller
         Session::put('shop', $shop->id) ;
       }
       
+      // if limit is not set default pagination limit
+      if ( !Session::has('limit')){
+        Session::put('limit', 1) ;
+      }
+      
       // if session is not set reset the session for the language
       if ( !Session::has('language')){
         Session::put('language', config('app.locale')) ;
