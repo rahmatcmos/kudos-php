@@ -13,7 +13,7 @@ class BlogController extends ThemeController
    */
   public function index()
   {
-    $blogs = Blog::all() ;
+    $blogs = Blog::paginate(20) ;
     return view('themes/basic/blog/index', ['blogs' => $blogs]);
   }
   

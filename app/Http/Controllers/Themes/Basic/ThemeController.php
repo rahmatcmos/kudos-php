@@ -19,7 +19,7 @@ class ThemeController extends \App\Http\Controllers\Controller
       
       // if limit is not set default pagination limit
       if ( !Session::has('limit')){
-        Session::put('limit', 1) ;
+        Session::put('limit', 100) ;
       }
       
       // if session is not set reset the session for the language

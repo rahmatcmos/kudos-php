@@ -4,7 +4,7 @@
 <ul class="row">
   @foreach ($products as $product)
     <li class="col-md-3">
-      <img src="/uploads/{{ $product->defaultImage }}" class="img-respsonive">
+      <img src="/uploads/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive">
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
       {!! $product[$language]['content'] !!}
       <a href="/products/{{ $product->slug }}" class="btn btn-primary">View Details</a>

@@ -109,5 +109,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   
   // blog
   Route::resource('blog', 'BlogController');
+  
+  // temp
+  Route::resource('populate', 'PopulateController');
 
 });

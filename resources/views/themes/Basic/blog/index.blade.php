@@ -17,4 +17,5 @@
       </li>
     @endforeach
   </ul>
+  {{ $blogs->links() }}
 @endsection
