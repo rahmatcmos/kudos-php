@@ -10,4 +10,6 @@ return [
   'county' => 'County',
   'postcode' => 'Postcode',
   'country' => 'Country',
+  'shipping' => 'Delivery Address',
+  'billing' => 'Billing Address',
 ];

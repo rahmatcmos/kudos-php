@@ -37,4 +37,11 @@
     border-color: transparent ;
     color: $color3 ; 
   }
+  &.full{
+    width: 100% ;
+    text-align: center ;
+  }
+  &.fat{
+    line-height: 60px ;
+  }
 }

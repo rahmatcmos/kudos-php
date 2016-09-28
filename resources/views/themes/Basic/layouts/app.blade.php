@@ -5,7 +5,7 @@
       <aside class="col-md-3">
         @if(session('basket')['count']>0)
         <p>
-          <a href="/checkout" class="btn btn-success">
+          <a href="/checkout" class="btn btn-success full fat">
             {{ trans('checkout.checkout') }}
           </a>
         </p>

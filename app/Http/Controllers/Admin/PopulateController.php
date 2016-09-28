@@ -14,6 +14,10 @@ class PopulateController extends AdminController
   {
     set_time_limit(0);
     ignore_user_abort(1);
+    
+    // disable
+    die('disabled') ;
+    
     $shopId = '577e745ef04996236f4e5a52';
     for($i=1;$i<6;$i++){
       // create a category;

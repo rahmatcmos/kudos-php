@@ -11,6 +11,7 @@
         <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
         <p>Price: &pound;{!! isset($product->salePrice) ? '<strike>'.$product->price.'</strike> &pound;'.$product->salePrice : $product->price !!}</p>
         <a href="/products/{{ $product->slug }}" class="btn btn-primary">View Details</a>
+        <hr>
       </li>
     @endforeach
   </ul>

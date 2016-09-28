@@ -7,4 +7,12 @@ class Order extends Model {
   
   use SoftDeletes;
   
+  /**
+  * Get the order Items for the order.
+  */
+  public function items()
+  {
+    return $this->hasMany('App\Models\OrderItem');
+  }
+  
 }

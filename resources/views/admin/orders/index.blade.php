@@ -3,27 +3,54 @@
 @section('content')
   <div class="title row">
     <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-6">
-          <h1>ORDERS</h1>
-        </div>
-        <div class="col-md-6 text-right dates">
-          <input type="text" class="datepicker"><i class="fa fa-calendar"></i><input type="text" class="datepicker">
-        </div>
-      </div>
+      <h1>
+        @if($orders->total()>0)
+          {{ ($orders->currentPage()-1) * $orders->perPage() + 1 }}
+          to
+          {{ min($orders->total(), $orders->currentPage() * $orders->perPage()) }}
+          of 
+          {{ $orders->total() }}
+        @endif
+        {{ trans('orders.orders') }}
+      </h1>
     </div>
   </div>
   
   <section>
     <div class="container-fluid">
-      <ul class="row">
-        <li class="col-md-6">
-          <div class="panel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas maximus semper. Ut condimentum enim condimentum, gravida justo a, blandit risus. Cras pulvinar lorem sodales consectetur sollicitudin. Etiam aliquet, mauris at laoreet accumsan, diam tortor pretium quam, ac vehicula eros ipsum non elit. Sed fermentum rutrum mollis. Quisque mattis faucibus lectus. Cras at eros eu massa consectetur cursus. Fusce aliquet eleifend mauris, a consectetur eros tincidunt sit amet.</div>
-        </li>
-        <li class="col-md-6">
-          <div class="panel">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas maximus semper. Ut condimentum enim condimentum, gravida justo a, blandit risus. Cras pulvinar lorem sodales consectetur sollicitudin. Etiam aliquet, mauris at laoreet accumsan, diam tortor pretium quam, ac vehicula eros ipsum non elit. Sed fermentum rutrum mollis. Quisque mattis faucibus lectus. Cras at eros eu massa consectetur cursus. Fusce aliquet eleifend mauris, a consectetur eros tincidunt sit amet.</div>
-        </li>
-      </ul>
+      {{ Form::open(['method' => 'get', 'url' => 'admin/orders']) }}
+        {{ Form::text('search', '', ['class' => 'form-control', 'placeholder' => trans('search.search').'...']) }}
+      {{ Form::close() }}
+      @if( $orders->search )
+        <p class="clear-search"><a href="/admin/orders" class="btn btn-red">clear search for "{{ $orders->search }}"</a></p>
+      @endif
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>
+              <a href="/admin/orders?page={{ $orders->currentPage() }}&order_by=id&order_dir={{ session('order.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $orders->search }}" 
+                class="order-{{ session('order.order_by') == 'id' ? session('order.order_dir') : '' }}">
+                {{ trans('orders.id') }}
+              </a>
+            </th>
+            <th>
+              <a href="/admin/orders?page={{ $orders->currentPage() }}&order_by=created_at&order_dir={{ session('order.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $orders->search }}" 
+                class="order-{{ session('order.order_by') == 'created_at' ? session('order.order_dir') : '' }}">
+                {{ trans('orders.created_at') }}
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($orders as $order)
+          <tr>
+            <td><a href="/admin/orders/{{ $order->id }}">{{ $order->id }}</a></td>
+            <td><a href="/admin/orders/{{ $order->id }}">{{ $order->created_at }}</a></td>
+          </tr> 
+          @endforeach
+        </tbody>
+      </table>
+      {{ $orders->appends(['search' => $orders->search, 'order_by' => session('customer.order_by'), 'order_dir' => session('customer.order_dir')] )->links() }}
     </div>
   </section>
     

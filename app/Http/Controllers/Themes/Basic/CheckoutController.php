@@ -65,10 +65,13 @@ class CheckoutController extends ThemeController
       
       // save order
       $order = new Order;
+      $order->shop_id = Session::get('shop') ;
       $order->customer_id = Auth::user()->id ;
       $order->shipping_id = $input['shipping_id'] ;
       $order->billing_id = $input['billing_id'] ;
       $order->total = $basket['subtotal'];
+      $basket['shipping'] = Address::find($input['shipping_id'])->toArray() ;
+      $basket['billing'] = Address::find($input['billing_id'])->toArray() ;
       $order->basket = serialize($basket);
       $order->save();
       
