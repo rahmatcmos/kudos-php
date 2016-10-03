@@ -2,12 +2,12 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -15,15 +15,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'telephone', 'email', 'password',
+        'name', 'email', 'password',
     ];
-    
-    /**
-     * soft deletes
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -34,8 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+    /**
+     * Check if the user is and administrator
+     */
     public function isAdmin()
     {
-        return $this->admin; // this looks for an admin column in your users table
+        return $this->admin;
     }
 }

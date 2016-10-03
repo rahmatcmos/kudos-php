@@ -1,10 +1,10 @@
 /vendor
 /node_modules
 /public/storage
+/.idea
 Homestead.yaml
 Homestead.json
 .env
-
 
 # Created by https://www.gitignore.io/api/osx,linux,windows,sass,less,composer,node,grunt
 

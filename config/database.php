@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'fetch' => PDO::FETCH_CLASS,
+    'fetch' => PDO::FETCH_OBJ,
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     */
 
     'connections' => [
-        
+      
         'mongodb' => [
             'driver'   => 'mongodb',
             'host'     => env('MONGO_HOST', 'localhost'),
@@ -57,7 +57,7 @@ return [
                 'database' => 'admin' // sets the authentication database required by mongo 3
             ]
         ],
-        
+
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
@@ -73,9 +73,8 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'prefix' => '',
-            'strict' => false,
+            'strict' => true,
             'engine' => null,
         ],
 
@@ -89,6 +88,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
+            'sslmode' => 'prefer',
         ],
 
     ],
