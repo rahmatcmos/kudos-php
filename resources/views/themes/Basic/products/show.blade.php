@@ -3,7 +3,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-6">
-      <img src="/uploads/{{ str_replace('/thumb/', '/', $product->defaultImage) }}" class="img-responsive">
+      <img src="/storage/{{ str_replace('/thumb/', '/', $product->defaultImage) }}" class="img-responsive">
     </div>
     <div class="col-md-6">
       <h2>{{ isset($product->$language['name']) ? $product->$language['name'] : $product->default['name'] }}</h2>

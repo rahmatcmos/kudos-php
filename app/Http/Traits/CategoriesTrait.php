@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Traits;
 
+use Illuminate\Http\Request;
 use App\Models\Category;
-use Session ;
 
 trait CategoriesTrait
 {
@@ -12,11 +12,11 @@ trait CategoriesTrait
    *
    * $return array
    */
-  public function category_select()
+  public function category_select(Request $request)
   {
-    $lang = Session::get('language');
+    $lang = $request->session()->get('language');
     $categories = [] ;
-    $results = Category::where('shop_id', '=', Session::get('shop'))->get() ; 
+    $results = Category::where('shop_id', '=', $request->session()->get('shop'))->get() ; 
     foreach($results as $category)
     {
       $categories[$category->id] = isset($category->$lang['name']) ? $category->$lang['name'] : $category->default['name'] ; 

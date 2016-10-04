@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Http\Controllers\Simple;
+
 use App\Models\Language ;
-use Redirect ;
-use Session ;
 
 class FrontendController extends \App\Http\Controllers\Controller
 {
@@ -11,11 +9,11 @@ class FrontendController extends \App\Http\Controllers\Controller
     {
       
       // if session is not set reset the session for the language
-      if ( !Session::has('language')){
-        Session::put('language', config('app.locale')) ;
+      if ( !$request->session()->has('language')){
+        $request->session()->put('language', config('app.locale')) ;
       }
       
       view()->share('languages', Language::LANGUAGES);
-      view()->share('language', Session::get('language')) ;
+      view()->share('language', $request->session()->get('language')) ;
     }
 }

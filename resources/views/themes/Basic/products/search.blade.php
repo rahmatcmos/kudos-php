@@ -7,7 +7,7 @@
   <ul class="row">
     @foreach ($products as $product)
       <li class="col-md-3">
-        <a href="/products/{{ $product->slug }}"><img src="/uploads/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
+        <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
         <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
         <p>Price: &pound;{!! isset($product->salePrice) ? '<strike>'.$product->price.'</strike> &pound;'.$product->salePrice : $product->price !!}</p>
         <a href="/products/{{ $product->slug }}" class="btn btn-primary">View Details</a>

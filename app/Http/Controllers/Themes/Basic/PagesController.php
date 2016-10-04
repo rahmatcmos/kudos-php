@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
 use App\Models\Page;
 
 class PagesController extends ThemeController

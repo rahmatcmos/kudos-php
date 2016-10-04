@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
-use Session ;
 
 class OrdersController extends ThemeController
 {
@@ -15,9 +15,9 @@ class OrdersController extends ThemeController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $limit = Session::get('limit') ;
+    $limit = $request->session()->get('limit') ;
     $orders = Order::where('customer_id', Auth::user()->id)
       ->paginate($limit);
     return view('themes/basic/orders/index', ['orders' => $orders]);

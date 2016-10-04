@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category ;
-use Session ;
-use Input ;
 
 class ProductsController extends ThemeController
 {
@@ -16,22 +13,22 @@ class ProductsController extends ThemeController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // pagination
     $session_type = 'product' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
     
-    $limit = Session::get('limit') ;
-    $products = Product::where('shop_id', Session::get('shop'))
-      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+    $limit = $request->session()->get('limit') ;
+    $products = Product::where('shop_id', $request->session()->get('shop'))
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('themes/basic/products/index', ['products' => $products]);
   }
@@ -48,7 +45,7 @@ class ProductsController extends ThemeController
   }
   
   /**
-   * searchs Products
+   * search Products
    *
    * @return Response
    */
@@ -56,34 +53,34 @@ class ProductsController extends ThemeController
   {
     // pagination
     $session_type = 'product' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
 
     if ($request->has('query')) {
       $searchTerm = $request->input('query') ;
-      Session::put('query', $searchTerm) ;
+      $request->session()->put('query', $searchTerm) ;
     }
     
     // search
     $products = new Product() ;
-    $products = $products->where('shop_id', Session::get('shop')) ;
+    $products = $products->where('shop_id', $request->session()->get('shop')) ;
     //query
-    if(Session::has('query')){
-      $products = $products->where('en.name', 'LIKE', '%'.Session::get('query').'%') ;
+    if($request->session()->has('query')){
+      $products = $products->where('en.name', 'LIKE', '%'.$request->session()->get('query').'%') ;
     }
     // category
     if($category){
       $category = Category::where('slug', $category)->pluck('_id')[0];
       $products = $products->whereIn('categories', [$category] ) ;
     }
-    $limit = Session::get('limit') ;
-    $products = $products->orderBy($orderby, Session::get($session_type.'.order_dir'))
+    $limit = $request->session()->get('limit') ;
+    $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('themes/basic/products/search', ['products' => $products]);
   }

@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
 use App\Models\Blog;
 
 class BlogController extends ThemeController

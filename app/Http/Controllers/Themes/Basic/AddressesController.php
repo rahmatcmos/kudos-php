@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
-use Input ;
-use Redirect ;
-use Session ;
 
 class AddressesController extends ThemeController
 {
@@ -51,10 +48,10 @@ class AddressesController extends ThemeController
    */
   public function store( )
   {
-    $data = Input::all() ;
+    $data = $request->all() ;
     $data['customer_id'] = Auth::user()->id ;
     Address::create($data);
-    return Redirect::to('/account/addresses');
+    return redirect('/account/addresses');
   }
   
   /**
@@ -67,11 +64,11 @@ class AddressesController extends ThemeController
   public function update( $id )
   {
     // store
-    $address = Address::find($id)->update(Input::all());
+    $address = Address::find($id)->update($request->all());
     
     // redirect
-    Session::flash('success', trans('address.address').' '.trans('crud.updated'));
-    return Redirect::back();
+    $request->session()->flash('success', trans('address.address').' '.trans('crud.updated'));
+    return back();
   }
   
   /**
@@ -88,7 +85,7 @@ class AddressesController extends ThemeController
     $Address->delete();
 
     // redirect
-    Session::flash('success',  trans('address.address').' '.trans('crud.deleted'));
-    return Redirect::back();
+    $request->session()->flash('success',  trans('address.address').' '.trans('crud.deleted'));
+    return back() ;
   }
 }

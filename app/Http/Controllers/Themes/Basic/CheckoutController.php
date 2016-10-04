@@ -1,15 +1,13 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
+use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
-use DB;
 use Illuminate\Support\Facades\Auth;
-use Input ;
-use Session ;
+use DB;
 use Omnipay ;
-use Redirect ;
 
 class CheckoutController extends ThemeController
 {
@@ -30,14 +28,14 @@ class CheckoutController extends ThemeController
    *
    * @return Response
    */
-  public function store()
+  public function store(Request $request)
   {
     // charge the card
-    $card = Omnipay::creditCard(Input::all());
+    $card = Omnipay::creditCard($request->all());
     
     $response = Omnipay::purchase(
       [
-        'amount' => number_format(Session::get('basket.subtotal'), 2),
+        'amount' => number_format($request->session()->get('basket.subtotal'), 2),
         'currency' => 'GBP',
         'card' => $card
       ]
@@ -45,27 +43,27 @@ class CheckoutController extends ThemeController
 
     if ($response->isSuccessful()) {
       // create order
-      $this->createOrder(Input::all()) ;
-      Session::forget('basket') ;
-      Session::flash('success',  trans('order.thankyou'));
-      return Redirect::to('/account');
+      $this->createOrder($request->all()) ;
+      $request->session()->forget('basket') ;
+      $request->session()->flash('success',  trans('order.thankyou'));
+      return redirect('/account');
     } else {
       // payment failed: display message to customer
-      Session::flash('danger',  $response->getMessage()) ;
-      return Redirect::to('/checkout');
+      $request->session()->flash('danger',  $response->getMessage()) ;
+      return redirect('/checkout');
     }
   }
   
-  public function createOrder(Array $input)
+  public function createOrder(Request $request, Array $input)
   {
     DB::transaction(function ($input) use ($input){
       
       // get the basket
-      $basket = Session::get('basket') ;
+      $basket = $request->session()->get('basket') ;
       
       // save order
       $order = new Order;
-      $order->shop_id = Session::get('shop') ;
+      $order->shop_id = $request->session()->get('shop') ;
       $order->customer_id = Auth::user()->id ;
       $order->shipping_id = $input['shipping_id'] ;
       $order->billing_id = $input['billing_id'] ;

@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
 use App\Models\Category;
 use App\Models\Product;
-use Input ;
-use Session ;
+use Illuminate\Http\Request;
 
 class CategoriesController extends ThemeController
 {
@@ -14,25 +13,25 @@ class CategoriesController extends ThemeController
    *
    * @return Response
    */
-  public function show($slug)
+  public function show(Request $request, $slug)
   {
     $category = Category::where('slug', $slug)->first() ;
     if(!$category) \App::abort(404);
     
     // pagination
     $session_type = 'product' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->getorder_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->getorder_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
        
-    $limit = Session::get('limit') ;
+    $limit = $request->session()->get('limit') ;
     $products = Product::whereIn('_id', $category->products )
-      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit) ;
 
     return view('themes/basic/categories/show', ['category' => $category, 'products' => $products]);

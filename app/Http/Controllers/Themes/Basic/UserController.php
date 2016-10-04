@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Themes\Basic;
+
+use Illuminate\Http\Request;
 use App\User ;
 use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 use Hash ;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,30 +28,24 @@ class UserController extends ThemeController
    * 
    * @return Redirect
    */
-  public function store( )
+  public function store(Request $request)
   {
     // validate
-    $rules = [
-      'email'      => 'email|unique:users,email,'.Auth::user()->id
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('account/settings')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $user = User::find(Auth::user()->id);
-      $user->email = Input::get('email');
-      $user->telephone = Input::get('telephone');
-      if(Input::get('password'))
-        $user->password = Hash::make(Input::get('password')) ;
-      $user->save();
+    $this->validate($request, [
+      'email' => 'email|unique:users,email,'.Auth::user()->id
+    ]);
+      
+    // store
+    $user = User::find(Auth::user()->id);
+    $user->email = $request->email;
+    $user->telephone = $request->telephone;
+    if($request->get('password'))
+      $user->password = Hash::make($request->password) ;
+    $user->save();
 
-      // redirect
-      Session::flash('success', trans('settings.settings').' '.trans('crud.updated'));
-      return Redirect::to('/account/settings');
-    }
+    // redirect
+    $request->session()->flash('success', trans('settings.settings').' '.trans('crud.updated'));
+    return redirect('/account/settings');
   }
 
 }
