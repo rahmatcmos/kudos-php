@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-12">
-          <h1><a href="/customers">{{ trans('customers.customers') }}</a> > {{ trans('crud.create') }}</h1>
+          <h1><a href="/admin/customers">{{ trans('customers.customers') }}</a> > {{ trans('crud.create') }}</h1>
         </div>
       </div>
     </div>

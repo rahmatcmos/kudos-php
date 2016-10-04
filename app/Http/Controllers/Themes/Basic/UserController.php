@@ -3,7 +3,6 @@ namespace App\Http\Controllers\Themes\Basic;
 
 use Illuminate\Http\Request;
 use App\User ;
-use Validator ;
 use Hash ;
 use Illuminate\Support\Facades\Auth;
 

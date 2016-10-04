@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Address;
 use App\Models\Order;
-use Validator ;
 
 class CustomersController extends AdminController
 {
@@ -58,7 +57,7 @@ class CustomersController extends AdminController
   {
     // validate
     $this->validate($request, [
-      'email' => 'required|email|unique:mongodb.customers',
+      'email' => 'required|email|unique:users',
     ]);
 
     // store
@@ -67,6 +66,7 @@ class CustomersController extends AdminController
     $customer->first_name = $request->first_name ;    
     $customer->last_name = $request->last_name ;
     $customer->telephone = $request->telephone ;
+    $customer->password = bcrypt(str_random(32)) ;
     $customer->email = $request->email ;
     $customer->save();
 
@@ -101,7 +101,7 @@ class CustomersController extends AdminController
   {
     // validate
     $this->validate($request, [
-      'email' => 'required|email|unique:mongodb.customers,email,'.$id.',_id'
+      'email' => 'required|email|unique:users,email,'.$id.',id'
     ]);
 
     // store
