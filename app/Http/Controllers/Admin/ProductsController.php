@@ -39,14 +39,13 @@ class ProductsController extends AdminController
       
     // query products with conditional search  
     $products = Product::where('shop_id',$request->session()->get('shop'))
-      ->where(function($query) {
-        if ($request->search){
-          
+      ->where(function($query) use ($request) {
+        if ($request->search) {
           return $query->where('en.name', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
       })
-      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir')
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
     $products->search = $request->search ;
     return view('admin/products/index', ['products' => $products]);
@@ -57,9 +56,9 @@ class ProductsController extends AdminController
    *
    * @return Response
    */
-  public function create()
+  public function create(Request $request)
   {
-    $categories = $this->category_select() ;
+    $categories = $this->category_select($request) ;
     return view('admin/products/create', ['categories' => $categories]);
   }
   
@@ -115,9 +114,9 @@ class ProductsController extends AdminController
    * 
    * @return Response
    */
-  public function edit( $id )
+  public function edit(Request $request, $id)
   {
-    $categories = $this->category_select() ;
+    $categories = $this->category_select($request) ;
     $product = Product::find($id) ; 
     $file_size = key(config('image.image_sizes')) ;
     $files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);

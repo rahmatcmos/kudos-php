@@ -22,7 +22,7 @@ class OrdersController extends AdminController
       
       $limit = $request->session()->get('limit') ;
       $orders = Order::where('shop_id', '=', $request->session()->get('shop'))
-        ->where(function($query) {
+        ->where(function($query) use ($request) {
           if ($request->search){
             return $query->where('id', 'LIKE', '%'.$request->search.'%') ;
           }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Http\Traits\Media;
 
@@ -28,9 +29,8 @@ class BlogController extends AdminController
       : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
       
     $blog = Blog::where('shop_id', '=', $request->session()->get('shop'))
-      ->where(function($query) {
+      ->where(function($query) use ($request) {
         if ($request->search){
-          
           return $query->where('en.name', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
