@@ -30,7 +30,7 @@ class MediaController extends AdminController
     );
 
     // resizing
-    foreach(config('filesystems.image_sizes') as $name => $size){
+    foreach(config('image.image_sizes') as $name => $size){
       $thumb = Image::make(Input::file('file'))->resize($size[0], null, function ($constraint) {
         $constraint->aspectRatio();
       });
@@ -64,7 +64,7 @@ class MediaController extends AdminController
     );
 
     // resizing
-    foreach(config('filesystems.image_sizes') as $name => $size){
+    foreach(config('image.image_sizes') as $name => $size){
       $thumb = $file->resize($size[0], null, function ($constraint) {
         $constraint->aspectRatio();
       });
@@ -90,7 +90,7 @@ class MediaController extends AdminController
    */
   public function getThumbnails( $id, $model='products', $type='images' )
   {
-    $file_size = key(config('filesystems.image_sizes')) ;
+    $file_size = key(config('image.image_sizes')) ;
     $files = $this->getFiles($type.'/'.$model.'/'.$id.'/'.$file_size);
     $class = 'App\\Models\\'.str_singular(ucfirst($model)) ;
     $item = $class::find($id) ;
@@ -109,7 +109,7 @@ class MediaController extends AdminController
     
     // resized images
     $path_parts = pathinfo($file);
-    foreach(config('filesystems.image_sizes') as $name => $size){
+    foreach(config('image.image_sizes') as $name => $size){
       Storage::disk('public')->delete( $path_parts['dirname'].'/'.$name.'/'.$path_parts['basename'] ) ;
     }
     return Redirect::back() ;

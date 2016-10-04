@@ -131,7 +131,7 @@ class CategoriesController extends AdminController
     $categories = Category::where('shop_id', '=', Session::get('shop'))->orderBy('order', 'asc')->get() ;
     $categories = $this->sortCategories($categories->toArray()) ;
     $category = Category::find($id) ;
-    $file_size = key(config('filesystems.image_sizes')) ;
+    $file_size = key(config('image.image_sizes')) ;
     $files = $this->getFiles('images/categories/'.$category->id.'/'.$file_size);
     return view('admin/categories/edit', ['category' => $category, 'categories' => $categories, 'files' => $files, 'file_size' => $file_size]);
   }

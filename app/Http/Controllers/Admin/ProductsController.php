@@ -134,7 +134,7 @@ class ProductsController extends AdminController
   {
     $categories = $this->category_select() ;
     $product = Product::find($id) ; 
-    $file_size = key(config('filesystems.image_sizes')) ;
+    $file_size = key(config('image.image_sizes')) ;
     $files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
     return view('admin/products/edit', ['product' => $product, 'categories' => $categories, 'files' => $files, 'file_size' => $file_size]);
   }
