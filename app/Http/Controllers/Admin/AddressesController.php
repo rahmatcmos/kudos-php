@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Address;
-use Input ;
-use Redirect ;
-use Session ;
 
 class AddressesController extends AdminController
 {
@@ -28,10 +26,10 @@ class AddressesController extends AdminController
    * 
    * @return Redirect
    */
-  public function store( )
+  public function store(Request $request)
   {
-    Address::create(Input::all());
-    return Redirect::back();
+    Address::create($request->all());
+    return back();
   }
   
   /**
@@ -41,14 +39,14 @@ class AddressesController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id )
   {
     // store
-    $address = Address::find($id)->update(Input::all());
+    $address = Address::find($id)->update($request->all());
     
     // redirect
-    Session::flash('success', trans('address.address').' '.trans('crud.updated'));
-    return Redirect::back();
+    $request->session()->flash('success', trans('address.address').' '.trans('crud.updated'));
+    return back();
   }
   
   /**
@@ -58,14 +56,14 @@ class AddressesController extends AdminController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id )
   {
     // delete
     $Address = Address::find($id);      
     $Address->delete();
 
     // redirect
-    Session::flash('success',  trans('address.address').' '.trans('crud.deleted'));
-    return Redirect::back();
+    $request->session()->flash('success',  trans('address.address').' '.trans('crud.deleted'));
+    return back();
   }
 }

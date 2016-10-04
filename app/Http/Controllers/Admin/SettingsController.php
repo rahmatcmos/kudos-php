@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Setting;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 
 class SettingsController extends AdminController
 {
@@ -23,9 +20,9 @@ class SettingsController extends AdminController
    * 
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $settings = Setting::where('shop_id', Session::get('shop'))->first() ;
+    $settings = Setting::where('shop_id', $request->session()->get('shop'))->first() ;
     return view('admin/settings/edit', ['settings' => $settings]);
   }
   
@@ -36,9 +33,9 @@ class SettingsController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $shop_id )
+  public function update(Request $request, $shop_id)
   {
-    $data = Input::except(['_token', '_method']) ;
+    $data = $request->except(['_token', '_method']) ;
     $data['shop_id'] = $shop_id ;
     $settings = Setting::where('shop_id', $shop_id)->first();
     if ($settings) { 
@@ -49,8 +46,8 @@ class SettingsController extends AdminController
     }
 
     // redirect
-    Session::flash('success', trans('settings.settings').' '.trans('crud.updated'));
-    return Redirect::to('admin/settings');
+    $request->session()->flash('success', trans('settings.settings').' '.trans('crud.updated'));
+    return redirect('admin/settings');
   }
 
 }

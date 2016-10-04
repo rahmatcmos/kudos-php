@@ -47,7 +47,7 @@
         {{ Form::model($blog, ['url' => 'admin/blog/'.$blog->id, 'method' => 'PUT']) }}
           {{ Form::hidden('shop_id', session('shop')) }}
           {{ Form::label('name', trans('blog.name')) }}
-          {{ Form::text('name', isset($blog->$language['name']) ? $blog->$language['name'] : $blog->default['name'], ['class' => 'form-control']) }}
+          {{ Form::text('name', isset($blog->$language['name']) ? $blog->$language['name'] : $blog->default['name'], ['class' => 'form-control', 'required' => 'required']) }}
           {{ Form::label('slug', trans('fields.slug')) }}
           {{ Form::text('slug', $blog->slug, ['class' => 'form-control', 'required' => 'required']) }}
           {{ Form::label('excerpt', trans('fields.excerpt')) }}

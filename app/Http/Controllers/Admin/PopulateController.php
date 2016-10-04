@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Traits\Media;

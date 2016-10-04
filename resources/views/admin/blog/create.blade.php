@@ -18,7 +18,7 @@
       {{ Form::open(['url' => 'admin/blog']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('name', trans('blog.name')) }}
-        {{ Form::text('name', '', ['class' => 'form-control']) }}
+        {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('slug', trans('fields.slug')) }}
         {{ Form::text('slug', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('excerpt', trans('fields.excerpt')) }}

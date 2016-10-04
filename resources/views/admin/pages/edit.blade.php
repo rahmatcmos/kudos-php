@@ -47,7 +47,7 @@
         {{ Form::model($page, ['url' => 'admin/pages/'.$page->id, 'method' => 'PUT']) }}
           {{ Form::hidden('shop_id', session('shop')) }}
           {{ Form::label('name', trans('pages.name')) }}
-          {{ Form::text('name', isset($page->$language['name']) ? $page->$language['name'] : $page->default['name'], ['class' => 'form-control']) }}
+          {{ Form::text('name', isset($page->$language['name']) ? $page->$language['name'] : $page->default['name'], ['class' => 'form-control', 'required' => 'required']]) }}
           {{ Form::label('slug', trans('fields.slug')) }}
           {{ Form::text('slug', $page->slug, ['class' => 'form-control', 'required' => 'required']) }}
         </div>

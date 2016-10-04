@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\User;
 use App\Models\Address;
 use App\Models\Order;
 use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
-use App ;
 
 class CustomersController extends AdminController
 {
@@ -17,28 +14,28 @@ class CustomersController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // pagination
     $session_type = 'customer' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $limit = Session::get('limit') ;
-    $customers = User::where('shop_id', '=', Session::get('shop'))
+    $limit = $request->session()->get('limit') ;
+    $customers = User::where('shop_id', '=', $request->session()->get('shop'))
       ->where(function($query) {
-        if (Input::get('search')){
-          return $query->where('first_name', 'LIKE', '%'.Input::get('search').'%')
-            ->orWhere('last_name', 'LIKE', '%'.Input::get('search').'%')
-            ->orWhere('email', 'LIKE', '%'.Input::get('search').'%') ;
+        if ($request->search){
+          return $query->where('first_name', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('last_name', 'LIKE', '%'.$request->search.'%')
+            ->orWhere('email', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
       })
-      ->orderBy(Session::get($session_type.'.order_by'), Session::get($session_type.'.order_dir'))
+      ->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
-    $customers->search = Input::get('search') ;
+    $customers->search = $request->search ;
     return view('admin/customers/index', ['customers' => $customers]);
   }
   
@@ -57,33 +54,25 @@ class CustomersController extends AdminController
    * 
    * @return Redirect
    */
-  public function store( )
+  public function store(Request $request)
   {
     // validate
-    $rules = [
-      'first_name'      => 'required',
-      'last_name'       => 'required',
-      'email'           => 'required|email|unique:mongodb.customers',
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/customers/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $customer = new User;
-      $customer->shop_id = Input::get('shop_id');
-      $customer->first_name = Input::get('first_name') ;    
-      $customer->last_name = Input::get('last_name') ;
-      $customer->telephone = Input::get('telephone') ;
-      $customer->email = Input::get('email') ;
-      $customer->save();
+    $this->validate($request, [
+      'email' => 'required|email|unique:mongodb.customers',
+    ]);
 
-      // redirect
-      Session::flash('success',  trans('customers.customer').' '.trans('crud.created'));
-      return Redirect::to('admin/customers/' . $customer->id . '/edit');
-    }
+    // store
+    $customer = new User;
+    $customer->shop_id = $request->shop_id;
+    $customer->first_name = $request->first_name ;    
+    $customer->last_name = $request->last_name ;
+    $customer->telephone = $request->telephone ;
+    $customer->email = $request->email ;
+    $customer->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('customers.customer').' '.trans('crud.created'));
+    return redirect('admin/customers/' . $customer->id . '/edit');
   }
   
   /**
@@ -108,33 +97,25 @@ class CustomersController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
     // validate
-    $rules = [
-      'first_name'       => 'required',
-      'last_name'       => 'required',
-      'email'            => 'required|email|unique:mongodb.customers,email,'.$id.',_id',
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/customers/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $customer = User::find($id);
-      $customer->shop_id = Input::get('shop_id');
-      $customer->first_name = Input::get('first_name') ;    
-      $customer->last_name = Input::get('last_name') ;
-      $customer->telephone = Input::get('telephone') ;
-      $customer->email = Input::get('email') ;  
-      $customer->save();
+    $this->validate($request, [
+      'email' => 'required|email|unique:mongodb.customers,email,'.$id.',_id'
+    ]);
 
-      // redirect
-      Session::flash('success', trans('customers.customer').' '.trans('crud.updated'));
-      return Redirect::to('admin/customers/' . $id . '/edit');
-    }
+    // store
+    $customer = User::find($id);
+    $customer->shop_id = $request->shop_id;
+    $customer->first_name = $request->first_name ;    
+    $customer->last_name = $request->last_name ;
+    $customer->telephone = $request->telephone ;
+    $customer->email = $request->email ;  
+    $customer->save();
+
+    // redirect
+    $request->session()->flash('success', trans('customers.customer').' '.trans('crud.updated'));
+    return redirect('admin/customers/' . $id . '/edit');
   }
   
   /**
@@ -151,7 +132,7 @@ class CustomersController extends AdminController
     $customer->delete();
 
     // redirect
-    Session::flash('success',  trans('customers.customer').' '.trans('crud.deleted'));
-    return Redirect::to('admin/customers');
+    $request->session()->flash('success',  trans('customers.customer').' '.trans('crud.deleted'));
+    return redirect('admin/customers');
   }
 }

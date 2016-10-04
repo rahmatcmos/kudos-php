@@ -42,7 +42,12 @@
       <li><a href="/admin/currencies"><i class="fa fa-money"></i></a></li>
       <li><a href="/admin/settings"><i class="fa fa-cog"></i></a></li>
       <li><a href="/admin/users"><i class="fa fa-user"></i></a></li>
-      <li><a href="/logout"><i class="fa fa-sign-out"></i></a></li>
+      <li>
+        <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+          {{ csrf_field() }}
+          <button class="btn btn-danger"><i class="fa fa-sign-out"></i></button>
+        </form>
+      </li>
     </ul>
   </header>
   

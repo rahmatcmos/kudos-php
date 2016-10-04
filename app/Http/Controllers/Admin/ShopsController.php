@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Category;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 
 class ShopsController extends AdminController
 {
@@ -44,33 +41,22 @@ class ShopsController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('shops/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $shop = new Shop;
-      $data = Input::except(['root', 'url','_token', '_method']) ;
-      $shop->url = Input::get('url');
-      $shop->$lang = $data ;
-      if($lang==config('app.locale')){
-        $shop->default = $data ;
-      }
-      $shop->save();
-
-      // redirect
-      Session::flash('success',  trans('shops.shop').' '.trans('crud.created'));
-      return Redirect::to('admin/shops/' . $shop->id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $shop = new Shop;
+    $data = $request->except(['root', 'url','_token', '_method']) ;
+    $shop->url = $request->url;
+    $shop->$lang = $data ;
+    if($lang==config('app.locale')){
+      $shop->default = $data ;
     }
+    $shop->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('shops.shop').' '.trans('crud.created'));
+    return redirect('admin/shops/' . $shop->id . '/edit');
   }
   
   /**
@@ -95,34 +81,23 @@ class ShopsController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/shops/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $shop = Shop::find($id);
-      $data = Input::except(['root', 'url','_token', '_method']) ;
-      $shop->root = Input::get('root');
-      $shop->url = Input::get('url');
-      $shop->$lang = $data ;
-      if($lang==config('app.locale')){
-        $shop->default = $data ;
-      }
-      $shop->save();
-
-      // redirect
-      Session::flash('success', trans('shops.shop').' '.trans('crud.updated'));
-      return Redirect::to('admin/shops/' . $id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $shop = Shop::find($id);
+    $data = $request->except(['root', 'url','_token', '_method']) ;
+    $shop->root = $request->root;
+    $shop->url = $request->url;
+    $shop->$lang = $data ;
+    if($lang==config('app.locale')){
+      $shop->default = $data ;
     }
+    $shop->save();
+
+    // redirect
+    $request->session()->flash('success', trans('shops.shop').' '.trans('crud.updated'));
+    return redirect('admin/shops/' . $id . '/edit');
   }
   
   /**
@@ -132,15 +107,15 @@ class ShopsController extends AdminController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id)
   {
     // delete
     $shop = Shop::find($id);      
     $shop->delete();
 
     // redirect
-    Session::flash('success',  trans('shops.shop').' '.trans('crud.deleted'));
-    return Redirect::to('admin/shops');
+    $request->session()->flash('success',  trans('shops.shop').' '.trans('crud.deleted'));
+    return redirect('admin/shops');
   }
   
   /*

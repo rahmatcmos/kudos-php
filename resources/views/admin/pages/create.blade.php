@@ -18,7 +18,7 @@
       {{ Form::open(['url' => 'admin/pages']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('name', trans('pages.name')) }}
-        {{ Form::text('name', '', ['class' => 'form-control']) }}
+        {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']]) }}
         {{ Form::label('content', trans('fields.content')) }}
         <textarea class="input-block-level wysiwyg" name="content" rows="18"></textarea>
         {{ Form::submit(trans('crud.create'), ['class' => 'btn btn-primary']) }}

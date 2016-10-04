@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Traits\Media;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 use Storage ;
 
 class CategoriesController extends AdminController
@@ -25,9 +22,9 @@ class CategoriesController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
-    $categories = Category::where('shop_id', '=', Session::get('shop'))->orderBy('order', 'asc')->get() ;
+    $categories = Category::where('shop_id', '=', $request->session()->get('shop'))->orderBy('order', 'asc')->get() ;
     $categories = $this->sortCategories($categories->toArray()) ;
     return view('admin/categories/index', ['categories' => $categories]);
   }
@@ -61,7 +58,7 @@ class CategoriesController extends AdminController
    */
   public function saveOrder()
   {
-    $categories = Input::get('categories') ;
+    $categories = $request->categories ;
     array_shift($categories) ;
     $count = 0 ;
     foreach($categories as $category){
@@ -75,9 +72,9 @@ class CategoriesController extends AdminController
    *
    * @return Response
    */
-  public function create()
+  public function create(Request $request)
   {
-    $categories = Category::where('shop_id', '=', Session::get('shop'))->orderBy('order', 'asc')->get() ;
+    $categories = Category::where('shop_id', '=', $request->session()->get('shop'))->orderBy('order', 'asc')->get() ;
     $categories = $this->sortCategories($categories->toArray()) ;
     return view('admin/categories/create', ['categories' => $categories]);
   }
@@ -87,36 +84,25 @@ class CategoriesController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/categories/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $category = new Category;
-      $category->shop_id = Input::get('shop_id');
-      $category->parent = Input::get('parent');
-      $category->slug = Input::get('slug');
-      $category->products = [];
-      $data = Input::except(['shop_id', 'parent', 'slug', '_token', '_method']) ;      
-      $category->$lang = $data ; 
-      if($lang==config('app.locale')){
-        $category->default = $data ;
-      }
-      $category->save();
-
-      // redirect
-      Session::flash('success',  trans('categories.category').' '.trans('crud.created'));
-      return Redirect::to('admin/categories/' . $category->id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $category = new Category;
+    $category->shop_id = $request->shop_id;
+    $category->parent = $request->parent;
+    $category->slug = $request->slug;
+    $category->products = [];
+    $data = $request->except(['shop_id', 'parent', 'slug', '_token', '_method']) ;      
+    $category->$lang = $data ; 
+    if($lang==config('app.locale')){
+      $category->default = $data ;
     }
+    $category->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('categories.category').' '.trans('crud.created'));
+    return redirect('admin/categories/' . $category->id . '/edit');
   }
   
   /**
@@ -126,9 +112,9 @@ class CategoriesController extends AdminController
    * 
    * @return Response
    */
-  public function edit( $id )
+  public function edit(Request $request, $id)
   {
-    $categories = Category::where('shop_id', '=', Session::get('shop'))->orderBy('order', 'asc')->get() ;
+    $categories = Category::where('shop_id', '=', $request->session()->get('shop'))->orderBy('order', 'asc')->get() ;
     $categories = $this->sortCategories($categories->toArray()) ;
     $category = Category::find($id) ;
     $file_size = key(config('image.image_sizes')) ;
@@ -143,36 +129,25 @@ class CategoriesController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/categories/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $category = Category::find($id);
-      $category->shop_id = Input::get('shop_id');
-      $category->parent = Input::get('parent');
-      $category->slug = Input::get('slug');
-      $data = Input::except(['shop_id', 'parent', 'slug', '_token', '_method']) ;
-      unset($data['shop_id'], $data['parent']) ;
-      $category->$lang = $data ;
-      if($lang==config('app.locale')){
-        $category->default = $data ;
-      }
-      $category->save();
-
-      // redirect
-      Session::flash('success', trans('categories.category').' '.trans('crud.updated'));
-      return Redirect::to('admin/categories/' . $id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $category = Category::find($id);
+    $category->shop_id = $request->shop_id;
+    $category->parent = $request->parent;
+    $category->slug = $request->slug;
+    $data = $request->except(['shop_id', 'parent', 'slug', '_token', '_method']) ;
+    unset($data['shop_id'], $data['parent']) ;
+    $category->$lang = $data ;
+    if($lang==config('app.locale')){
+      $category->default = $data ;
     }
+    $category->save();
+
+    // redirect
+    $request->session()->flash('success', trans('categories.category').' '.trans('crud.updated'));
+    return redirect('admin/categories/' . $id . '/edit');
   }
   
   /**
@@ -189,7 +164,7 @@ class CategoriesController extends AdminController
     $category->delete();
 
     // redirect
-    Session::flash('success',  trans('categories.category').' '.trans('crud.deleted'));
-    return Redirect::to('admin/categories');
+    $request->session()->flash('success',  trans('categories.category').' '.trans('crud.deleted'));
+    return redirect('admin/categories');
   }
 }

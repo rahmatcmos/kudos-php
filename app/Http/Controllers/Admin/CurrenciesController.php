@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Currency;
-use Input ;
-use Session ;
-use Redirect ;
 
 class CurrenciesController extends AdminController
 {
@@ -13,7 +11,7 @@ class CurrenciesController extends AdminController
    *
    * @return Redirect
    */
-  public function auto()
+  public function auto(Request $request)
   {
     $url = 'http://api.fixer.io/latest?base='.env('APP_CURRENCY');
     $rates = json_decode(file_get_contents($url), true);
@@ -30,11 +28,11 @@ class CurrenciesController extends AdminController
         $currency->rate = $rate ;
         $currency->save() ;
       }
-      Session::flash('success',  trans('currencies.currency').' '.trans('crud.updated'));
-      return Redirect::to('admin/currencies');
+      $request->session()->flash('success',  trans('currencies.currency').' '.trans('crud.updated'));
+      return redirect('admin/currencies');
     }
-    Session::flash('danger',  trans('currencies.currencies').' '.trans('crud.failed'));
-    return Redirect::to('admin/currencies');
+    $request->session()->flash('danger',  trans('currencies.currencies').' '.trans('crud.failed'));
+    return redirect('admin/currencies');
   }
   
   /**
@@ -63,15 +61,15 @@ class CurrenciesController extends AdminController
    * 
    * @return Redirect
    */
-  public function store()
+  public function store(Request $request)
   {
     // store
-    $data = Input::except(['_token', '_method']) ;
+    $data = $request->except(['_token', '_method']) ;
     $currency = Currency::create($data);
 
     // redirect
-    Session::flash('success',  trans('currencies.currency').' '.trans('crud.created'));
-    return Redirect::to('admin/currencies/' . $currency->id . '/edit');
+    $request->session()->flash('success',  trans('currencies.currency').' '.trans('crud.created'));
+    return redirect('admin/currencies/' . $currency->id . '/edit');
   }
   
   /**
@@ -94,17 +92,17 @@ class CurrenciesController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id )
   {
     // store
     $currency = Currency::find($id);
-    $data = Input::except(['_token', '_method']) ;
+    $data = $request->except(['_token', '_method']) ;
     $currency->fill($data) ;
     $currency->save();
 
     // redirect
-    Session::flash('success', trans('currencies.currency').' '.trans('crud.updated'));
-    return Redirect::to('admin/currencies/' . $id . '/edit');
+    $request->session()->flash('success', trans('currencies.currency').' '.trans('crud.updated'));
+    return redirect('admin/currencies/' . $id . '/edit');
   }
   
   /**
@@ -121,7 +119,7 @@ class CurrenciesController extends AdminController
     $currency->delete();
 
     // redirect
-    Session::flash('success',  trans('currencies.currency').' '.trans('crud.deleted'));
-    return Redirect::to('admin/currencies');
+    $request->session()->flash('success',  trans('currencies.currency').' '.trans('crud.deleted'));
+    return redirect('admin/currencies');
   }
 }

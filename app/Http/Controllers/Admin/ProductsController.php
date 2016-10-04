@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Traits\CategoriesTrait;
 use App\Http\Traits\Media;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 
 class ProductsController extends AdminController
 {
@@ -26,32 +23,32 @@ class ProductsController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // pagination
     $session_type = 'product' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by',$request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir',$request->order_dir) ;
     
-    $limit = Session::get('limit') ;
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $limit = $request->session()->get('limit') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
       
     // query products with conditional search  
-    $products = Product::where('shop_id',Session::get('shop'))
+    $products = Product::where('shop_id',$request->session()->get('shop'))
       ->where(function($query) {
-        if (Input::get('search')){
+        if ($request->search){
           
-          return $query->where('en.name', 'LIKE', '%'.Input::get('search').'%') ;
+          return $query->where('en.name', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
       })
-      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir')
       ->paginate($limit);
-    $products->search = Input::get('search') ;
+    $products->search = $request->search ;
     return view('admin/products/index', ['products' => $products]);
   }
   
@@ -71,56 +68,44 @@ class ProductsController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
-    // validate
-    $rules = [
-      'name' => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/products/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      
-      // store
-      $lang = Session::get('language');
-      $product = new Product;
-      $product->shop_id = Input::get('shop_id');
-      $product->slug = Input::get('slug');
-      $product->categories = Input::get('categories');
-      $product->price = Input::get('price');
-      $product->rrp = Input::get('rrp');
-      $product->salePrice = Input::get('salePrice');
-      $data = Input::except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
-      $product->$lang = $data ;
-      if($lang==config('app.locale')){
-        $product->default = $data ;
-      }
-      $product->save();
-      
-      // add product id to each category
-      // TODO: test later to see what query method is fastest
-      if(Input::has('categories')){
-        $categories = Input::get('categories');
-        foreach($categories as $category){
-          $c = Category::find($category) ;
-          $products = $c->products ;
-          if(!empty($products)){
-            array_push($products, $product->id) ;
-            $c->products = array_unique($products) ;
-          } else {
-             $c->products = [$product->id] ;
-          }
-          $c->save() ;
-        }
-      }
-
-      // redirect
-      Session::flash('success',  trans('products.product').' '.trans('crud.created'));
-      return Redirect::to('admin/products/' . $product->id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $product = new Product;
+    $product->shop_id = $request->shop_id;
+    $product->slug = $request->slug;
+    $product->categories = $request->categories;
+    $product->price = $request->price;
+    $product->rrp = $request->rrp;
+    $product->salePrice = $request->salePrice;
+    $data = $request->except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
+    $product->$lang = $data ;
+    if($lang==config('app.locale')){
+      $product->default = $data ;
     }
+    $product->save();
+    
+    // add product id to each category
+    // TODO: test later to see what query method is fastest
+    if($request->has('categories')){
+      $categories = $request->categories;
+      foreach($categories as $category){
+        $c = Category::find($category) ;
+        $products = $c->products ;
+        if(!empty($products)){
+          array_push($products, $product->id) ;
+          $c->products = array_unique($products) ;
+        } else {
+           $c->products = [$product->id] ;
+        }
+        $c->save() ;
+      }
+    }
+
+    // redirect
+    $request->session()->flash('success',  trans('products.product').' '.trans('crud.created'));
+    return redirect('admin/products/' . $product->id . '/edit');
   }
   
   /**
@@ -146,55 +131,44 @@ class ProductsController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/products/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $product = Product::find($id);
-      $product->shop_id = Input::get('shop_id');
-      $product->slug = Input::get('slug');
-      $product->categories = Input::get('categories');
-      $product->price = Input::get('price');
-      $product->rrp = Input::get('rrp');
-      $product->salePrice = Input::get('salePrice');
-      $data = Input::except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
-      $product->$lang = $data ;
-      if($lang==config('app.locale')){
-        $product->default = $data ;
-      }
-      $product->save();
-      
-      // add product id to each category
-      // TODO: test later to see what query method is fastest
-      if(Input::has('categories')){
-        $categories = Input::get('categories');
-        foreach($categories as $category){
-          $c = Category::find($category) ;
-          $products = $c->products ;
-          if(!empty($products)){
-            array_push($products, $product->id) ;
-            $c->products = array_unique($products) ;
-          } else {
-             $c->products = [$product->id] ;
-          }
-          $c->save() ;
-        }
-      }
-
-      // redirect
-      Session::flash('success', trans('products.product').' '.trans('crud.updated'));
-      return Redirect::to('admin/products/' . $id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $product = Product::find($id);
+    $product->shop_id = $request->shop_id;
+    $product->slug = $request->slug;
+    $product->categories = $request->categories;
+    $product->price = $request->price;
+    $product->rrp = $request->rrp;
+    $product->salePrice = $request->salePrice;
+    $data = $request->except(['shop_id', 'categories', 'slug', '_token', '_method', 'price', 'rrp', 'salePrice']) ;
+    $product->$lang = $data ;
+    if($lang==config('app.locale')){
+      $product->default = $data ;
     }
+    $product->save();
+    
+    // add product id to each category
+    // TODO: test later to see what query method is fastest
+    if($request->has('categories')){
+      $categories = $request->categories;
+      foreach($categories as $category){
+        $c = Category::find($category) ;
+        $products = $c->products ;
+        if(!empty($products)){
+          array_push($products, $product->id) ;
+          $c->products = array_unique($products) ;
+        } else {
+           $c->products = [$product->id] ;
+        }
+        $c->save() ;
+      }
+    }
+
+    // redirect
+    $request->session()->flash('success', trans('products.product').' '.trans('crud.updated'));
+    return redirect('admin/products/' . $id . '/edit');
   }
   
   /**
@@ -204,14 +178,14 @@ class ProductsController extends AdminController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id )
   {
     // delete
     $product = Product::find($id);      
     $product->delete();
 
     // redirect
-    Session::flash('success',  trans('products.product').' '.trans('crud.deleted'));
-    return Redirect::to('admin/products');
+    $request->session()->flash('success',  trans('products.product').' '.trans('crud.deleted'));
+    return redirect('admin/products');
   }
 }

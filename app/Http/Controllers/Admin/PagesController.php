@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Http\Traits\Media;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 
 class PagesController extends AdminController
 {
@@ -17,31 +14,31 @@ class PagesController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // pagination
     $session_type = 'page' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $limit = Session::get('limit') ;
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $limit = $request->session()->get('limit') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
       
-    $pages = Page::where('shop_id', Session::get('shop'))
+    $pages = Page::where('shop_id', $request->session()->get('shop'))
       ->where(function($query) {
-        if (Input::get('search')){
+        if ($request->search){
           
-          return $query->where('en.name', 'LIKE', '%'.Input::get('search').'%') ;
+          return $query->where('en.name', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
       })
-      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
-    $pages->search = Input::get('search') ;
+    $pages->search = $request->search ;
     return view('admin/pages/index', ['pages' => $pages]);
   }
   
@@ -60,34 +57,23 @@ class PagesController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/pages/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $page = new Page;
-      $page->shop_id = Input::get('shop_id');
-      $page->slug = Input::get('slug');
-      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
-      $page->$lang = $data ;
-      if($lang==config('app.locale')){
-        $page->default = $data ;
-      }
-      $page->save();
-
-      // redirect
-      Session::flash('success',  trans('pages.page').' '.trans('crud.created'));
-      return Redirect::to('admin/pages/' . $page->id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $page = new Page;
+    $page->shop_id = $request->shop_id;
+    $page->slug = $request->slug;
+    $data = $request->except(['shop_id', 'slug', '_token', '_method']) ;
+    $page->$lang = $data ;
+    if($lang==config('app.locale')){
+      $page->default = $data ;
     }
+    $page->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('pages.page').' '.trans('crud.created'));
+    return redirect('admin/pages/' . $page->id . '/edit');
   }
   
   /**
@@ -112,34 +98,23 @@ class PagesController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/pages/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $page = Page::find($id);
-      $page->shop_id = Input::get('shop_id');
-      $page->slug = Input::get('slug');
-      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
-      $page->$lang = $data ;
-      if($lang==config('app.locale')){
-        $page->default = $data ;
-      }
-      $page->save();
-
-      // redirect
-      Session::flash('success', trans('pages.page').' '.trans('crud.updated'));
-      return Redirect::to('admin/pages/' . $id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $page = Page::find($id);
+    $page->shop_id = $request->shop_id;
+    $page->slug = $request->slug;
+    $data = $request->except(['shop_id', 'slug', '_token', '_method']) ;
+    $page->$lang = $data ;
+    if($lang==config('app.locale')){
+      $page->default = $data ;
     }
+    $page->save();
+
+    // redirect
+    $request->session()->flash('success', trans('pages.page').' '.trans('crud.updated'));
+    return redirect('admin/pages/' . $id . '/edit');
   }
   
   /**
@@ -149,14 +124,14 @@ class PagesController extends AdminController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id )
   {
     // delete
     $page = Page::find($id);      
     $page->delete();
 
     // redirect
-    Session::flash('success',  trans('pages.page').' '.trans('crud.deleted'));
-    return Redirect::to('admin/pages');
+    $request->session()->flash('success',  trans('pages.page').' '.trans('crud.deleted'));
+    return redirect('admin/pages');
   }
 }

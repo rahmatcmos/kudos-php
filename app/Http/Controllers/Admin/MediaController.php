@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\Http\Traits\Media;
-use Input ;
 use Storage ;
-use Redirect ;
 use Image ; 
 
 class MediaController extends AdminController
@@ -20,9 +19,9 @@ class MediaController extends AdminController
    * 
    * @return none
    */
-  public function uploadImages( $dir, $id )
+  public function uploadImages(Request $request, $dir, $id )
   {
-    $file = Input::file('file'); 
+    $file = $request->file('file'); 
 
     Storage::disk('public')->put(
       'images/'.$dir.'/'.$id.'/'.basename($file->getClientOriginalName()),
@@ -31,7 +30,7 @@ class MediaController extends AdminController
 
     // resizing
     foreach(config('image.image_sizes') as $name => $size){
-      $thumb = Image::make(Input::file('file'))->resize($size[0], null, function ($constraint) {
+      $thumb = Image::make($request->file('file'))->resize($size[0], null, function ($constraint) {
         $constraint->aspectRatio();
       });
       if($thumb->height()>$size[1]){
@@ -102,9 +101,9 @@ class MediaController extends AdminController
    * 
    * @return Redirect
    */
-  public function delete()
+  public function delete(Request $request)
   {
-    $file = Input::get('file'); 
+    $file = $request->get('file'); 
     Storage::disk('public')->delete( $file ) ;
     
     // resized images
@@ -112,7 +111,7 @@ class MediaController extends AdminController
     foreach(config('image.image_sizes') as $name => $size){
       Storage::disk('public')->delete( $path_parts['dirname'].'/'.$name.'/'.$path_parts['basename'] ) ;
     }
-    return Redirect::back() ;
+    return back() ;
   }
   
   /**
@@ -122,11 +121,11 @@ class MediaController extends AdminController
    */
   public function default( $id, $type='product')
   {
-    $file = Input::get('file');
+    $file = $request->get('file');
     $model = 'App\\Models\\'.ucfirst($type) ;
     $item = $model::find($id) ; 
     $item->defaultImage = $file ;
     $item->save() ;
-    Return Redirect::back() ;
+    Return back() ;
   }
 }

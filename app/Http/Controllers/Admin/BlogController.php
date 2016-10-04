@@ -1,12 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Blog;
 use App\Http\Traits\Media;
-use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 
 class BlogController extends AdminController
 {
@@ -17,31 +13,31 @@ class BlogController extends AdminController
    *
    * @return Response
    */
-  public function index()
+  public function index(Request $request)
   {
     // pagination
     $session_type = 'blog' ;
-    if (!Session::has('order_by')) Session::put($session_type.'.order_by', 'created_at') ;
-    if (!Session::has('order_dir')) Session::put($session_type.'.order_dir', 'desc') ;
-    if (Input::get('order_by')) Session::put($session_type.'.order_by', Input::get('order_by')) ;
-    if (Input::get('order_dir')) Session::put($session_type.'.order_dir', Input::get('order_dir')) ;
+    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
-    $limit = Session::get('limit') ;
-    $orderby = Session::get($session_type.'.order_by') == 'created_at'
-      ? Session::get($session_type.'.order_by')
-      : Session::get('language').'.'.Session::get($session_type.'.order_by') ;
+    $limit = $request->session()->get('limit') ;
+    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
+      ? $request->session()->get($session_type.'.order_by')
+      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
       
-    $blog = Blog::where('shop_id', '=', Session::get('shop'))
+    $blog = Blog::where('shop_id', '=', $request->session()->get('shop'))
       ->where(function($query) {
-        if (Input::get('search')){
+        if ($request->search){
           
-          return $query->where('en.name', 'LIKE', '%'.Input::get('search').'%') ;
+          return $query->where('en.name', 'LIKE', '%'.$request->search.'%') ;
         }
         return ;
       })
-      ->orderBy($orderby, Session::get($session_type.'.order_dir'))
+      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
-    $blog->search = Input::get('search') ;
+    $blog->search = $request->search ;
     return view('admin/blog/index', ['blog' => $blog]);
   }
   
@@ -60,34 +56,23 @@ class BlogController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/blog/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $blog = new Blog;
-      $blog->shop_id = Input::get('shop_id');
-      $blog->slug = Input::get('slug');
-      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
-      $blog->$lang = $data ;
-      if($lang==config('app.locale')){
-        $blog->default = $data ;
-      }
-      $blog->save();
-
-      // redirect
-      Session::flash('success',  trans('blog.blog').' '.trans('crud.created'));
-      return Redirect::to('admin/blog/' . $blog->id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $blog = new Blog;
+    $blog->shop_id = $request->shop_id;
+    $blog->slug = $request->slug;
+    $data = $request->except(['shop_id', 'slug', '_token', '_method']) ;
+    $blog->$lang = $data ;
+    if($lang==config('app.locale')){
+      $blog->default = $data ;
     }
+    $blog->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('blog.blog').' '.trans('crud.created'));
+    return redirect('admin/blog/' . $blog->id . '/edit');
   }
   
   /**
@@ -112,34 +97,23 @@ class BlogController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
-    // validate
-    $rules = [
-      'name'       => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/blog/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $lang = Session::get('language');
-      $blog = Blog::find($id);
-      $blog->shop_id = Input::get('shop_id');
-      $blog->slug = Input::get('slug');
-      $data = Input::except(['shop_id', 'slug', '_token', '_method']) ;
-      $blog->$lang = $data ;
-      if($lang==config('app.locale')){
-        $blog->default = $data ;
-      }
-      $blog->save();
-
-      // redirect
-      Session::flash('success', trans('blog.blog').' '.trans('crud.updated'));
-      return Redirect::to('admin/blog/' . $id . '/edit');
+    // store
+    $lang = $request->session()->get('language');
+    $blog = Blog::find($id);
+    $blog->shop_id = $request->shop_id;
+    $blog->slug = $request->slug;
+    $data = $request->except(['shop_id', 'slug', '_token', '_method']) ;
+    $blog->$lang = $data ;
+    if($lang==config('app.locale')){
+      $blog->default = $data ;
     }
+    $blog->save();
+
+    // redirect
+    $request->session()->flash('success', trans('blog.blog').' '.trans('crud.updated'));
+    return redirect('admin/blog/' . $id . '/edit');
   }
   
   /**
@@ -156,7 +130,7 @@ class BlogController extends AdminController
     $blog->delete();
 
     // redirect
-    Session::flash('success',  trans('blog.blog').' '.trans('crud.deleted'));
-    return Redirect::to('admin/blog');
+    $request->session()->flash('success',  trans('blog.blog').' '.trans('crud.deleted'));
+    return redirect('admin/blog');
   }
 }

@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
 use App\User ;
 use Validator ;
-use Input ;
-use Session ;
-use Redirect ;
 use Hash ;
 
 class UsersController extends AdminController
@@ -42,33 +40,27 @@ class UsersController extends AdminController
    * 
    * @return Redirect
    */
-  public function store(  )
+  public function store(Request $request)
   {
     // validate
-    $rules = [
+    $this->validate($request, [
       'first_name'       => 'required',
       'email'      => 'required|email|unique:users',
       'password'   => 'required'
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/users/create')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $user = new user;
-      $user->first_name = Input::get('first_name') ;
-      $user->last_name = Input::get('last_name') ;
-      $user->email = Input::get('email') ;
-      $user->admin = 1 ;
-      $user->password = Hash::make(Input::get('password')) ;
-      $user->save();
+    ]);
 
-      // redirect
-      Session::flash('success',  trans('users.user').' '.trans('crud.created'));
-      return Redirect::to('admin/users/' . $user->id . '/edit');
-    }
+    // store
+    $user = new user;
+    $user->first_name = $request->first_name ;
+    $user->last_name = $request->last_name ;
+    $user->email = $request->email ;
+    $user->admin = 1 ;
+    $user->password = Hash::make($request->password) ;
+    $user->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('users.user').' '.trans('crud.created'));
+    return redirect('admin/users/' . $user->id . '/edit');
   }
   
   /**
@@ -91,33 +83,27 @@ class UsersController extends AdminController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id)
   {
     // validate
-    $rules = [
+    $this->validate($request, [
       'first_name'       => 'required',
       'email'      => 'email|unique:users,email,'.$id
-    ];
-    $validator = Validator::make(Input::all(), $rules);
-    if ($validator->fails()) {
-      return Redirect::to('admin/users/' . $id . '/edit')
-        ->withErrors($validator)
-        ->withInput();
-    } else {
-      // store
-      $user = User::find($id);
-      $user->first_name = Input::get('first_name') ;
-      $user->last_name = Input::get('last_name') ;
-      $user->email = Input::get('email');
-      $user->admin = 1 ;
-      if(Input::get('password'))
-        $user->password = Hash::make(Input::get('password')) ;
-      $user->save();
+    ]);
+    
+    // store
+    $user = User::find($id);
+    $user->first_name = $request->first_name ;
+    $user->last_name = $request->last_name ;
+    $user->email = $request->email;
+    $user->admin = 1 ;
+    if($request->password)
+      $user->password = Hash::make($request->password) ;
+    $user->save();
 
-      // redirect
-      Session::flash('success', trans('users.user').' '.trans('crud.updated'));
-      return Redirect::to('admin/users/' . $id . '/edit');
-    }
+    // redirect
+    $request->session()->flash('success', trans('users.user').' '.trans('crud.updated'));
+    return redirect('admin/users/' . $id . '/edit');
   }
   
   /**
@@ -127,15 +113,15 @@ class UsersController extends AdminController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id )
   {
     // delete
     $user = User::find($id);      
     $user->delete();
 
     // redirect
-    Session::flash('success',  trans('users.user').' '.trans('crud.deleted'));
-    return Redirect::to('admin/users');
+    $request->session()->flash('success',  trans('users.user').' '.trans('crud.deleted'));
+    return redirect('admin/users');
   }
 
     
