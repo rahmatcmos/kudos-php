@@ -86,7 +86,6 @@ class ProductsController extends AdminController
     $product->save();
     
     // add product id to each category
-    // TODO: test later to see what query method is fastest
     if($request->has('categories')){
       $categories = $request->categories;
       foreach($categories as $category){
@@ -149,7 +148,6 @@ class ProductsController extends AdminController
     $product->save();
     
     // add product id to each category
-    // TODO: test later to see what query method is fastest
     if($request->has('categories')){
       $categories = $request->categories;
       foreach($categories as $category){

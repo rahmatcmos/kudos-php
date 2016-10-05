@@ -7,8 +7,17 @@
     <li class="col-md-3">
       <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
-      <p>Price: &pound;{!! isset($product->salePrice) ? '<strike>'.$product->price.'</strike> &pound;'.$product->salePrice : $product->price !!}</p>
-      <a href="/products/{{ $product->slug }}" class="btn btn-primary">View Details</a>
+      @if(isset($product->rrp))
+      <p>rrp: <strong>&pound;{{ $product->rrp }}</strong></p>
+      @endif
+      @if(isset($product->salePrice))
+      <p>was: <strong>&pound;{{ $product->price}}</strong></p>
+      <p>now: <strong>&pound;{{ $product->salePrice}}</strong></p>
+      @else
+      <p>price: <strong>&pound;{{ $product->price}}</strong></p>
+      @endif
+      <a href="/products/{{ $product->slug }}" class="btn btn-primary full">View Details</a>
+      <hr>
     </li>
   @endforeach
 </ul>

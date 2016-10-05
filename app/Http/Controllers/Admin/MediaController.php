@@ -119,7 +119,7 @@ class MediaController extends AdminController
    * 
    * @return Redirect
    */
-  public function default( $id, $type='product')
+  public function default(Request $request, $id, $type='product')
   {
     $file = $request->get('file');
     $model = 'App\\Models\\'.ucfirst($type) ;

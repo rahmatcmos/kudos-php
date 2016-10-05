@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Themes\Basic;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category ;
+use App\Http\Traits\Media;
 
 class ProductsController extends ThemeController
 {
+  use Media ;
   
   /**
    * Show all products
@@ -41,6 +43,8 @@ class ProductsController extends ThemeController
   public function show($slug)
   {
     $product = Product::where('slug', $slug)->first() ;
+    $file_size = key(array_reverse(config('image.image_sizes'))) ; //smallest
+    $product->files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
     return view('themes/basic/products/show', ['product' => $product]);
   }
   
