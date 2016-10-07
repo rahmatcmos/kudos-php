@@ -2,12 +2,12 @@
 
 @section('content')
   <div class="row">
-    <div class="col-md-6">
-      <img src="/storage/{{ str_replace('/thumb/', '/large/', $product->defaultImage) }}" class="img-responsive">
+    <div class="col-md-6 images">
+      <a href="/storage/{{ str_replace('/large/', '/', $product->defaultImage) }}" target="_blank"><img src="/storage/{{ $product->defaultImage }}" class="img-responsive main"></a>
       <ul class="row">
       @foreach($product->files as $thumb)
         <li class="col-md-4">
-          <img src="/storage/{{ $thumb }}" class="img-responsive">
+          <a href="/storage/{{ str_replace('/thumb/', '/', $thumb ) }}" target="_blank"><img src="/storage/{{ $thumb }}" class="img-responsive"></a>
         </li>
       @endforeach
       </ul>
@@ -28,7 +28,7 @@
       </div>
       {{ Form::open(['url' => 'basket']) }}
         {{ Form::hidden('id',  $product['id']) }}
-        {{ Form::hidden('price',  isset($product->salePrice) ? $product->salePrice : $product->price) }}
+        {{ Form::hidden('price',  !empty($product->salePrice) ? $product->salePrice : $product->price) }}
         {{ Form::submit('Add to Basket', ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}
     </div>

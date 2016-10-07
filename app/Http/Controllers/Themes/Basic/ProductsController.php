@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Themes\Basic;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Product;
 use App\Models\Category ;
 use App\Http\Traits\Media;
@@ -32,6 +33,7 @@ class ProductsController extends ThemeController
     $products = Product::where('shop_id', $request->session()->get('shop'))
       ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
+
     return view('themes/basic/products/index', ['products' => $products]);
   }
   

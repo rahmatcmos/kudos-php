@@ -6,10 +6,10 @@
     <li class="col-md-3">
       <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
-      @if(isset($product->rrp))
+      @if(!empty($product->rrp))
       <p>rrp: <strong>&pound;{{ $product->rrp }}</strong></p>
       @endif
-      @if(isset($product->salePrice))
+      @if(!empty($product->salePrice))
       <p>was: <strong>&pound;{{ $product->price}}</strong></p>
       <p>now: <strong>&pound;{{ $product->salePrice}}</strong></p>
       @else
