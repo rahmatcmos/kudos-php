@@ -8,6 +8,7 @@ use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Omnipay ;
+use App\Notifications\NewOrder;
 
 class CheckoutController extends ThemeController
 {
@@ -30,6 +31,13 @@ class CheckoutController extends ThemeController
    */
   public function store(Request $request)
   {
+    // check for address
+    if(!$request->shipping_id || !$request->billing_id){
+      $request->session()->flash('danger',  trans('address.required')) ;
+      return back() ;
+    }
+    
+    
     // charge the card
     $card = Omnipay::creditCard($request->all());
     
@@ -42,10 +50,11 @@ class CheckoutController extends ThemeController
     )->send();
 
     if ($response->isSuccessful()) {
-      // create order
-      $this->createOrder($request->all()) ;
+      // create order and send email
+      $order = $this->createOrder($request) ;
       $request->session()->forget('basket') ;
-      $request->session()->flash('success',  trans('order.thankyou'));
+      $request->session()->flash('success',  trans('orders.thankyou'));
+      Auth::user()->notify(new NewOrder($order));
       return redirect('/account');
     } else {
       // payment failed: display message to customer
@@ -54,9 +63,9 @@ class CheckoutController extends ThemeController
     }
   }
   
-  public function createOrder(Request $request, Array $input)
+  public function createOrder(Request $request)
   {
-    DB::transaction(function ($input) use ($input){
+    DB::transaction(function ($input) use ($request){
       
       // get the basket
       $basket = $request->session()->get('basket') ;
@@ -65,11 +74,11 @@ class CheckoutController extends ThemeController
       $order = new Order;
       $order->shop_id = $request->session()->get('shop') ;
       $order->customer_id = Auth::user()->id ;
-      $order->shipping_id = $input['shipping_id'] ;
-      $order->billing_id = $input['billing_id'] ;
+      $order->shipping_id = $request->shipping_id ;
+      $order->billing_id = $request->billing_id ;
       $order->total = $basket['subtotal'];
-      $basket['shipping'] = Address::find($input['shipping_id'])->toArray() ;
-      $basket['billing'] = Address::find($input['billing_id'])->toArray() ;
+      $basket['shipping'] = Address::find($request->shipping_id)->toArray() ;
+      $basket['billing'] = Address::find($request->billing_id)->toArray() ;
       $order->basket = serialize($basket);
       $order->save();
       
@@ -83,6 +92,8 @@ class CheckoutController extends ThemeController
         $orderItem->price = $item['price'];
         $orderItem->save();
       }
+      
+      return $order ;
     });
   }
 

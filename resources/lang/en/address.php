@@ -12,4 +12,5 @@ return [
   'country' => 'Country',
   'shipping' => 'Delivery Address',
   'billing' => 'Billing Address',
+  'required' => 'Billing Address and Delivery Address required',
 ];

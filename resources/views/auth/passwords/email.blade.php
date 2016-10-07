@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('themes.Basic.layouts.full')
 
 <!-- Main Content -->
 @section('content')

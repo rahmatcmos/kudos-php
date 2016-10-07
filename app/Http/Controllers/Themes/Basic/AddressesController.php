@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Controllers\Themes\Basic;
 
-use App\Models\Address;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
 
 class AddressesController extends ThemeController
 {
@@ -46,7 +47,7 @@ class AddressesController extends ThemeController
    * 
    * @return Redirect
    */
-  public function store( )
+  public function store(Request $request )
   {
     $data = $request->all() ;
     $data['customer_id'] = Auth::user()->id ;
@@ -61,7 +62,7 @@ class AddressesController extends ThemeController
    * 
    * @return Redirect
    */
-  public function update( $id )
+  public function update(Request $request, $id )
   {
     // store
     $address = Address::find($id)->update($request->all());

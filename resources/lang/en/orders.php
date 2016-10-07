@@ -7,5 +7,6 @@ return [
   'date' => 'Order Date',
   'items' => 'Items',
   'subtotal' => 'Subtotal',
-  'total' => 'Total'  
+  'total' => 'Total',
+  'thankyou' => 'Thank your for your order'
 ];
