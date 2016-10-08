@@ -11,11 +11,11 @@
     </li>
   </ul>
   <hr>
-  @foreach($order_items as $id => $item)
+  @foreach($order->basket['items'] as $id => $item)
   <ul class="row">
     <li class="col-md-7">
       <h2>
-        {{ isset($item[session('language')]['name']) ? $item[session('language')]['name'] : $item['default']['name'] }}
+        {{ isset($item['product'][session('language')]['name']) ? $item['product'][session('language')]['name'] : $item['product']['default']['name'] }}
       </h2>
     </li>
     <li class="col-md-2 text-right">

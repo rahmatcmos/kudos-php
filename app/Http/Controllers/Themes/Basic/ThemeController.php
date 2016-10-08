@@ -10,6 +10,7 @@ class ThemeController extends \App\Http\Controllers\Controller
     
     public function __construct(Route $route)
     {    
+      
       $this->middleware(function ($request, $next) {
         // if session is not set or the shop doesn't exist reset the session for the shop
         if ( !$request->session()->has('shop') || Shop::where('_id', '=', $request->session()->get('shop'))->count()==0 ){

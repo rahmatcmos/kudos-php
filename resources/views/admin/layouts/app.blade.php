@@ -45,7 +45,7 @@
       <li>
         <form id="logout-form" action="{{ url('/logout') }}" method="POST">
           {{ csrf_field() }}
-          <button class="btn btn-danger"><i class="fa fa-sign-out"></i></button>
+          <button class="btn btn-link"><i class="fa fa-sign-out"></i></button>
         </form>
       </li>
     </ul>

@@ -49,7 +49,7 @@ class AddressesController extends ThemeController
    */
   public function store(Request $request )
   {
-    $data = $request->all() ;
+    $data = $request->except('_token') ;
     $data['customer_id'] = Auth::user()->id ;
     Address::create($data);
     return redirect('/account/addresses');
@@ -79,11 +79,11 @@ class AddressesController extends ThemeController
    * 
    * @return Redirect
    */
-  public function destroy( $id )
+  public function destroy(Request $request, $id )
   {
     // delete
-    $Address = Address::find($id);      
-    $Address->delete();
+    $address = Address::find($id);    
+    $address->delete();
 
     // redirect
     $request->session()->flash('success',  trans('address.address').' '.trans('crud.deleted'));

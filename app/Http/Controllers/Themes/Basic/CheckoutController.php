@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
-use DB;
 use Omnipay ;
 use App\Notifications\NewOrder;
 
@@ -64,9 +63,7 @@ class CheckoutController extends ThemeController
   }
   
   public function createOrder(Request $request)
-  {
-    DB::transaction(function ($input) use ($request){
-      
+  { 
       // get the basket
       $basket = $request->session()->get('basket') ;
       
@@ -79,22 +76,9 @@ class CheckoutController extends ThemeController
       $order->total = $basket['subtotal'];
       $basket['shipping'] = Address::find($request->shipping_id)->toArray() ;
       $basket['billing'] = Address::find($request->billing_id)->toArray() ;
-      $order->basket = serialize($basket);
+      $order->basket = $basket;
       $order->save();
-      
-      // save order items
-      foreach($basket['items'] as $id => $item){
-        // save order
-        $orderItem = new OrderItem;
-        $orderItem->order_id = $order->id ;
-        $orderItem->product_id = $id ;
-        $orderItem->quantity = $item['qty'];
-        $orderItem->price = $item['price'];
-        $orderItem->save();
-      }
-      
       return $order ;
-    });
   }
 
 }

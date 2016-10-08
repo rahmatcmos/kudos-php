@@ -13,6 +13,8 @@
 
 Auth::routes();
 
+Route::get('/account','OrdersController@index');
+
 // frontend routes
 Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function() {
   Route::get('/', 'ProductsController@index');

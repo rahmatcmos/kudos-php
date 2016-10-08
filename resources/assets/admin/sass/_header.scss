@@ -47,6 +47,14 @@ header {
         padding: 0 15px;
         font-size: 120% ;
       }
+      form{
+        .btn-link{
+          color: #fff ;
+          &:hover{
+            color: #fff ;
+          }
+        }
+      }
     }
   }
 

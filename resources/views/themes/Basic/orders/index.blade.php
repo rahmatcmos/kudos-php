@@ -14,7 +14,7 @@
     @foreach ($orders as $order)
     <tr>
       <td><a href="/account/orders/{{ $order->id }}">{{ $order->id }}</a></td>
-      <td><a href="/account/orders/{{ $order->id }}">&pound;{{ $order->total }}</a></td>
+      <td><a href="/account/orders/{{ $order->id }}">&pound;{{ number_format($order->total,2) }}</a></td>
       <td><a href="/account/orders/{{ $order->id }}">{{ $order->created_at }}</a></td>
     </tr>    
     @endforeach

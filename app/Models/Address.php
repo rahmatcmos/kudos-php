@@ -1,25 +1,27 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Moloquent ;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class Address extends Model {
+class Address extends Moloquent {
   
   use SoftDeletes;
   
+  protected $connection = 'mongodb';
+  
   /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+   * The table associated with the model.
+   *
+   * @var string
+   */
   protected $table = 'addresses';
   
   /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
   protected $fillable = [
     'customer_id',
     'address1',

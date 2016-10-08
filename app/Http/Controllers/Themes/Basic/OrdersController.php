@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Themes\Basic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Product;
 
 class OrdersController extends ThemeController
@@ -32,14 +31,7 @@ class OrdersController extends ThemeController
   {
     $order = Order::find($id);
     if(!$order) \App::abort(404);
-    $items = OrderItem::where('order_id', $order->id)->get();
-    $order_items = [];
-    foreach($items as $item){
-      $order_items[$item->product_id] = Product::find($item->product_id) ; 
-      $order_items[$item->product_id]['price'] = $item->price ;
-      $order_items[$item->product_id]['qty'] = $item->quantity ;
-    }
-    return view('themes/basic/orders/show', ['order' => $order, 'order_items' => $order_items]);
+    return view('themes/basic/orders/show', ['order' => $order]);
   }
 
 }

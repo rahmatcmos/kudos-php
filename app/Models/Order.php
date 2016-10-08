@@ -1,12 +1,14 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Moloquent ;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
-class Order extends Model {
+class Order extends Moloquent {
   
   use SoftDeletes;
+  
+  protected $connection = 'mongodb';
   
   /**
   * Get the order Items for the order.
