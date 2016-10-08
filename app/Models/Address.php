@@ -8,8 +8,6 @@ class Address extends Moloquent {
   
   use SoftDeletes;
   
-  protected $connection = 'mongodb';
-  
   /**
    * The table associated with the model.
    *

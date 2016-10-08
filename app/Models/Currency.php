@@ -7,15 +7,13 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 class Currency extends Moloquent {
     
   use SoftDeletes;
-  
-  protected $connection = 'mongodb';
+
   protected $dates = ['deleted_at'];
   
   /**
    * allow filling of any amount of fields
    */
-  protected $guarded = []; 
-    
+  protected $guarded = [];   
     
   /*
    * currency list ISO 4217

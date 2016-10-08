@@ -8,8 +8,6 @@ class Page extends Moloquent {
   
   use SoftDeletes;
   
-  protected $connection = 'mongodb';
-  
   /**
    * allow filling of any amount of fields
    */

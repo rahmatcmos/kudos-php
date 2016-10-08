@@ -8,8 +8,6 @@ class Order extends Moloquent {
   
   use SoftDeletes;
   
-  protected $connection = 'mongodb';
-  
   /**
   * Get the order Items for the order.
   */
