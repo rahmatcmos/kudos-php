@@ -48,4 +48,22 @@ class OrdersController extends AdminController
         if(!$order) \App::abort(404);       
         return view('admin/orders/show', ['order' => $order]);
     }
+    
+    /**
+     * Delete an order
+     *
+     * @param string $id
+     * 
+     * @return Redirect
+     */
+    public function destroy(Request $request, String $id)
+    {
+      // delete
+      $order = Order::find($id);      
+      $order->delete();
+  
+      // redirect
+      $request->session()->flash('success',  trans('orders.order').' '.trans('crud.deleted'));
+      return redirect('admin/orders');
+  }
 }
