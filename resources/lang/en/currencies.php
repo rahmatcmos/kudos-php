@@ -3,8 +3,7 @@
 return [
   'currencies' => 'Currencies',
   'currency' => 'Currency',
-  
-  // labels
   'code' => 'Code',
-  'rate' => 'Rate'
+  'rate' => 'Rate',
+  'autoinfo' => 'If you wish to automatically update currency rates you should use the artisan command'
 ];

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Currency;
+use Artisan ;
 
 class CurrenciesController extends AdminController
 {
@@ -13,25 +14,8 @@ class CurrenciesController extends AdminController
    */
   public function auto(Request $request)
   {
-    $url = 'http://api.fixer.io/latest?base='.env('APP_CURRENCY');
-    $rates = json_decode(file_get_contents($url), true);
-    if($rates){
-      $currency = Currency::firstOrNew([ 
-        'currency'  => env('APP_CURRENCY'),
-        'rate'      => 1
-      ]);
-      $currency->save() ;
-      foreach($rates['rates'] as $code => $rate){
-        $currency = Currency::firstOrNew([ 
-          'currency'  => $code
-        ]);
-        $currency->rate = $rate ;
-        $currency->save() ;
-      }
-      $request->session()->flash('success',  trans('currencies.currency').' '.trans('crud.updated'));
-      return redirect('admin/currencies');
-    }
-    $request->session()->flash('danger',  trans('currencies.currencies').' '.trans('crud.failed'));
+    Artisan::call('update:currencies') ;
+    $request->session()->flash('info', Artisan::output());
     return redirect('admin/currencies');
   }
   
