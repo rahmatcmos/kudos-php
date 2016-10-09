@@ -17,6 +17,7 @@
     <a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars"></i></a>
     <ol>
       <li>
+      {!! Form::token() !!}
       @if( !isset($shop_remove) )
         <select class="form-control" id="select-shops">
           @foreach ($select_shops as $shop)
@@ -33,6 +34,7 @@
     @endif
     <ul>
       <li>
+        {!! Form::token() !!}
         <select class="form-control" id="select-language">
           @foreach ($languages as $id => $language)
           <option value="{{ $id }}" {{ session('language')==$id ?'selected=selected':'' }}>{{ $language }}{{ config('app.locale')==$id ?' (Default)':''}}</option>   

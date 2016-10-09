@@ -12,7 +12,8 @@
     // shop
     $("#select-shops").change(function() {
       var id = $(this).val() ;
-      $.post( "/admin/remember", { shop: id }, function() {
+      var token = $(this).prev().val() ;
+      $.post( "/admin/remember", { 'shop': id, '_token': token }, function() {
         window.location.replace("/admin"); 
       });
     }); 
@@ -20,7 +21,8 @@
     // lang
     $("#select-language").change(function() {
       var id = $(this).val() ;
-      $.post( "/admin/remember", { language: id }, function() {
+      var token = $(this).prev().val() ;
+      $.post( "/admin/remember", { 'language': id, '_token': token }, function() {
         location.reload() ; 
       });
     });
