@@ -46,8 +46,9 @@ class ShopsController extends AdminController
     // store
     $lang = $request->session()->get('language');
     $shop = new Shop;
-    $data = $request->except(['url','_token', '_method']) ;
+    $data = $request->except(['code', 'url','_token', '_method']) ;
     $shop->url = $request->url;
+    $shop->code = $request->code;
     $shop->$lang = $data ;
     if($lang==config('app.locale')){
       $shop->default = $data ;
@@ -85,8 +86,9 @@ class ShopsController extends AdminController
     // store
     $lang = $request->session()->get('language');
     $shop = Shop::find($id);
-    $data = $request->except(['url','_token', '_method']) ;
+    $data = $request->except(['code', 'url','_token', '_method']) ;
     $shop->url = $request->url;
+    $shop->code = $request->code;
     $shop->$lang = $data ;
     if($lang==config('app.locale')){
       $shop->default = $data ;
