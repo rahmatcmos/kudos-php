@@ -12,9 +12,9 @@ class ThemeController extends \App\Http\Controllers\Controller
     {    
       
       $this->middleware(function ($request, $next) {
-        // if session is not set or the shop doesn't exist reset the session for the shop
-        if ( !$request->session()->has('shop') || Shop::where('_id', '=', $request->session()->get('shop'))->count()==0 ){
-          $shop = Shop::first() ;
+        // if session is not set get it from .env SHOP_CODE
+        if ( !$request->session()->has('shop')){
+          $shop = Shop::where('code', config('app.shop_code'))->first() ;
           $request->session()->put('shop', $shop->id) ;
         }
         
