@@ -37,11 +37,11 @@ class OrdersController extends AdminController
     /**
      * View an order
      *
-     * @param Int $id 
+     * @param String $id 
      *
      * @return Response
      */
-    public function show(Int $id)
+    public function show(String $id)
     {  
         $order = Order::find($id) ;
         $order->basket = unserialize($order->basket) ;

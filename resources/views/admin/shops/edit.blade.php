@@ -19,8 +19,7 @@
   
   <section>
     <div class="container-fluid">
-      <!-- if there are creation errors, they will show here -->
-      {{ Html::ul($errors->all()) }}
+      {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
       {{ Form::model($shop, ['url' => 'admin/shops/'.$shop->id, 'method' => 'PUT']) }}
         {{ Form::label('name', trans('shops.shop_name')) }}
         {{ Form::text('name', isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'], ['class' => 'form-control', 'required' => 'required']) }}

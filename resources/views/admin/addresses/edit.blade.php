@@ -8,8 +8,7 @@
   </div>
   
   <section class="container-fluid">
-    <!-- if there are creation errors, they will show here -->
-    {{ Html::ul($errors->all()) }}
+    {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
     {{ Form::model($address, ['url' => 'admin/addresses/'.$address->id, 'method' => 'PUT']) }}
       {{ Form::hidden('customer_id', $address->customer_id) }}
       {{ Form::label('address1', trans('address.address1')) }}

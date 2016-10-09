@@ -1,7 +1,7 @@
 @extends('themes.basic.layouts.account')
 
 @section('content')
-  {{ Html::ul($errors->all()) }}
+  {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
   {{ Form::model($address, ['url' => 'account/addresses/'.$address->id, 'method' => 'PUT']) }}
     {{ Form::label('address1', trans('address.address1')) }}
     {{ Form::text('address1', $address->address1, ['class' => 'form-control', 'required' => 'required']) }}

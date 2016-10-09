@@ -13,8 +13,7 @@
   
   <section>
     <div class="container-fluid">
-      <!-- if there are creation errors, they will show here -->
-      {{ Html::ul($errors->all()) }}
+      {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
       {{ Form::open(['url' => 'admin/products']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('name', trans('products.name')) }}

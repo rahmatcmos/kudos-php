@@ -19,7 +19,7 @@
   
   <section>
     <div class="container-fluid">
-      {{ Html::ul($errors->all(), ['class' => 'alert alert-warning']) }}
+      {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
       {{ Form::model($user, ['url' => 'admin/users/'.$user->id, 'method' => 'PUT']) }}
         {{ Form::label('first_name', trans('users.first name')) }}
         {{ Form::text('first_name', $user->first_name, ['class' => 'form-control', 'required' => 'required']) }}

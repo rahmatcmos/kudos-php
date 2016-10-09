@@ -36,7 +36,7 @@
             <th>
               <a href="/admin/orders?page={{ $orders->currentPage() }}&order_by=created_at&order_dir={{ session('order.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $orders->search }}" 
                 class="order-{{ session('order.order_by') == 'created_at' ? session('order.order_dir') : '' }}">
-                {{ trans('orders.created_at') }}
+                {{ trans('crud.created') }}
               </a>
             </th>
           </tr>

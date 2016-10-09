@@ -21,11 +21,11 @@
     <div class="container-fluid">
       {{ Html::ul($errors->all(), ['class' => 'alert alert-warning']) }}
       <form>
-      {{ Form::label('id', trans('orders.ref')) }}
+      {{ Form::label('id', trans('orders.id')) }}
       {{ Form::text('id', $order->id, ['class' => 'form-control', 'required' => 'required']) }}
       {{ Form::label('total', trans('orders.total')) }}
-      {{ Form::text('total', $order->total, ['class' => 'form-control', 'required' => 'required']) }}
-      {{ Form::label('created_at', trans('orders.created')) }}
+      {{ Form::text('total', number_format($order->total,2), ['class' => 'form-control', 'required' => 'required']) }}
+      {{ Form::label('created_at', trans('crud.created')) }}
       {{ Form::text('created_at', $order->created_at, ['class' => 'form-control', 'required' => 'required']) }}
       </form>
       <div class="white-panel">
@@ -58,7 +58,7 @@
           {{ trans('orders.total') }}: &pound;{{ number_format($order->total, 2) }}
         </p>
       </div>
-      
+      <br>      
       <div class="row">
         <div class="col-md-6">
           <div class="white-panel">

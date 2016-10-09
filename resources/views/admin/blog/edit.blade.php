@@ -19,8 +19,7 @@
   
   <section>
     <div class="container-fluid">
-      <!-- if there are creation errors, they will show here -->
-      {{ Html::ul($errors->all()) }}
+      {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
       <div class="row">
         <div class="col-md-4">
           {{ Form::label('images', trans('fields.images')) }} ({{ trans('fields.click default')}})

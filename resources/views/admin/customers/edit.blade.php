@@ -19,8 +19,7 @@
   </div>
   
   <section class="container-fluid">
-      <!-- if there are creation errors, they will show here -->
-      {{ Html::ul($errors->all()) }}
+      {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}
       {{ Form::model($customer, ['url' => 'admin/customers/'.$customer->id, 'method' => 'PUT']) }}
         {{ Form::hidden('shop_id', session('shop')) }}
         {{ Form::label('first_name', trans('customers.first name')) }}
