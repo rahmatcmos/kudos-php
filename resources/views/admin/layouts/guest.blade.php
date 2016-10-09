@@ -11,7 +11,7 @@
     
 </head>
 
-<body>
+<body class="{{ isset($body_class) ? $body_class : '' }}">
 
   @yield('content')
 

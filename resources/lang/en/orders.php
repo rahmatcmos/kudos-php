@@ -8,5 +8,6 @@ return [
   'items' => 'Items',
   'subtotal' => 'Subtotal',
   'total' => 'Total',
-  'thankyou' => 'Thank your for your order'
+  'thankyou' => 'Thank your for your order',
+  'revenuegenerated' => 'Revenue generated'
 ];

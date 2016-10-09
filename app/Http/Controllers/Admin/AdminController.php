@@ -55,6 +55,6 @@ class AdminController extends \App\Http\Controllers\Controller
     {  
       if ( Auth::check() && Auth::user()->isAdmin() )
         return redirect('admin/dashboard') ;
-      return view('auth/admin-login');
+      return view('auth/admin-login', ['body_class' => 'login']);
     }
 }

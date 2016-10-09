@@ -3,6 +3,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Page;
+use App\Models\Blog;
+use App\Models\Order;
+use App\User;
 
 class DashboardController extends AdminController
 {  
@@ -13,9 +19,19 @@ class DashboardController extends AdminController
      */
     public function show(Request $request)
     {
-      return view('admin/dashboard');
+      $stats['categories'] = Category::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['products'] = Product::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['customers'] = User::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['pages'] = Page::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['blogs'] = Blog::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['orders'] = Order::where('shop_id', '=', $request->session()->get('shop'))->count() ;
+      $stats['revenue'] = Order::where('shop_id', '=', $request->session()->get('shop'))->sum('total') ;
+      return view('admin/dashboard', ['stats' => $stats]);
     }
     
+    /**
+     * remember lang/shop state
+     */
     public function remember(Request $request)
     {
       // toggle state 
