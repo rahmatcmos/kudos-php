@@ -19,16 +19,38 @@
     background: $orange ;
     border-color: $orange ;
     &:hover{
-      background: darken($orange, 10%) ;
+      background: darken($orange, 10%) ; 
       border-color: darken($orange, 10%) ;
     }
   }
   &.btn-danger{
-    background: $red ;
+    background: $red ; 
     border-color: $red ;
     &:hover{
       background: darken($red, 10%) ;
       border-color: darken($red, 10%) ;
     }
+  }
+  &.btn-link{
+    padding: 0 ;
+    background: transparent ; 
+    border-color: transparent ;
+    color: $color3 ; 
+  }
+  &.full{
+    width: 100% ;
+    text-align: center ;
+  }
+  &.fat{
+    line-height: 60px ;
+  }
+  &.red{
+    color: $red ;
+  }
+  &.orange{
+    color: $orange ;
+  }
+  &.green{
+    color: $green ;
   }
 }

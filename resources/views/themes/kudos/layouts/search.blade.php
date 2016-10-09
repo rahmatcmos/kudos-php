@@ -6,7 +6,7 @@
         <h2>Navigation</h2>
         <ul>
           @foreach ($categories as $category)
-            <li><a href="/categories/{{ $category->slug }}">{{ $category[$language]['name']}}</a></li>
+            <li><a href="/products/search/{{ $category->slug }}">{{ $category[$language]['name']}}</a></li>
           @endforeach
         </ul>
       </aside>

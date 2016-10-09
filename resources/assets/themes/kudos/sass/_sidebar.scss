@@ -1,0 +1,63 @@
+aside{
+  padding-top: 20px ;
+  padding-bottom: 20px ;
+  h2,
+  h3{
+    border-bottom: 1px solid $color4;
+    line-height: 40px ;
+    text-transform: uppercase ;
+    font-weight: bold ;
+  }
+  &.account{
+    .btn-link{
+      width: 100% ;
+      text-align: left ;
+      line-height: 40px ;
+      border: 0 ;
+      color: $color5 ;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+ aside{
+   padding-top: 60px ;
+   padding-bottom: 60px ;
+   h2,
+   h3{
+     margin-right: 20px ;
+   }
+   ul{  
+     padding-right: 20px ;
+   }
+   ul{
+     li{
+       border-bottom: 1px solid $color4;
+       a{
+         line-height: 40px ;
+         display: block ;
+         color: $color5 ;
+         font-size: 90% ;
+         span{
+           float: right ;
+           color: $color3 ;
+         }
+       }
+     }
+     &.icons{
+       li{
+         border: 0 ;
+       }
+     }
+     &.visual{
+       margin: 20px 0 ;
+     }
+     &.account{
+       margin: 20px 0 ;
+     }
+     &.social{
+       margin-top: 15px ;
+     }
+   }
+ } 
+}
