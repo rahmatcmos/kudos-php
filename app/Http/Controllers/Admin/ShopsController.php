@@ -46,7 +46,7 @@ class ShopsController extends AdminController
     // store
     $lang = $request->session()->get('language');
     $shop = new Shop;
-    $data = $request->except(['root', 'url','_token', '_method']) ;
+    $data = $request->except(['url','_token', '_method']) ;
     $shop->url = $request->url;
     $shop->$lang = $data ;
     if($lang==config('app.locale')){
@@ -70,8 +70,7 @@ class ShopsController extends AdminController
   {
     $shop = Shop::find($id) ;
     $categories = Category::where('shop_id', '=', $id)->orderBy('order', 'asc')->get() ;
-    $categories = $this->sortCategories($categories->toArray()) ;
-    return view('admin/shops/edit', ['shop' => $shop, 'categories' => $categories]);
+    return view('admin/shops/edit', ['shop' => $shop]);
   }
   
   /**
@@ -86,8 +85,7 @@ class ShopsController extends AdminController
     // store
     $lang = $request->session()->get('language');
     $shop = Shop::find($id);
-    $data = $request->except(['root', 'url','_token', '_method']) ;
-    $shop->root = $request->root;
+    $data = $request->except(['url','_token', '_method']) ;
     $shop->url = $request->url;
     $shop->$lang = $data ;
     if($lang==config('app.locale')){
@@ -118,23 +116,4 @@ class ShopsController extends AdminController
     return redirect('admin/shops');
   }
   
-  /*
-   * sort categories
-   *
-   * @param array categories
-   * @param string parent id
-   * 
-   * @return Array
-   */
-  private function sortCategories(Array $categories, $parent = NULL)
-  {
-    $return = [] ;
-    foreach ($categories as $k => $v) {
-      if ($v['parent'] == $parent) {
-        $return[$v['_id']] = $v; 
-        $return[$v['_id']]['children'] = $this->sortCategories($categories, $v['_id']);    
-      }
-    }
-    return $return ;
-  }
 }
