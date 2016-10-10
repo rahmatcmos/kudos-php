@@ -14,7 +14,8 @@
         "ignited/laravel-omnipay": "2.*",
         "omnipay/stripe": "*",
         "barryvdh/laravel-debugbar": "^2.3",
-        "spatie/laravel-analytics": "^2.2"
+        "spatie/laravel-analytics": "^2.2",
+        "magyarjeti/laravel-lipsum": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

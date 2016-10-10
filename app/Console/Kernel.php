@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-      Commands\UpdateCurrencies::class
+      Commands\UpdateCurrencies::class,
+      Commands\PopulateDummy::class
     ];
 
     /**

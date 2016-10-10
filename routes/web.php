@@ -113,9 +113,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   // blog
   Route::resource('blog', 'BlogController');
   
-  // temp
-  Route::resource('populate', 'PopulateController');
-  
   // slugify
   Route::post('slugify', 'SlugController@slugify');
   Route::get('slugify', 'SlugController@slugify');
