@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.search')
+@extends('themes.kudos.layouts.search')
 
 @section('content')
   @if(session('query'))

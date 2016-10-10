@@ -34,7 +34,7 @@ class CategoriesController extends ThemeController
       ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit) ;
 
-    return view('themes/basic/categories/show', ['category' => $category, 'products' => $products]);
+    return view('themes/kudos/categories/show', ['category' => $category, 'products' => $products]);
   }
 
 }

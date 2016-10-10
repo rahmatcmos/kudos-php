@@ -15,7 +15,7 @@ class PagesController extends ThemeController
   {
     $page = Page::Where('slug', $slug)->first() ;
     if(!$page) \App::abort(404); 
-    return view('themes/basic/pages/show', ['page' => $page]);
+    return view('themes/kudos/pages/show', ['page' => $page]);
   }
 
 }

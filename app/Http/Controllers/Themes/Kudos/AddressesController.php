@@ -16,7 +16,7 @@ class AddressesController extends ThemeController
   public function index( )
   {
     $addresses = Address::where('customer_id', Auth::user()->id)->get() ;
-    return view('themes/basic/addresses/index', ['addresses' => $addresses]);
+    return view('themes/kudos/addresses/index', ['addresses' => $addresses]);
   }
   
   /**
@@ -26,7 +26,7 @@ class AddressesController extends ThemeController
    */
   public function create()
   {
-    return view('themes/basic/addresses/create');
+    return view('themes/kudos/addresses/create');
   }
  
   /**
@@ -39,7 +39,7 @@ class AddressesController extends ThemeController
   public function edit( $id )
   {
     $address = Address::find($id) ;
-    return view('themes/basic/addresses/edit', ['address' => $address]);
+    return view('themes/kudos/addresses/edit', ['address' => $address]);
   }
    
   /**

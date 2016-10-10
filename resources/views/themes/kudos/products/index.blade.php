@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.app')
+@extends('themes.kudos.layouts.app')
 
 @section('content')
 <ul class="row">

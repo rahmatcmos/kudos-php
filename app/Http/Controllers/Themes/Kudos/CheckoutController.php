@@ -20,7 +20,7 @@ class CheckoutController extends ThemeController
   public function index()
   {
     $addresses = Address::where('customer_id', Auth::user()->id)->get() ;
-    return view('themes/basic/checkout/index', ['addresses' => $addresses]);
+    return view('themes/kudos/checkout/index', ['addresses' => $addresses]);
   }
   
   /**

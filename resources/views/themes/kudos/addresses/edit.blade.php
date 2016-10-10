@@ -1,4 +1,4 @@
-@extends('themes.basic.layouts.account')
+@extends('themes.kudos.layouts.account')
 
 @section('content')
   {{ Html::ul($errors->all(), ['class' => 'alert alert-danger']) }}

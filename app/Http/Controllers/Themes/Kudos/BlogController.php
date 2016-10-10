@@ -15,7 +15,7 @@ class BlogController extends ThemeController
   public function index(Request $request)
   {
     $blogs = Blog::where('shop_id', $request->session()->get('shop'))->paginate(20) ;
-    return view('themes/basic/blog/index', ['blogs' => $blogs]);
+    return view('themes/kudos/blog/index', ['blogs' => $blogs]);
   }
   
   /**
@@ -27,7 +27,7 @@ class BlogController extends ThemeController
   {
     $blog = Blog::where('slug', $slug)->first() ;
     if(!$blog) \App::abort(404);
-    return view('themes/basic/blog/show', ['blog' => $blog]);
+    return view('themes/kudos/blog/show', ['blog' => $blog]);
   }
 
 }

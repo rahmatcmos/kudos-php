@@ -19,7 +19,7 @@ class UserController extends ThemeController
   public function index()
   {
     $settings = User::find(Auth::user()->id) ;
-    return view('themes/basic/user/index', ['settings' => $settings]);
+    return view('themes/kudos/user/index', ['settings' => $settings]);
   }
   
   /**

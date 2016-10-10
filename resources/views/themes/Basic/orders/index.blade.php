@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>{{ trans('orders.ref') }}</th>
+      <th>{{ trans('orders.id') }}</th>
       <th>{{ trans('orders.total') }}</th>
       <th>{{ trans('orders.date') }}</th>
     </tr>

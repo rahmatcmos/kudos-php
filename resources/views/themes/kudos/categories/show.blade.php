@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.app')
+@extends('themes.kudos.layouts.app')
 
 @section('content')
 <h2>{{ $category[$language]['name'] }} - {{ trans('products.products') }}</h2>

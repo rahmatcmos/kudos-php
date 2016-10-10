@@ -19,7 +19,7 @@ class OrdersController extends ThemeController
     $limit = $request->session()->get('limit') ;
     $orders = Order::where('customer_id', Auth::user()->id)
       ->paginate($limit);
-    return view('themes/basic/orders/index', ['orders' => $orders]);
+    return view('themes/kudos/orders/index', ['orders' => $orders]);
   }
   
   /**
@@ -31,7 +31,7 @@ class OrdersController extends ThemeController
   {
     $order = Order::find($id);
     if(!$order) \App::abort(404);
-    return view('themes/basic/orders/show', ['order' => $order]);
+    return view('themes/kudos/orders/show', ['order' => $order]);
   }
 
 }

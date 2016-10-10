@@ -18,7 +18,7 @@ class BasketController extends ThemeController
     $this->totals($request) ;
     $qtyRange = range(0,10) ;
     unset($qtyRange[0]) ;
-    return view('themes/basic/basket/index', ['subtotal' => $request->session()->get('basket')['subtotal'], 'qtyRange' => $qtyRange]);
+    return view('themes/kudos/basket/index', ['subtotal' => $request->session()->get('basket')['subtotal'], 'qtyRange' => $qtyRange]);
   }
   
   /**

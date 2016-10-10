@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.full')
+@extends('themes.kudos.layouts.full')
 
 @section('content')
   <h1>{{ trans('basket.basket') }}</h1>

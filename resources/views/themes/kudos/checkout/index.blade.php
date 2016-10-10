@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.full')
+@extends('themes.kudos.layouts.full')
 
 @section('content')
 {{ Form::open(['url' => 'checkout', 'class' => 'form-inline']) }}

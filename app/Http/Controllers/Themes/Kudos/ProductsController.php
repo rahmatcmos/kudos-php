@@ -34,7 +34,7 @@ class ProductsController extends ThemeController
       ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
 
-    return view('themes/basic/products/index', ['products' => $products]);
+    return view('themes/kudos/products/index', ['products' => $products]);
   }
   
   /**
@@ -47,7 +47,7 @@ class ProductsController extends ThemeController
     $product = Product::where('slug', $slug)->first() ;
     $file_size = key(array_reverse(config('image.image_sizes'))) ; //smallest
     $product->files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
-    return view('themes/basic/products/show', ['product' => $product]);
+    return view('themes/kudos/products/show', ['product' => $product]);
   }
   
   /**
@@ -88,7 +88,7 @@ class ProductsController extends ThemeController
     $limit = $request->session()->get('limit') ;
     $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
-    return view('themes/basic/products/search', ['products' => $products]);
+    return view('themes/kudos/products/search', ['products' => $products]);
   }
 
 }
