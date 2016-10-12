@@ -1,6 +1,5 @@
 (function($, window, document) {
   $(function(){
-    
     // nav
     $("#menu-toggle").click(function(e) {
       e.preventDefault();

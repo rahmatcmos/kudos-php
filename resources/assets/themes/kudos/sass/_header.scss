@@ -1,49 +1,10 @@
 header{
-  line-height: 120px ;
-  .badge{
-    background: $green ;
-  }
-  ul{
-    li{
-      a{
-        color: $color2  ;
-        .fa-stack{
-          color: $color3 ;
-        }
-      }
-    }
+  figure{
+    margin: 30px 0 40px 0 ;
   }
 }
 
 @media (min-width: 992px) {
   header{
-    text-align: right ;
-    ul{
-      li{
-        margin-left: 40px ;
-        &:first-of-type{
-          float: left ;
-          margin-left: 0 ;
-          font-size: 200% ;
-        }
-        &.search{
-          position: relative ;
-          input{
-            height: 36px ;
-            border-color: $color3  ;
-            padding-right: 40px ;
-            min-width: 300px ;
-          }
-          .fa-stack{
-            position: absolute ;
-            top: -3px ;
-            right: 0 ;
-            .fa-square{
-              color: $color3  ;
-            }
-          }
-        }
-      }
-    }
   }
 }

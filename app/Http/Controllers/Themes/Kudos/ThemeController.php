@@ -10,7 +10,6 @@ class ThemeController extends \App\Http\Controllers\Controller
     
     public function __construct(Route $route)
     {    
-      
       $this->middleware(function ($request, $next) {
         // if session is not set get it from .env SHOP_CODE
         if ( !$request->session()->has('shop')){
@@ -20,7 +19,7 @@ class ThemeController extends \App\Http\Controllers\Controller
         
         // if limit is not set default pagination limit
         if ( !$request->session()->has('limit')){
-          $request->session()->put('limit', 100) ;
+          $request->session()->put('limit', 102) ;
         }
         
         // if session is not set reset the session for the language
@@ -37,13 +36,14 @@ class ThemeController extends \App\Http\Controllers\Controller
           ]) ;
         }
 
-      
         // global list of categories
-        $categories = Category::where('shop_id', $request->session()->get('shop'))->orderBy('order', 'asc')->get() ;
-      
+        if ( !$request->session()->has('categories')){
+          $categories = Category::where('shop_id', $request->session()->get('shop'))->orderBy('order', 'asc')->get()->toArray() ; 
+          $request->session()->put('categories', $categories) ;
+        } 
+        
         // share globals
         view()->share('language', $request->session()->get('language')) ;
-        view()->share('categories', $categories) ;
         
         return $next($request);
       

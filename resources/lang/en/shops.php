@@ -7,5 +7,6 @@ return [
   'visit' => 'Visit Site',
   'name' => 'Name',
   'shop_name' => 'Shop name',
-  'code' => "Shop code"
+  'code' => 'Shop code',
+  'back' => 'Back to products'
 ];

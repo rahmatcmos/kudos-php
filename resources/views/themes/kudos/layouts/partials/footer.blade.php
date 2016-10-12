@@ -1,4 +1,4 @@
-  <footer>
+  <!--<footer>
     <div class="container">
       <div class="row">
         <dl class="col-md-4">
@@ -32,7 +32,10 @@
         </dl>
       </div>
     </div>
-  </footer>
+  </footer>-->
+  
+  <!-- js -->
+  <script src="/build/themes/kudos/js/all.js"></script>
 
   @yield('foot')
 

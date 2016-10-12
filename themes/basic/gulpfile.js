@@ -19,5 +19,5 @@ elixir(function(mix) {
     .styles([
       './node_modules/bootstrap/dist/css/bootstrap.min.css',
       './../../resources/assets/themes/basic/css/modules/*.css'
-    ], './../../public/build/themes/basic/css');
+    ],'./../../public/build/themes/basic/css');
 });

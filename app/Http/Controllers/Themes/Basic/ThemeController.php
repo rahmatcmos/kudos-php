@@ -10,7 +10,6 @@ class ThemeController extends \App\Http\Controllers\Controller
     
     public function __construct(Route $route)
     {    
-      
       $this->middleware(function ($request, $next) {
         // if session is not set get it from .env SHOP_CODE
         if ( !$request->session()->has('shop')){
@@ -37,7 +36,6 @@ class ThemeController extends \App\Http\Controllers\Controller
           ]) ;
         }
 
-      
         // global list of categories
         $categories = Category::where('shop_id', $request->session()->get('shop'))->orderBy('order', 'asc')->get() ;
       

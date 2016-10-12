@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- css -->
-  <link rel="stylesheet" href="/build/themes/basic/css/all.css">
+  <link rel="stylesheet" href="/build/themes/kudos/css/all.css">
   
   @yield('head')
   
@@ -15,29 +15,62 @@
 
 <body class="{{ isset($body_class) ? $body_class : '' }}">
   
-  <header class="container">
-    <ul class="list-inline">
-      <li><a href="/">Basic Theme</a></li>
-      <li class="search">
-        {{ Form::open(['url' => 'products/search', 'method' => 'get']) }}
-          <input type="text" name="query"class="form-control" placeholder="Enter Keyword(s)">
-        {{ Form::close() }}
-      </li>
-      <li>
-        <a href="/basket">
-          Basket (&pound;{{ number_format(session('basket')['subtotal'], 2) }}) <span class="badge">{{ session('basket')['count'] }}</span>
-        </a>
-      </li>
-    </ul>    
+  <section id="quick-basket">
+    quick basket
+  </section>
+  
+  {{ Form::open(['url' => 'products/search', 'method' => 'get', 'id' => 'search']) }}
+    <input type="text" name="query"class="form-control" placeholder="Enter Keyword(s)">
+  {{ Form::close() }}
+  
+  <header>
+    <form>
+      <ul class="list-inline">
+        <li>
+          <select name="language">
+            <option>{{ trans('languages.english') }}</option>
+          </select>
+        </li>
+        <li>
+          <select name="currency">
+            <option>{{ trans('currencies.gbp') }}</option>
+          </select>
+        </li>
+        <li class="pull-right">
+          <a href="/basket">
+            Basket ({{ session('basket')['count'] }})
+          </a>
+        </li>
+        <li class="pull-right">
+          <a href="#"><i class="fa fa-search"></i></a> &bull;
+        </li>
+      </ul>
+    </form>
+    <figure class="text-center">
+      <a href="/"><img src="{{ url('/build/themes/kudos/img/logo.jpg') }}" alt="" width="150"></a>
+      <figcaption>KUDOS THEME <a href="/pages/info" title="">Theme info</a></figcaption>
+    </figure>
   </header>
   
-  <nav>
-    <ul class="container list-inline text-center">
-      <li><a href="/">Products</a></li>
-      <li><a href="/pages/info">Theme Info</a></li>
-      <li><a href="/blog">Blog</a></li>
-      <li><a href="/account">Account</a></li>
+  <nav class="text-center">
+    <ul class="list-inline">
+      @if(!session('categories'))
+        <li><a href="/">{{ trans('shops.back')}}</a></li>
+      @else
+      @foreach (session('categories') as $category)
+        <li><a href="/categories/{{ $category['slug'] }}">{{ $category[session('language')]['name']}}</a></li>
+      @endforeach
+      @endif
     </ul>
+    <form>
+      <p>
+        Filter by
+        <select><option>Size</option></select>
+        <select><option>Color</option></select>
+        <select><option>Material</option></select>
+        <a href="#">clear filters</a>
+      </p>
+    </form>
   </nav>
   
   <div class="container">

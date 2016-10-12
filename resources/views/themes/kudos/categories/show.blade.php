@@ -4,19 +4,14 @@
 <h2>{{ $category[$language]['name'] }} - {{ trans('products.products') }}</h2>
 <ul class="row">
   @foreach ($products as $product)
-    <li class="col-md-3">
+    <li class="col-md-2 text-center">
       <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
-      @if(!empty($product->rrp))
-      <p>rrp: <strong>&pound;{{ $product->rrp }}</strong></p>
-      @endif
       @if(!empty($product->salePrice))
-      <p>was: <strong>&pound;{{ $product->price}}</strong></p>
-      <p>now: <strong>&pound;{{ $product->salePrice}}</strong></p>
+      <p>&pound;{{ $product->salePrice}}</p>
       @else
-      <p>price: <strong>&pound;{{ $product->price}}</strong></p>
+      <p>&pound;{{ $product->price}}</p>
       @endif
-      <a href="/products/{{ $product->slug }}" class="btn btn-primary full">View Details</a>
       <hr>
     </li>
   @endforeach

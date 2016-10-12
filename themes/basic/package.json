@@ -7,7 +7,6 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "laravel-elixir": "^5.0.0",
-    "bootstrap": "^3.3.6",
-    "font-awesome": "^4.6.1"
+    "bootstrap": "^3.3.6"
   }
 }

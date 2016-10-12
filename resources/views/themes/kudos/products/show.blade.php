@@ -1,6 +1,7 @@
 @extends('themes.kudos.layouts.app')
 
 @section('content')
+<div class="container">
   <div class="row">
     <div class="col-md-6 images">
       <a href="/storage/{{ str_replace('/large/', '/', $product->defaultImage) }}" target="_blank"><img src="/storage/{{ $product->defaultImage }}" class="img-responsive main"></a>
@@ -38,4 +39,5 @@
   <div class="content">
     {!! isset($product->$language['content']) ? $product->$language['content'] : $product->default['content'] !!}
   </div>
+</div>
 @endsection
