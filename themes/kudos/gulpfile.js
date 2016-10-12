@@ -21,6 +21,12 @@ elixir(function(mix) {
       './node_modules/font-awesome/css/font-awesome.min.css',
       './../../resources/assets/themes/kudos/css/modules/*.css'
     ], './../../public/build/themes/kudos/css')
+    .scripts([
+      './node_modules/jquery/dist/jquery.min.js',
+      './node_modules/bootstrap/dist/js/bootstrap.min.js',
+      './../../resources/assets/themes/kudos/js/third-party/*.js',
+      './../../resources/assets/themes/kudos/js/modules/*.js'
+    ], './../../public/build/themes/kudos/js')
     .copy(
      './node_modules/font-awesome/fonts',
      './../../public/build/themes/kudos/fonts'
