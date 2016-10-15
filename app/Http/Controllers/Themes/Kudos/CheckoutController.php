@@ -42,7 +42,7 @@ class CheckoutController extends ThemeController
     
     $response = Omnipay::purchase(
       [
-        'amount' => number_format($request->session()->get('basket.subtotal'), 2),
+        'amount' => number_format($request->session()->get('basket.subtotal'), 2, '.', ''),
         'currency' => 'GBP',
         'card' => $card
       ]

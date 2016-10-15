@@ -19,6 +19,16 @@ body.ProductsController-search{
             font-weight: 300 ;
           }
         }
+        p{
+          &.price{
+            font-size: 120% ;
+            color: $red ;
+            i{
+              margin-right: 2px ;
+              font-size: 80% ;
+            }
+          }
+        }
       }
     }
   }

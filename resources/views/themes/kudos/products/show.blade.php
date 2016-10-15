@@ -14,17 +14,17 @@
       </ul>
     </div>
     <div class="col-md-6">
-      <h1>{{ isset($product->$language['name']) ? $product->$language['name'] : $product->default['name'] }}</h1>
-      <p id="excerpt">{{ isset($product->$language['excerpt']) ? $product->$language['excerpt'] : $product->default['excerpt'] }}</p>
+      <h1>{{ $product->name }}</h1>
+      <p id="excerpt">{{ $product->excerpt }}</p>
       <div id="price">
         @if(!empty($product->rrp))
-        <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->rrp }}</strong></p>
+        <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><strike>{{ $product->rrp }}</strike></strong></p>
         @endif
         @if(!empty($product->salePrice))
-        <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price}}</strong></p>
-        <p>now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice}}</strong></p>
+        <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
+        <p class="price">now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</strong></p>
         @else
-        <p>price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price}}</strong></p>
+        <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
         @endif
       </div>
       {{ Form::open(['url' => 'basket']) }}
@@ -37,7 +37,7 @@
   <hr>
   <h3>Product Details</h3>
   <div class="content">
-    {!! isset($product->$language['content']) ? $product->$language['content'] : $product->default['content'] !!}
+    {!! $product->content !!}
   </div>
 </div>
 @endsection
