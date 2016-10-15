@@ -1,7 +1,7 @@
   <footer>
     <nav class="container-fluid">
       <ul class="list-inline">
-        <li><a href="/pages/about">{{ trans('nav.about') }}</a></li>
+        <li><a href="/pages/info">{{ trans('nav.about') }}</a></li>
         @if(!session('categories'))
           <li><a href="/">{{ trans('shops.back')}}</a></li>
         @else

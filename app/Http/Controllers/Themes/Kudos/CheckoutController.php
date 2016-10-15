@@ -71,6 +71,7 @@ class CheckoutController extends ThemeController
       $order = new Order;
       $order->shop_id = $request->session()->get('shop') ;
       $order->customer_id = Auth::user()->id ;
+      $order->currency = $request->session()->get('currency') ;
       $order->shipping_id = $request->shipping_id ;
       $order->billing_id = $request->billing_id ;
       $order->total = $basket['subtotal'];

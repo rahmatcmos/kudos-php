@@ -19,7 +19,7 @@
       </h2>
     </li>
     <li class="col-md-2 text-right">
-      &pound;{{ number_format($item['price'],2) }}
+      <i class="fa fa-{{ strtolower($order->currency) }}"></i>{{ number_format($item['price'],2) }}
     </li>
     <li class="col-md-3 text-right">
       {{ $item['qty'] }}
@@ -28,6 +28,6 @@
   <hr>
   @endforeach
   <p class="text-right">
-    {{ trans('orders.total') }}: &pound;{{ number_format($order->total, 2) }}
+    {{ trans('orders.total') }}: <i class="fa fa-{{ strtolower($order->currency) }}"></i>{{ number_format($order->total, 2) }}
   </p>
 @endsection
