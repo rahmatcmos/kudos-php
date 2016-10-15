@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Themes\Kudos;
 use Illuminate\Routing\Route;
 use App\Models\Shop;
 use App\Models\Category;
+use App\Models\Currency;
 
 class ThemeController extends \App\Http\Controllers\Controller
 {
@@ -30,6 +31,8 @@ class ThemeController extends \App\Http\Controllers\Controller
         // if session is not set reset the session for the currency
         if ( !$request->session()->has('currency')){
           $request->session()->put('currency', config('app.currency')) ;
+          $currency = Currency::where('currency', config('app.currency'))->first() ;
+          $request->session()->put('currency_rate', $currency->rate) ;
         }
         
         // if session is not set reset the session for the basket

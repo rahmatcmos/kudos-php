@@ -18,13 +18,13 @@
       <p id="excerpt">{{ isset($product->$language['excerpt']) ? $product->$language['excerpt'] : $product->default['excerpt'] }}</p>
       <div id="price">
         @if(!empty($product->rrp))
-        <p>rrp: <strong>&pound;{{ $product->rrp }}</strong></p>
+        <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->rrp }}</strong></p>
         @endif
         @if(!empty($product->salePrice))
-        <p>was: <strong>&pound;{{ $product->price}}</strong></p>
-        <p>now: <strong>&pound;{{ $product->salePrice}}</strong></p>
+        <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price}}</strong></p>
+        <p>now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice}}</strong></p>
         @else
-        <p>price: <strong>&pound;{{ $product->price}}</strong></p>
+        <p>price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price}}</strong></p>
         @endif
       </div>
       {{ Form::open(['url' => 'basket']) }}

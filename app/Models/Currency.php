@@ -3,12 +3,18 @@ namespace App\Models;
 
 use Moloquent ;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Session ;
 
 class Currency extends Moloquent {
     
   use SoftDeletes;
 
   protected $dates = ['deleted_at'];
+  
+  /**
+   * Current currency rate
+   */
+  public $rate = 1 ;
   
   /**
    * allow filling of any amount of fields
@@ -120,4 +126,15 @@ class Currency extends Moloquent {
     'AMK' => 'Zambian Kwacha',
     'ZWD' => 'Zimbabwe Dollar' 
   ] ;
+  
+  /**
+   * Constructor
+   *
+   * Set currency rate
+   */
+  public function __construct() 
+  {
+    parent::__construct();
+    $this->rate = Session::get('currency_rate');
+  }
 }
