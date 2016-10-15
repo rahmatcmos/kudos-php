@@ -1,0 +1,25 @@
+body.ProductsController-index,
+body.CategoriesController-show,
+body.ProductsController-search{
+  #main{
+    padding-bottom: 0 ;
+    ul{
+      li{
+        margin-bottom: 30px ;
+        img{
+          &:hover{
+            filter: grayscale(100%);
+          }
+        }
+        h2{
+          a{
+            font-family: $font2 ;
+            color: lighten($blue, 10%) ;
+            letter-spacing: 1px ;
+            font-weight: 300 ;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,9 @@
 <?php
 
 return [
-  'english' => 'English'
+  'english' => 'English',
+  'french' => 'French',
+  'chinese' => 'Chinese',
+  'spanish' => 'Spanish',
+  'german' => 'German'
 ];

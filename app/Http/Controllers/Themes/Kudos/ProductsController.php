@@ -42,7 +42,7 @@ class ProductsController extends ThemeController
    *
    * @return Response
    */
-  public function show($slug)
+  public function show(Request $request, $slug)
   {
     $product = Product::where('slug', $slug)->first() ;
     $file_size = key(array_reverse(config('image.image_sizes'))) ; //smallest

@@ -54,6 +54,12 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   
   // blog
   Route::resource('blog', 'BlogController');
+  
+  // languages
+  Route::resource('languages', 'LanguagesController');
+  
+  // currencies
+  Route::resource('currencies', 'CurrenciesController');
 
 }); 
   

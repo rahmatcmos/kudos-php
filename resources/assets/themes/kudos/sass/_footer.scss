@@ -1,0 +1,55 @@
+footer{
+  background: $color2 ;
+  line-height: 40px ;
+  padding: 40px 0 ;
+  ul{
+    li{
+      position: relative ;
+      color: darken($grey, 25%) ;
+      a{
+        color: lighten($color2, 50%) ;
+        text-decoration: none ;
+        display: inline-block ;
+        line-height: 40px ;
+        text-transform: uppercase ;
+        font-size: 80% ;
+        letter-spacing: 1px ;
+        
+        
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  footer{
+    ul{
+      text-align: center ;
+      li{
+        &:after{
+        content: '/' ;
+        position: absolute ;
+        top: 1px ;
+        right : -4px ;
+        }
+        &:first-of-type{
+          float: left ;
+        }
+        &:last-of-type,
+        &:nth-last-of-type(2){
+          float: right ;
+        }
+        &:nth-last-of-type(2){
+          margin-left: 4px ;  
+        }
+        &:first-of-type,
+        &:nth-last-of-type(2),
+        &:nth-last-of-type(3){
+          &:after{
+            content: '' ;
+          }
+        }
+      }
+    }
+  }
+}

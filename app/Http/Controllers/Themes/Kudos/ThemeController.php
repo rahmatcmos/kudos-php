@@ -27,6 +27,11 @@ class ThemeController extends \App\Http\Controllers\Controller
           $request->session()->put('language', config('app.locale')) ;
         }
         
+        // if session is not set reset the session for the currency
+        if ( !$request->session()->has('currency')){
+          $request->session()->put('currency', config('app.currency')) ;
+        }
+        
         // if session is not set reset the session for the basket
         if ( !$request->session()->has('basket')){
           $request->session()->put('basket', [

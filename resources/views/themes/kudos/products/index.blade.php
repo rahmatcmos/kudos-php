@@ -11,9 +11,7 @@
       @else
       <p>&pound;{{ $product->price}}</p>
       @endif
-      <hr>
     </li>
   @endforeach
 </ul>
-{{ $products->appends(['order_by' => session('product.order_by'), 'order_dir' => session('product.order_dir')] )->links() }}
 @endsection

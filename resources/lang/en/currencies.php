@@ -6,5 +6,8 @@ return [
   'code' => 'Code',
   'rate' => 'Rate',
   'autoinfo' => 'If you wish to automatically update currency rates you should use the artisan command',
-  'gbp' => 'GBP &pound;'
+  'gbp' => 'GBP',
+  'eur' => 'EUR',
+  'cny' => 'CNY',
+  'usd' => 'USD'
 ];

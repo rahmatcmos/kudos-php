@@ -1,6 +1,6 @@
 @include('themes.kudos.layouts.partials.header') 
   
-  <div class="container-fluid">
+  <div class="container-fluid" id="main">
     @yield('content')
   </div>
   

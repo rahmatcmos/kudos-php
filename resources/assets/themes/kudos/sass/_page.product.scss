@@ -1,0 +1,40 @@
+body.ProductsController-show{
+  #main{
+    h1{
+      font-size: 140% ;
+      line-height: 30px ;
+    }
+    .images{
+      .main{
+        margin-bottom: 15px ;
+      }
+    }
+    #excerpt{
+      margin: 10px 0 15px ;
+      font-size: 90% ;
+    }
+    form{
+      margin-top: 15px ;
+    }
+    #price{
+      p{
+        margin-bottom: 5px ; 
+        &:last-of-type{
+          strong{
+            color: $red ;
+          }
+        }    
+        &:nth-last-of-type(2){
+          strong{
+            color: $orange ;
+          }
+        }  
+        &:nth-last-of-type(3){
+          strong{
+            color: lighten($green, 10%) ;
+          }
+        }  
+      }
+    }
+  }
+}
