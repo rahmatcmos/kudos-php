@@ -32,7 +32,7 @@
         {{ Form::close() }}
       </li>
       <li class="col-md-2 text-right">
-        &pound;{{ number_format($item['price'],2) }}
+        <i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ number_format($item['price'],2) }}
       </li>
       <li class="col-md-3 text-right">
         {{ Form::open(['method' => 'PUT', 'url' => 'basket/'.$id]) }}
@@ -45,7 +45,7 @@
     @endforeach
     @if(!empty(session('basket')))
     <p class="text-right subtotal">
-      {{ trans('orders.subtotal') }}: <strong>&pound;{{ number_format($subtotal, 2) }}</strong>
+      {{ trans('orders.subtotal') }}: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ number_format($subtotal, 2) }}</strong>
     </p>
     <p class="text-right">
       <a href="/checkout" class="btn btn-success btn-checkout">

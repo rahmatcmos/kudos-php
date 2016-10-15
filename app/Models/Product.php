@@ -16,18 +16,27 @@ class Product extends Moloquent {
    */
   protected $guarded = [];
   
+  /**
+   * mutator for price @ currency rate
+   */
   public function getPriceAttribute($value)
   {
     $currency = new Currency ;
     return number_format($value * $currency->rate, 2) ;
   }
   
+  /**
+   * mutator for sale price @ currency rate
+   */
   public function getSalePriceAttribute($value)
   {
     $currency = new Currency ;
     return number_format($value * $currency->rate, 2) ;
   }
   
+  /**
+   * mutator for rrp @ currency rate
+   */
   public function getRrpAttribute($value)
   {
     $currency = new Currency ;
