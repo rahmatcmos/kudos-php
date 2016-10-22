@@ -3,7 +3,7 @@ body.CategoriesController-show,
 body.ProductsController-search{
   #main{
     padding-bottom: 0 ;
-    ul{
+    ul.results{
       li{
         margin-bottom: 30px ;
         img{
@@ -25,7 +25,8 @@ body.ProductsController-search{
             color: $red ;
             i{
               margin-right: 2px ;
-              font-size: 80% ;
+              font-size: 80% ; 
+              font-weight: 300 ;
             }
           }
         }

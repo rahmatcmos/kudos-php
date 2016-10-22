@@ -30,11 +30,11 @@ class BasketController extends ThemeController
   {
     $basket = $request->session()->get('basket') ;
     if(isset($basket['items'][$request->id])){
-      $basket['items'][$request->id]['qty']++ ;
+      $basket['items'][$request->id]['qty'] += $request->qty ;
     } else {
       $basket['items'][$request->id] = [
         'price' => $request->price,
-        'qty'   => 1,
+        'qty'   => $request->qty,
         'product' => Product::find($request->id)->toArray()
       ] ;
     }
@@ -56,7 +56,7 @@ class BasketController extends ThemeController
     unset($basket['items'][$id]) ;
     $request->session()->put('basket', $basket) ;
     $this->totals($request) ;
-    return redirect('basket');
+    return redirect()->back();
   }
   
   /**
@@ -72,7 +72,7 @@ class BasketController extends ThemeController
     $basket['items'][$id]['qty'] = $request->get('qty') ;
     $request->session()->put('basket', $basket) ;
     $this->totals($request) ;
-    return redirect('basket');
+    return redirect()->back();
   }
   
   /**

@@ -1,0 +1,63 @@
+#basket{
+  display: none ;
+  background: $color4 ;
+  padding-bottom: 8px ;
+  h2{
+    font-weight: 300 ;
+    font-family: $font2 ;
+    line-height: 24px ;
+  }
+  img{
+    margin-top: 2px ;
+  }
+  .price{
+    font-size: 100% ;
+    color: $red ;
+    i{
+      margin-right: 2px ;
+      font-size: 90% ; 
+      font-weight: 300 ;
+    }
+  }
+  .subtotal{
+    font-size: 120% ;
+    margin-bottom: 10px ;
+  }
+  hr{
+    border-color: lighten($grey,25%) ;
+    margin: 10px 0 ;
+    &:last-of-type{
+      display: none ;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  #basket{
+    padding-top: 20px ;
+    padding-bottom: 30px ;
+    .outer{
+      position: relative ;
+      .left{
+        position: relative ;
+        &:after{
+          content: '' ;
+          position: absolute ;
+          top: 0 ;
+          right: -30px ;
+          bottom: 0 ;
+          width: 1px ;
+          background: lighten($grey,25%) ;
+        }
+      }
+      .right{
+        position: static ;
+        .actions{
+          position: absolute ;
+          bottom: 0 ;
+          right: 0 ;
+        }
+      }
+    }
+  }  
+}

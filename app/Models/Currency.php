@@ -135,6 +135,7 @@ class Currency extends Moloquent {
   public function __construct() 
   {
     parent::__construct();
-    $this->rate = Session::get('currency_rate');
+    if(Session::has('currency_rate'))
+      $this->rate = Session::get('currency_rate');
   }
 }

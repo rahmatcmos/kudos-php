@@ -28,9 +28,13 @@ class ThemeController extends \App\Http\Controllers\Controller
           $request->session()->put('language', config('app.locale')) ;
         }
         
+        
+        
         // if session is not set reset the session for the currency
         if ( !$request->session()->has('currency')){
           $request->session()->put('currency', config('app.currency')) ;
+        }
+        if ( !$request->session()->has('currency_rate')){
           $currency = Currency::where('currency', config('app.currency'))->first() ;
           $request->session()->put('currency_rate', $currency->rate) ;
         }

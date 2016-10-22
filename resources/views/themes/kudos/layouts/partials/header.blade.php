@@ -15,9 +15,7 @@
 
 <body class="{{ isset($body_class) ? $body_class : '' }}">
   
-  <section id="quick-basket">
-    quick basket
-  </section>
+  @include('themes.kudos.layouts.partials.basket')
 
   <header>
     <form>
@@ -52,15 +50,12 @@
           </div>
         </li>
         <li class="pull-right">
-          <a href="/basket">
-            Basket ({{ session('basket')['count'] }})
+          <a href="#" id="basket-toggle">
+            {{ trans('basket.basket') }} ({{ session('basket')['count'] }})
           </a>
         </li>
         <li class="pull-right">
           <a href="{{ url('account') }}">{{ trans('account.account') }}</a> &bull;
-        </li>
-        <li class="pull-right hidden-md hidden-lg">
-          <a href="#"><i class="fa fa-search"></i></a> &bull;
         </li>
       </ul>
     </form>
@@ -70,6 +65,7 @@
     </figure>
     {{ Form::open(['url' => 'products/search', 'method' => 'get', 'id' => 'search', 'class' => 'text-center']) }}
       <input type="text" name="query"class="form-control" placeholder="Enter Keyword(s)">
+      <button type="submit" class="btn btn-link"><i class="fa fa-search"></i></button>
     {{ Form::close() }}
   </header>
   
@@ -79,7 +75,7 @@
         <li><a href="/">{{ trans('shops.back')}}</a></li>
       @else
       @foreach (session('categories') as $category)
-        <li><a href="/categories/{{ $category['slug'] }}">{{ isset($category[session('language')]['name']) ? $category[session('language')]['name'] : $category['default']['name']}}</a></li>
+        <li><a href="/categories/{{ $category['slug'] }}">{{ isset($category[session('language')]['name']) ? $category[session('language')]['name'] : $category['default']['name'] }}</a></li>
       @endforeach
       @endif
     </ul>

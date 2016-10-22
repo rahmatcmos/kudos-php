@@ -6,4 +6,5 @@ return [
   'cardnumber' => 'Card number',
   'expiration' => 'Expiration',
   'cvc' => 'CVC',
+  'keepshopping' => 'Keep Shopping'
 ];

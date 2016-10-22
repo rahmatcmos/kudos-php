@@ -20,21 +20,46 @@ class ProductsController extends ThemeController
   {
     // pagination
     $session_type = 'product' ;
-    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
-    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if (!$request->session()->has($session_type.'.order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has($session_type.'.order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
     if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
     if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
-    
-    $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
-      ? $request->session()->get($session_type.'.order_by')
-      : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
-    
+
     $limit = $request->session()->get('limit') ;
     $products = Product::where('shop_id', $request->session()->get('shop'))
-      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
+      ->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
 
     return view('themes/kudos/products/index', ['products' => $products]);
+  }
+  
+  /**
+   * Show all products for infinite scroll
+   *
+   * @return Response
+   */
+  public function scroll(Request $request)
+  {
+    $session_type = 'product' ;
+    $limit = $request->session()->get('limit') ;
+    $products = Product::where('shop_id', $request->session()->get('shop'))
+      ->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
+      ->paginate($limit);
+
+    return view('themes/kudos/products/scroll', ['products' => $products]);
+  }
+  
+  /**
+   * Show all products for infinite scroll
+   *
+   * @return Redirect
+   */
+  public function filter(Request $request)
+  {
+    $session_type = 'product' ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
+    return redirect()->back() ;
   }
   
   /**

@@ -19,11 +19,13 @@ elixir(function(mix) {
     .styles([
       './node_modules/bootstrap/dist/css/bootstrap.min.css',
       './node_modules/font-awesome/css/font-awesome.min.css',
+      './node_modules/swipebox/src/css/swipebox.min.css',
       './../../resources/assets/themes/kudos/css/modules/*.css'
     ], './../../public/build/themes/kudos/css')
     .scripts([
       './node_modules/jquery/dist/jquery.min.js',
       './node_modules/bootstrap/dist/js/bootstrap.min.js',
+      './node_modules/swipebox/src/js/jquery.swipebox.min.js',
       './../../resources/assets/themes/kudos/js/third-party/*.js',
       './../../resources/assets/themes/kudos/js/modules/*.js'
     ], './../../public/build/themes/kudos/js')

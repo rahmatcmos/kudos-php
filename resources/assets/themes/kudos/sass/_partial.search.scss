@@ -1,8 +1,7 @@
 #search{
-  display: none ;
   padding: 0 15px ;
+  position: relative ;
   input{
-    margin-bottom: 0 ;
     text-align: center ;
     height: 40px ;
     border-radius: 0 ;
@@ -11,14 +10,20 @@
     max-width: 100%;
     margin: -10px 0 15px 0 ;
   }
+  button{
+    position: absolute ;
+    top: 0 ;
+    right: 15px ;
+    line-height: 40px;
+    color: $color2 ;
+    padding: 0 10px ;
+  }
 } 
 
 @media (min-width: 992px) {
   #search{
     display: block ;
-    input{
-      max-width: 600px ;
-      margin: 0 auto 30px auto ;
-    }
+    max-width: 600px ;
+    margin: 10px auto 30px auto ;
   }
 }
