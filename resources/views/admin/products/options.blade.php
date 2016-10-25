@@ -88,7 +88,7 @@
                   @endforeach
                 @endforeach
                 <td>
-                  <input name="price" type="number" class="form-control" placeholder="{{ trans('products.price') }}" required>
+                  <input name="price" type="number" class="form-control" value="{{ isset($product->salePrice) ? $product->salePrice : $product->price }}" placeholder="{{ trans('products.price') }}" required>
                 </td>
                 <td width="80">
                   <button type="submit" class="btn btn-success btn-block">{{ trans('crud.add') }}</button>
@@ -100,10 +100,13 @@
             @foreach($product->option_values as $ovId => $ov)
               <tr>
                 <td>{{ $ov['sku'] }}</td>
-                @foreach($ov['options'] as $id)
-                <td>{{ $product->options[$lang][0]['Example'][$id] }}</td>
+                @foreach($ov['options'] as $oid => $id)
+                  @php 
+                    $key = key($product->options[$lang][$oid])
+                  @endphp
+                  <td>{{ $product->options[$lang][$oid][$key][$id] }}</td>
                 @endforeach
-                <td>{{ $ov['price'] }}</td>
+                <td>{{ number_format($ov['price'],2) }}</td>
                 <td width="80">
                   <a href="/admin/products/{{ $product->id }}/delete-product-option/{{ $ovId }}" class="btn btn-danger no-submit btn-block">{{ trans('crud.delete') }}</a>
                 </td>
