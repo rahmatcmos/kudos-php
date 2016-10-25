@@ -105,8 +105,18 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   
   
   // products
-  //Route::get('products/{page?}/{orderBy?}/{orderDir?}', 'ProductsController@index')->where('page', '[0-9]+');
+  Route::get('products/{id}/options', 'ProductsController@options');
+  Route::post('products/{id}/store-option', 'ProductsController@storeOption');
+  Route::delete('products/{id}/delete-option', 'ProductsController@deleteOption');
+  Route::post('products/{id}/add-options', 'ProductsController@addOptions');
+  Route::post('products/{id}/update-option-name', 'ProductsController@updateOptionName');
+  Route::post('products/{id}/update-option-value', 'ProductsController@updateOptionValue');
+  Route::post('products/{id}/add-product-option', 'ProductsController@addProductOption');
+  Route::get('products/{id}/delete-product-option/{povId}', 'ProductsController@deleteProductOption');
   Route::resource('products', 'ProductsController');
+  
+  // options
+  Route::resource('options', 'OptionsController');
   
   // customers
   Route::resource('customers', 'CustomersController');

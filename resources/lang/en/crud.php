@@ -14,5 +14,9 @@ return [
   'failed' => 'failed to complete',
   'Choose once saved' => 'Choose once saved',
   'not available' => 'not available',
-  'notset' => 'NOT SET'
+  'notset' => 'NOT SET',
+  'manage' => 'Manage',
+  'back' => 'Back to',
+  'close' => 'Close',
+  'exists' => 'already exists'
 ];

@@ -113,7 +113,7 @@ class ProductsController extends AdminController
    * 
    * @return Response
    */
-  public function edit(Request $request, $id)
+  public function edit(Request $request, String $id)
   {
     $categories = $this->category_select($request) ;
     $product = Product::find($id) ; 
@@ -184,5 +184,204 @@ class ProductsController extends AdminController
     // redirect
     $request->session()->flash('success',  trans('products.product').' '.trans('crud.deleted'));
     return redirect('admin/products');
+  }
+  
+  /**
+   * product options
+   *
+   * @param string $id
+   * 
+   * @return Response
+   */
+  public function options(Request $request, String $id)
+  {
+    $product = Product::find($id) ; 
+    return view('admin/products/options', ['product' => $product]);
+  }
+  
+  /**
+   * Add a new product option
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function storeOption(Request $request, String $id)
+  {
+    $product = Product::find($id) ; 
+    $data = [ 
+      $request->name => array_map('trim', explode(',', $request->options))
+    ] ;
+    $lang = $request->session()->get('language');
+    $currentOptions = $product->options ;
+    $currentOptions[$lang][][$request->name] = array_map('trim', explode(',', $request->options)) ;
+    $currentOptions['default'] = $currentOptions[$lang] ;
+    foreach($currentOptions as $l => $val){
+      if(!in_array($l, [$lang, 'default']))
+        $currentOptions[$l] = $currentOptions[$lang] ;
+    }
+    $product->options = $currentOptions ;
+    $product->option_values = [] ;   
+    $product->save() ;
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.created'));
+    return redirect()->back() ;
+  }
+  
+  /**
+   * Delete option
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function deleteOption(Request $request, $id )
+  {
+    // delete
+    $product = Product::find($id);
+    $productOptions = $product->options ;
+    foreach($productOptions as $lang => $val){
+      unset($productOptions[$lang][$request->option]) ;
+    }
+    $product->options = $productOptions ;  
+    $product->option_values = [] ;    
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.deleted'));
+    return redirect()->back();
+  }
+  
+  /**
+   * Add options
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function addOptions(Request $request, $id )
+  {
+    $lang = $request->session()->get('language');
+    $product = Product::find($id);
+    $productOptions = $product->options ;
+    // check if language exists 
+    if(!isset($productOptions[$lang]))
+      $productOptions[$lang] = $productOptions['default'] ;
+    $newOptions = explode(',', $request->options) ;
+    foreach($productOptions as $lang => $val){
+      $key = key($productOptions[$lang][$request->id]) ;
+      $merged = array_merge(reset($productOptions[$lang][$request->id]), $newOptions)  ;  
+      $productOptions[$lang][$request->id][$key] = $merged ;
+    }
+    $product->options = $productOptions ; 
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
+    return redirect()->back();
+  }
+  
+  /**
+   * update option name
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function updateOptionName(Request $request, $id)
+  {
+    $lang = $request->session()->get('language');
+    $product = Product::find($id);
+    $productOptions = $product->options ;
+    if(!isset($productOptions[$lang]))
+      $productOptions[$lang] = $productOptions['default'] ;
+    $values = reset($productOptions[$lang][$request->id]) ;
+    unset($productOptions[$lang][$request->id]) ;
+    $productOptions[$lang][$request->id][$request->name] = $values ;
+    $product->options = $productOptions ;   
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
+    return redirect()->back();
+  }
+  
+  /**
+   * update option value
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function updateOptionValue(Request $request, $id)
+  {
+    $lang = $request->session()->get('language');
+    $product = Product::find($id);
+    $productOptions = $product->options ;
+    // check if language exists 
+    if(!isset($productOptions[$lang]))
+      $productOptions[$lang] = $productOptions['default'] ;
+    $key = key($productOptions[$lang][$request->option_id]) ;
+    $productOptions[$lang][$request->option_id][$key][$request->id] = $request->name ;
+    $product->options = $productOptions ;   
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
+    return redirect()->back();
+  }
+  
+  /**
+   * add a new option the product
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function addProductOption(Request $request, $id)
+  {
+    $product = Product::find($id);
+    $productOptionValues = $product->option_values ;
+    $new = [
+      'sku' => $request->sku,
+      'price' => $request->price,
+      'options' => $request->options
+    ] ;
+    
+    // check if combination exists
+    foreach($productOptionValues as $pov){
+      if($pov['options'] == $new['options']){
+        $request->session()->flash('danger',  trans('options.option').' '.trans('crud.exists'));
+        return redirect()->back();
+      }
+    }
+
+    // create new
+    $productOptionValues[] = $new ;
+    $product->option_values = $productOptionValues ;
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.created'));
+    return redirect()->back();
+  }
+  
+  /**
+   * delete a product option
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function deleteProductOption(Request $request, $id, $povId)
+  {
+    $product = Product::find($id);
+    $productOptionValues = $product->option_values ;
+    unset($productOptionValues[$povId]);
+    $product->option_values = $productOptionValues ;
+    $product->save();
+
+    // redirect
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.deleted'));
+    return redirect()->back();
   }
 }

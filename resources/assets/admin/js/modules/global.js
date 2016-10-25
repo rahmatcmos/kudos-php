@@ -28,7 +28,7 @@
     });
     
     // are you sure?, when danger is present
-    $(document).on('click', '.btn-danger, a.text-danger', function(e){
+    $(document).on('click', '.btn-danger:not(.no-submit), a.text-danger', function(e){
       e.preventDefault() ;
       if (window.confirm("Are you sure?")) {
         $(this).closest('form').submit() ; 

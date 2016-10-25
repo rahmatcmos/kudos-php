@@ -10,6 +10,7 @@
         <div class="col-md-3 text-right">
           {{ Form::open(['url' => 'admin/products/' . $product->id]) }}
             {{ Form::hidden('_method', 'DELETE') }}
+            <a href="/admin/products/{{ $product->id }}/options" class="btn btn-warning">{{ trans('crud.manage') }} {{ trans('options.options') }}</a>
             {{ Form::submit(trans('crud.delete'), ['class' => 'btn btn-danger']) }}
           {{ Form::close() }}
         </div>
