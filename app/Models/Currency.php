@@ -14,7 +14,7 @@ class Currency extends Moloquent {
   /**
    * Current currency rate
    */
-  public $rate = 1 ;
+  public $currency_rate = 1 ;
   
   /**
    * allow filling of any amount of fields
@@ -136,6 +136,6 @@ class Currency extends Moloquent {
   {
     parent::__construct();
     if(Session::has('currency_rate'))
-      $this->rate = Session::get('currency_rate');
+      $this->currency_rate = Session::get('currency_rate');
   }
 }

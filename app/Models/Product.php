@@ -24,7 +24,7 @@ class Product extends Moloquent {
   public function getPriceAttribute($value)
   {
     $currency = new Currency ;
-    return number_format($value * $currency->rate, 2, '.', '') ;
+    return number_format($value * $currency->currency_rate, 2, '.', '') ;
   }
   
   /**
@@ -33,7 +33,7 @@ class Product extends Moloquent {
   public function getSalePriceAttribute($value)
   {
     $currency = new Currency ;
-    return number_format($value * $currency->rate, 2, '.', '') ;
+    return number_format($value * $currency->currency_rate, 2, '.', '') ;
   }
   
   /**
@@ -42,7 +42,7 @@ class Product extends Moloquent {
   public function getRrpAttribute($value)
   {
     $currency = new Currency ;
-    return number_format($value * $currency->rate, 2, '.', '') ;
+    return number_format($value * $currency->currency_rate, 2, '.', '') ;
   }
   
   /**
