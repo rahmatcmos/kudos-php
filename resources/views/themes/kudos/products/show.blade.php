@@ -35,9 +35,24 @@
         @endif
       </div>
       {{ Form::open(['url' => 'basket', 'id' => 'add-to-basket']) }}
+      
+        <!-- product options -->
+        @php
+          $options = isset($product->options[$language]) ? $product->options[$language] : $product->options['default'] ;
+          ksort($options) ;
+        @endphp
+        @if($options)
+          @foreach($options as $key => $option)
+            {{ Form::label($key, key($option)) }}
+            {{ Form::select($key, $option[key($option)], '', ['class' => 'form-control']) }}
+          @endforeach
+        @endif
+        <!-- /product options -->
+      
         {{ Form::hidden('id',  $product['id']) }}
         {{ Form::hidden('price',  !empty($product->salePrice) ? $product->salePrice : $product->price) }}
         @php $range = range(0,10) ; unset($range[0]) @endphp
+        {{ Form::label('qty', trans('basket.quantity')) }}
         {{ Form::select('qty', $range, 1, ['class' => 'form-control']) }}
         {{ Form::submit('Add to Basket', ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}

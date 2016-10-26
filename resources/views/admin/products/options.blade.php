@@ -36,7 +36,11 @@
                 $lang = isset($product->options[$language]) ? $language : 'default' ;
               @endphp
               @if(isset($product->options[$lang]))
-                @foreach ($product->options[$lang] as $id => $option)
+                @php 
+                  $soptions = $product->options[$lang] ;
+                  ksort($soptions) ;                
+                @endphp
+                @foreach ($soptions as $id => $option)
                   @foreach($option as $name => $options)
                   <tr>
                     <td>
@@ -76,7 +80,11 @@
                 <td>
                   <input name="sku" type="text" class="form-control" placeholder="{{ trans('products.sku') }}" required>
                 </td>
-                @foreach ($product->options[$lang] as $id => $option)
+                @php 
+                  $soptions = $product->options[$lang] ;
+                  ksort($soptions) ;                
+                @endphp
+                @foreach ($soptions as $id => $option)
                   @foreach($option as $name => $options)
                     <td>
                       <select name="options[]" class="form-control">
@@ -100,6 +108,9 @@
             @foreach($product->option_values as $ovId => $ov)
               <tr>
                 <td>{{ $ov['sku'] }}</td>
+                @php 
+                  ksort($ov['options']) ;                
+                @endphp
                 @foreach($ov['options'] as $oid => $id)
                   @php 
                     $key = key($product->options[$lang][$oid])

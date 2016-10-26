@@ -70,6 +70,18 @@ class ProductsController extends ThemeController
   public function show(Request $request, $slug)
   {
     $product = Product::where('slug', $slug)->first() ;
+    
+    /*$optionValues = $product->option_values ;
+    $productOptions = [] ;
+    foreach($optionValues as $option){
+      foreach($option['options'] as $key => $opt){
+        $productOptions[key($product->options[$lang][$key])][] = $opt ;
+      }
+    }
+    echo '<pre>' ;
+    print_r($product->options) ;
+    die() ;*/
+    
     $file_size = key(array_reverse(config('image.image_sizes'))) ; //smallest
     $product->files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
     return view('themes/kudos/products/show', ['product' => $product]);
