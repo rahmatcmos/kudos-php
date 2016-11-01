@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Option;
+use App\Models\OptionProduct;
+use App\Models\OptionProductValue;
 use App\Http\Traits\CategoriesTrait;
 use App\Http\Traits\Media;
 
@@ -74,6 +77,7 @@ class ProductsController extends AdminController
     $product = new Product;
     $product->shop_id = $request->shop_id;
     $product->slug = $request->slug;
+    $product->sku = $request->sku;
     $product->categories = $request->categories;
     $product->price = $request->price;
     $product->rrp = $request->rrp;
@@ -136,6 +140,7 @@ class ProductsController extends AdminController
     $product = Product::find($id);
     $product->shop_id = $request->shop_id;
     $product->slug = $request->slug;
+    $product->sku = $request->sku;
     $product->categories = $request->categories;
     $product->price = $request->price;
     $product->rrp = $request->rrp;
@@ -196,7 +201,19 @@ class ProductsController extends AdminController
   public function options(Request $request, String $id)
   {
     $product = Product::find($id) ; 
-    return view('admin/products/options', ['product' => $product]);
+    
+    // get current options
+    $options = isset($product->options) ? $product->options : [] ;
+    $options = Option::whereIn('_id', $options)->get()->toArray() ;
+    
+    // get existing options - minus ones already present
+    $current = [] ;
+    foreach($options as $option){
+      $current[] = $option['_id'] ;
+    }
+    $availableOptions = Option::all()->except( $current ) ;
+    
+    return view('admin/products/options', ['product' => $product, 'options' => $options, 'availableOptions' => $availableOptions]);
   }
   
   /**
@@ -213,19 +230,58 @@ class ProductsController extends AdminController
       $request->name => array_map('trim', explode(',', $request->options))
     ] ;
     $lang = $request->session()->get('language');
-    $currentOptions = $product->options ;
-    $currentOptions[$lang][][$request->name] = array_map('trim', explode(',', $request->options)) ;
+    
+    // build and create option
+    $currentOptions[$lang][$request->name] = array_map('trim', explode(',', $request->options)) ;
     $currentOptions['default'] = $currentOptions[$lang] ;
-    foreach($currentOptions as $l => $val){
-      if(!in_array($l, [$lang, 'default']))
-        $currentOptions[$l] = $currentOptions[$lang] ;
-    }
-    $product->options = $currentOptions ;
+    $option = Option::create($currentOptions);
+    
+    // register product with this option
+    $optionProduct = OptionProduct::firstOrNew(['option_id' => $option->id]);
+    $optionProduct->option_id = $option->id;
+    $optionProduct->products = [$product->id]; 
+    $optionProduct->save() ;
+    
+    // register option with this product
+    $productOptions = isset($product->options) ? $product->options : [] ;
+    array_push($productOptions, $option->id) ; 
+    $product->options = $productOptions ;
+    
+    // reset this products options
     $product->option_values = [] ;   
     $product->save() ;
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.created'));
     return redirect()->back() ;
   }
+  
+  /**
+   * Add an existing product option
+   *
+   * @param string $id
+   * 
+   * @return Redirect
+   */
+  public function addExistingOption(Request $request, String $id)
+  {
+    // add option to product
+    $product = Product::find($id) ;
+    $options = $product->options ;
+    array_push($options, $request->option_id) ;
+    $product->options = $options ;
+    $product->option_values = [] ;
+    $product->save() ;
+    
+    // add product to option
+    $op = OptionProduct::where('option_id', $request->option_id)->first() ;
+    $products = $op->products ;
+    array_push($products, $id) ;
+    $op->options = $products ;
+    $op->save() ;
+    
+    $request->session()->flash('success',  trans('options.option').' '.trans('crud.added'));
+    return redirect()->back() ;
+  }
+
   
   /**
    * Delete option
@@ -236,16 +292,20 @@ class ProductsController extends AdminController
    */
   public function deleteOption(Request $request, $id )
   {
-    // delete
+    
+    // delete option from product and reset options
     $product = Product::find($id);
-    $productOptions = $product->options ;
-    foreach($productOptions as $lang => $val){
-      unset($productOptions[$lang][$request->option]) ;
-    }
+    $productOptions = array_diff( $product->options, [$request->option] ) ;
     $product->options = $productOptions ;  
     $product->option_values = [] ;    
     $product->save();
-
+    
+    // remove from option products
+    $optionProduct = optionProduct::where('option_id', $request->option)->first();
+    $optionProducts = array_diff( $optionProduct->products, [$id] ) ;
+    $optionProduct->products = $optionProducts ;     
+    $optionProduct->save();
+    
     // redirect
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.deleted'));
     return redirect()->back();
@@ -260,20 +320,25 @@ class ProductsController extends AdminController
    */
   public function addOptions(Request $request, $id )
   {
-    $lang = $request->session()->get('language');
-    $product = Product::find($id);
-    $productOptions = $product->options ;
-    // check if language exists 
-    if(!isset($productOptions[$lang]))
-      $productOptions[$lang] = $productOptions['default'] ;
+    $language = $request->session()->get('language');
+    $option = Option::find($request->id);
+      
+    // prepeare new options
     $newOptions = explode(',', $request->options) ;
-    foreach($productOptions as $lang => $val){
-      $key = key($productOptions[$lang][$request->id]) ;
-      $merged = array_merge(reset($productOptions[$lang][$request->id]), $newOptions)  ;  
-      $productOptions[$lang][$request->id][$key] = $merged ;
+    
+    // check if this language exists
+    if(!isset($option->$language))
+     $option->$language = $option->default ;
+         
+    // add to all languages
+    foreach($option->toArray() as $lang => $val){
+      if(!in_array($lang, ['_id', 'updated_at', 'created_at'])){
+        $key = key($val) ;
+        $merged = array_merge(reset($val), $newOptions)  ;  
+        $option->$lang = [$key => $merged] ;
+      }
     }
-    $product->options = $productOptions ; 
-    $product->save();
+    $option->save();
 
     // redirect
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
@@ -289,21 +354,27 @@ class ProductsController extends AdminController
    */
   public function updateOptionName(Request $request, $id)
   {
-    $lang = $request->session()->get('language');
-    $product = Product::find($id);
-    $productOptions = $product->options ;
-    if(!isset($productOptions[$lang]))
-      $productOptions[$lang] = $productOptions['default'] ;
-    $values = reset($productOptions[$lang][$request->id]) ;
-    unset($productOptions[$lang][$request->id]) ;
-    $productOptions[$lang][$request->id][$request->name] = $values ;
-    $product->options = $productOptions ;   
-    $product->save();
+    $language = $request->session()->get('language');
+    $option = Option::find($request->id);
+
+    // check if this language exists
+    if(!isset($option->$language))
+     $option->$language = $option->default ;
+
+    // get the current values
+    $current = $option->$language ;
+
+    // save the new name
+    $option->$language = [$request->name => reset($current)] ;
+    if($language==config('app.locale'))
+      $option->default = [$request->name => reset($current)] ;
+    $option->save();
 
     // redirect
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
     return redirect()->back();
   }
+  
   
   /**
    * update option value
@@ -314,16 +385,22 @@ class ProductsController extends AdminController
    */
   public function updateOptionValue(Request $request, $id)
   {
-    $lang = $request->session()->get('language');
-    $product = Product::find($id);
-    $productOptions = $product->options ;
-    // check if language exists 
-    if(!isset($productOptions[$lang]))
-      $productOptions[$lang] = $productOptions['default'] ;
-    $key = key($productOptions[$lang][$request->option_id]) ;
-    $productOptions[$lang][$request->option_id][$key][$request->id] = $request->name ;
-    $product->options = $productOptions ;   
-    $product->save();
+    $language = $request->session()->get('language');  
+    $option = Option::find($request->option_id);
+    
+    // check if this language exists
+    if(!isset($option->$language))
+     $option->$language = $option->default ;
+
+    // get the current values
+    $current = $option->$language ;
+    $current[key($current)][$request->id] = $request->name ;
+    
+    // save the new name
+    $option->$language = $current ;
+    if($language==config('app.locale'))
+      $option->default = $current ;
+    $option->save();
 
     // redirect
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.updated'));
@@ -331,7 +408,7 @@ class ProductsController extends AdminController
   }
   
   /**
-   * add a new option the product
+   * add a new option combo to the product
    *
    * @param string $id
    * 
@@ -360,6 +437,26 @@ class ProductsController extends AdminController
     $product->option_values = $productOptionValues ;
     $product->save();
 
+    // add this option to OPV table for quick filtering
+    foreach($productOptionValues as $pov){
+      foreach($pov['options'] as $key => $option){
+        $opv = OptionProductValue::where('filter', $key.'-'.$option)->first() ;
+        if(!$opv){
+          // insert first
+          OptionProductValue::create([
+            'filter' => $key.'-'.$option,
+            'products' => [$id]
+          ]) ;
+        } else {
+          // add to list
+          $products = $opv->products ;
+          array_push($products, $id) ;
+          $opv->products = array_unique($products) ;
+          $opv->save();
+        }
+      }
+    }
+
     // redirect
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.created'));
     return redirect()->back();
@@ -384,4 +481,5 @@ class ProductsController extends AdminController
     $request->session()->flash('success',  trans('options.option').' '.trans('crud.deleted'));
     return redirect()->back();
   }
+  
 }

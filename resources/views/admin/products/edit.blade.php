@@ -50,6 +50,8 @@
           {{ Form::text('name', isset($product->$language['name']) ? $product->$language['name'] : $product->default['name'], ['class' => 'form-control', 'required' => 'required']) }}
           {{ Form::label('slug', trans('fields.slug')) }}
           {{ Form::text('slug', $product->slug, ['class' => 'form-control', 'required' => 'required']) }}
+          {{ Form::label('sku', trans('products.sku')) }}
+          {{ Form::text('sku', $product->sku, ['class' => 'form-control', 'required' => 'required']) }}
           {{ Form::label('categories', trans('categories.category')) }}
           {{ Form::select('categories', $categories, $product->categories,  ['class' => 'form-control','multiple'=>'multiple','name'=>'categories[]']) }}
           {{ Form::label('excerpt', trans('fields.excerpt')) }}

@@ -20,6 +20,8 @@
         {{ Form::text('name', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('slug', trans('fields.slug')) }}
         {{ Form::text('slug', '', ['class' => 'form-control', 'required' => 'required']) }}
+        {{ Form::label('sku', trans('products.sku')) }}
+        {{ Form::text('sku', '', ['class' => 'form-control', 'required' => 'required']) }}
         {{ Form::label('categories', trans('categories.category')) }}
         {{ Form::select('categories', $categories, null,  ['class' => 'form-control','multiple'=>'multiple','name'=>'categories[]']) }}
         {{ Form::label('excerpt', trans('fields.excerpt')) }}

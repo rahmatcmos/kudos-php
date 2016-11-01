@@ -35,6 +35,12 @@
         <thead>
           <tr>
             <th>
+              <a href="/admin/products?page={{ $products->currentPage() }}&order_by=sku&order_dir={{ session('product.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $products->search }}" 
+                class="order-{{ session('product.order_by') == 'sku' ? session('product.order_dir') : '' }}">
+                {{ trans('products.sku') }}
+              </a>
+            </th>
+            <th>
               <a href="/admin/products?page={{ $products->currentPage() }}&order_by=name&order_dir={{ session('product.order_dir') == 'asc' ? 'desc' : 'asc' }}&search={{ $products->search }}" 
                 class="order-{{ session('product.order_by') == 'name' ? session('product.order_dir') : '' }}">
                 {{ trans('products.name') }}
@@ -45,6 +51,7 @@
         <tbody>
           @foreach ($products as $product)
           <tr>
+            <td><a href="/admin/products/{{ $product->id }}/edit">{{ $product->sku }}</a></td>
             <td><a href="/admin/products/{{ $product->id }}/edit">{{ isset($product->$language['name']) ? $product->$language['name'] : $product->default['name'] }}</a></td>
           </tr>    
           @endforeach

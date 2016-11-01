@@ -7,6 +7,7 @@ return [
   'save' => 'Save',
   'delete' => 'Delete',
   'created' => 'Created',
+  'added' => 'Added',
   'updated' => 'Updated',
   'deleted' => 'Deleted',
   'change' => 'Change',
@@ -18,5 +19,7 @@ return [
   'manage' => 'Manage',
   'back' => 'Back to',
   'close' => 'Close',
-  'exists' => 'already exists'
+  'exists' => 'already exists',
+  'new' => 'New',
+  'existing' => 'existing'
 ];

@@ -22,39 +22,62 @@
     </div>
     <div class="col-md-6">
       <h1>{{ $product->name }}</h1>
+      <small>{{ trans('products.sku') }}: {{ $product->sku }}</small>
       <p id="excerpt">{{ $product->excerpt }}</p>
       <div id="price">
-        @if(!empty($product->rrp) && $product->rrp > 0)
-        <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><strike>{{ $product->rrp }}</strike></strong></p>
-        @endif
-        @if(!empty($product->salePrice) && $product->salePrice > 0)
-        <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
-        <p class="price">now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</strong></p>
+        @if(isset($product->first['price']))
+          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->first['price'] }}</strong></p>
         @else
-        <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
+          @if(!empty($product->rrp) && $product->rrp > 0)
+          <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><strike>{{ $product->rrp }}</strike></strong></p>
+          @endif
+          @if(!empty($product->salePrice) && $product->salePrice > 0)
+          <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
+          <p class="price">now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</strong></p>
+          @else
+          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
+          @endif
         @endif
       </div>
       {{ Form::open(['url' => 'basket', 'id' => 'add-to-basket']) }}
       
         <!-- product options -->
-        @php
-          $options = isset($product->options[$language]) ? $product->options[$language] : $product->options['default'] ;
-          ksort($options) ;
-        @endphp
-        @if($options)
-          @foreach($options as $key => $option)
-            {{ Form::label($key, key($option)) }}
-            {{ Form::select($key, $option[key($option)], '', ['class' => 'form-control']) }}
-          @endforeach
+        @if($product->options && $product->option_values)
+            <div id="product-options">
+            @foreach($product->options as $option)
+              @php 
+                $options = isset($option[$language]) ? $option[$language] : $option['default'] ;
+              @endphp
+              @foreach($options as $key => $opt)
+                {{ Form::label($option->id, key($options)) }}
+                <select name="{{ $option->id }}" class="form-control">
+                  @foreach($opt as $id => $name)
+                    @if(in_array($id, array_keys($available[$option->id])))
+                    <option value="{{ $id }}" {{ $id==$product->first['options'][$option->id] ? 'selected' : '' }}>{{ $name }}</option>
+                    @endif
+                  @endforeach
+                </select>
+              @endforeach
+            @endforeach
+            </div>
         @endif
         <!-- /product options -->
       
-        {{ Form::hidden('id',  $product['id']) }}
-        {{ Form::hidden('price',  !empty($product->salePrice) ? $product->salePrice : $product->price) }}
+        {{ Form::hidden('id', $product['id']) }}
+        {{ Form::hidden('sku', $product['sku']) }}
+        {{ Form::hidden('option_sku', $product->first['sku']) }}
+        {{ Form::hidden('price', 
+          isset($product->first['price']) 
+            ? $product->first['price'] 
+            : !empty($product->salePrice) 
+              ? $product->salePrice 
+              : $product->price)
+        }}
+        
         @php $range = range(0,10) ; unset($range[0]) @endphp
         {{ Form::label('qty', trans('basket.quantity')) }}
         {{ Form::select('qty', $range, 1, ['class' => 'form-control']) }}
-        {{ Form::submit('Add to Basket', ['class' => 'btn btn-primary']) }}
+        {{ Form::submit('Add to Basket', ['class' => 'btn btn-primary', 'id' => 'add-to-cart']) }}
       {{ Form::close() }}
     </div>
   </div>
@@ -64,4 +87,14 @@
     {!! $product->content !!}
   </div>
 </div>
+@endsection
+
+@section('foot')
+<script>
+  $(function(){
+    if($('#product-options').length){
+      //alert(1) ;
+    }
+  }) ;
+</script>
 @endsection

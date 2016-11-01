@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   Route::get('products/search/{category?}', 'ProductsController@search');
   Route::get('products/scroll', 'ProductsController@scroll');
   Route::post('products/filter', 'ProductsController@filter');
+  Route::post('products/{id}/optionize', 'ProductsController@optionize');
   Route::resource('products', 'ProductsController');
   
   // basket
@@ -108,6 +109,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
   Route::get('products/{id}/options', 'ProductsController@options');
   Route::post('products/{id}/store-option', 'ProductsController@storeOption');
   Route::delete('products/{id}/delete-option', 'ProductsController@deleteOption');
+  Route::post('products/{id}/add-existing-option', 'ProductsController@addExistingOption');
   Route::post('products/{id}/add-options', 'ProductsController@addOptions');
   Route::post('products/{id}/update-option-name', 'ProductsController@updateOptionName');
   Route::post('products/{id}/update-option-value', 'ProductsController@updateOptionValue');

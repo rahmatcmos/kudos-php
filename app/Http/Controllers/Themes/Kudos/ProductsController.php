@@ -5,11 +5,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Product;
 use App\Models\Category ;
+use App\Models\Option;
 use App\Http\Traits\Media;
+use App\Http\Traits\Options;
 
 class ProductsController extends ThemeController
 {
   use Media ;
+  use Options ;
   
   /**
    * Show all products
@@ -71,20 +74,30 @@ class ProductsController extends ThemeController
   {
     $product = Product::where('slug', $slug)->first() ;
     
-    /*$optionValues = $product->option_values ;
-    $productOptions = [] ;
-    foreach($optionValues as $option){
-      foreach($option['options'] as $key => $opt){
-        $productOptions[key($product->options[$lang][$key])][] = $opt ;
+    // product options
+    if($product->options){
+      $product->options = Option::whereIn('_id', $product->options)->get() ;
+      if($product->option_values){
+        $first = $product->option_values ;
+        $product->first = reset($first) ;
       }
     }
-    echo '<pre>' ;
-    print_r($product->options) ;
-    die() ;*/
+
+    // load only available options based on selected
+    $available = [] ;
+      if($product->option_values){
+      foreach($product->option_values as $option){
+        foreach($option['options'] as $key => $opt){
+          $available[$key][$opt] = [] ; //$this->available($product, $key, $opt) ;
+        }
+      }
+    }
     
+    // product images
     $file_size = key(array_reverse(config('image.image_sizes'))) ; //smallest
     $product->files = $this->getFiles('images/products/'.$product->id.'/'.$file_size);
-    return view('themes/kudos/products/show', ['product' => $product]);
+    
+    return view('themes/kudos/products/show', ['product' => $product, 'available' => $available]);
   }
   
   /**
@@ -109,7 +122,6 @@ class ProductsController extends ThemeController
       $searchTerm = $request->input('query') ;
       $request->session()->put('query', $searchTerm) ;
     }
-    
     // search
     $products = new Product() ;
     $products = $products->where('shop_id', $request->session()->get('shop')) ;
@@ -126,6 +138,32 @@ class ProductsController extends ThemeController
     $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('themes/kudos/products/search', ['products' => $products]);
+  }
+  
+  /**
+   * get options based on current selection
+   *
+   * @return Json
+   */
+  public function optionize(Request $request, $id)
+  {
+    $data = $request->except(['_token', 'price', 'qty', 'id', 'sku', 'option_sku']) ;
+    $initiated = $data['initiated'] ;
+    unset($data['initiated']) ;
+    
+    $init = false ;
+    $keys = [] ;
+    foreach($data as $key => $option){ 
+      if($init){
+        //get the options based on the keys
+        $data[$key] = $this->getOptions($id, $key, $keys) ;
+        $nextKeys = $keys ;
+      }
+      $keys[$key] = $data[$key][0] ; 
+      if($key == $initiated) $init = true ;
+    }
+    //print_r($data) ;
+    return response()->json($data);
   }
 
 }

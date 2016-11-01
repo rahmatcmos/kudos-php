@@ -15,10 +15,13 @@
     <div class="container-fluid">
       <div class="panel panel-default">
         <div class="panel-heading">{{ trans('products.product') }} {{ trans('options.options') }} {{ trans('options.set') }}
-          <a href="#" class="btn btn-success btn-panel" data-toggle="modal" data-target="#modal-create-option">{{ trans('crud.add') }}</a>
+          <span class="panel-btns">
+            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modal-add-option">{{ trans('crud.add') }} {{ trans('crud.existing') }}</a>
+            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modal-create-option">{{ trans('crud.add') }} {{ trans('crud.new') }}</a>
+          </span>
         </div>
         <div class="panel-body">
-          @if(isset($product->options))
+          @if(isset($options))
           <table class="table table-bordered">
             <thead>
               <tr>
@@ -32,37 +35,32 @@
               </tr>
             </thead>
             <tbody>
+ 
+            @foreach ($options as $option)
               @php
-                $lang = isset($product->options[$language]) ? $language : 'default' ;
+                $lang = isset($option[$language]) ? $language : 'default' ;
               @endphp
-              @if(isset($product->options[$lang]))
-                @php 
-                  $soptions = $product->options[$lang] ;
-                  ksort($soptions) ;                
-                @endphp
-                @foreach ($soptions as $id => $option)
-                  @foreach($option as $name => $options)
-                  <tr>
-                    <td>
-                      <a href="#" data-name="{{ $name }}" data-id="{{ $id }}" data-toggle="modal" data-target="#modal-edit-option-name">{{ $name }}</a>
-                    </td>
-                    <td>
-                      @foreach($options as $key => $value)
-                      <a href="#" data-name="{{ $value }}" data-option-id="{{ $id }}" data-id="{{ $key }}" data-toggle="modal" data-target="#modal-edit-option-value">{{ $value }}</a>
-                      @endforeach
-                    </td>
-                    <td>
-                      <a href="#" class="btn btn-warning" data-id="{{ $id }}" data-toggle="modal" data-target="#modal-add-option-values">{{ trans('crud.add') }} {{ trans('options.options') }}</a> 
-                      {{ Form::open(['url' => 'admin/products/' . $product->id.'/delete-option', 'class' => 'pull-right']) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::hidden('option', $id )}}
-                        {{ Form::submit(trans('crud.delete'), ['class' => 'btn btn-danger']) }}
-                      {{ Form::close() }}
-                    </td>
-                  </tr>  
+              @foreach($option[$lang] as $name => $opt)
+              <tr>
+                <td>
+                  <a href="#" data-name="{{ $name }}" data-id="{{ $option['_id'] }}" data-toggle="modal" data-target="#modal-edit-option-name">{{ $name }}</a>
+                </td>
+                <td>
+                  @foreach($opt as $key => $value)
+                  <a href="#" data-name="{{ $value }}" data-option-id="{{ $option['_id'] }}" data-id="{{ $key }}" data-toggle="modal" data-target="#modal-edit-option-value">{{ $value }}</a>
                   @endforeach
-                @endforeach
-              @endif
+                </td>
+                <td>
+                  <a href="#" class="btn btn-warning" data-id="{{ $option['_id'] }}" data-toggle="modal" data-target="#modal-add-option-values">{{ trans('crud.add') }} {{ trans('options.options') }}</a> 
+                  {{ Form::open(['url' => 'admin/products/' . $product->id.'/delete-option', 'class' => 'pull-right']) }}
+                    {{ Form::hidden('_method', 'DELETE') }}
+                    {{ Form::hidden('option', $option['_id'] )}}
+                    {{ Form::submit(trans('crud.delete'), ['class' => 'btn btn-danger']) }}
+                  {{ Form::close() }}
+                </td>
+              </tr>  
+              @endforeach
+            @endforeach
             </tbody>
           </table>
           <p>* {{ trans('options.warning') }}</p>
@@ -70,7 +68,7 @@
       </div>
       @endif
       
-      @if(isset($product->options[$lang]) && !empty($product->options[$lang]))
+      @if(isset($options) && !empty($options))
       <div class="panel panel-default">
         <div class="panel-heading">{{ trans('products.product') }} {{ trans('options.options') }}</div>
         <div class="panel-body">
@@ -80,19 +78,19 @@
                 <td>
                   <input name="sku" type="text" class="form-control" placeholder="{{ trans('products.sku') }}" required>
                 </td>
-                @php 
-                  $soptions = $product->options[$lang] ;
-                  ksort($soptions) ;                
-                @endphp
-                @foreach ($soptions as $id => $option)
-                  @foreach($option as $name => $options)
-                    <td>
-                      <select name="options[]" class="form-control">
-                        @foreach($options as $key => $value)
-                        <option value="{{ $key }}">{{ $value }}</a>
-                        @endforeach
-                      </select>
-                    </td>
+                @foreach ($options as $option)
+                  @php
+                    $lang = isset($option[$language]) ? $language : 'default' ;
+                  @endphp
+                  @foreach ($option[$lang] as $name => $opt)
+                  <td>
+                    <select name="options[{{ $option['_id'] }}]" class="form-control" required>
+                      <option value="">{{ $name }}</option>
+                      @foreach($opt as $key => $value)
+                      <option value="{{ $key }}">{{ $value }}</a>
+                      @endforeach
+                    </select>
+                  </td>
                   @endforeach
                 @endforeach
                 <td>
@@ -108,14 +106,15 @@
             @foreach($product->option_values as $ovId => $ov)
               <tr>
                 <td>{{ $ov['sku'] }}</td>
-                @php 
-                  ksort($ov['options']) ;                
-                @endphp
                 @foreach($ov['options'] as $oid => $id)
-                  @php 
-                    $key = key($product->options[$lang][$oid])
-                  @endphp
-                  <td>{{ $product->options[$lang][$oid][$key][$id] }}</td>
+                  @foreach($options as $option)
+                    @if($option['_id']==$oid)
+                      @php
+                        $lang = isset($option[$language]) ? $language : 'default' ;
+                      @endphp
+                      <td>{{ $option[$lang][key($option[$lang])][$id] }}</td>
+                    @endif
+                  @endforeach
                 @endforeach
                 <td>{{ number_format($ov['price'],2) }}</td>
                 <td width="80">
@@ -127,12 +126,13 @@
           @endif
         </div>
       </div>
+      @endif 
     </div>
-    @endif 
-    
+
   </section>
   
 @include('admin.products.partials.create-option')
+@include('admin.products.partials.add-option')
 @include('admin.products.partials.add-option-values')
 @include('admin.products.partials.edit-option-name')
 @include('admin.products.partials.edit-option-value')
