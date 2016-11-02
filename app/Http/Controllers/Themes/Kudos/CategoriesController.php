@@ -21,11 +21,12 @@ class CategoriesController extends ThemeController
     
     // pagination
     $session_type = 'product' ;
-    if (!$request->session()->has('order_by')) $request->session()->put($session_type.'.order_by', 'created_at') ;
-    if (!$request->session()->has('order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
-    if ($request->getorder_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
-    if ($request->getorder_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
+    if (!$request->session()->has($session_type.'.order_by'))  $request->session()->put($session_type.'.order_by', 'created_at') ;
+    if (!$request->session()->has($session_type.'.order_dir')) $request->session()->put($session_type.'.order_dir', 'desc') ;
+    if ($request->order_by) $request->session()->put($session_type.'.order_by', $request->order_by) ;
+    if ($request->order_dir) $request->session()->put($session_type.'.order_dir', $request->order_dir) ;
     
+    // try to remember why we were doing this ??
     $orderby = $request->session()->get($session_type.'.order_by') == 'created_at'
       ? $request->session()->get($session_type.'.order_by')
       : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
@@ -35,21 +36,18 @@ class CategoriesController extends ThemeController
     
     // filters
     if($request->session()->has('filter') && !empty($request->session()->get('filter'))){
-      $found = false ;
       foreach($request->session()->get('filter') as $key => $value){
         $opv = OptionProductValue::where('filter', $key.'-'.$value)->first() ; 
-        if($opv){
-          $found = true ;
-          $products = $products->whereIn('_id', $opv ->products) ;
+        if(!isset($opv->products)){
+          $find = [] ;
+        } else {
+          $find = $opv->products ;
         }
-      }
-      if(!$found) {
-        $request->session()->flash('danger',  trans('search.none'));
-        $products = $products->whereIn('_id', []) ;
+        $products = $products->whereIn('_id', $find) ;
       }
     }
     
-    $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
+    $products = $products->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit) ;
 
     return view('themes/kudos/categories/show', ['category' => $category, 'products' => $products]);

@@ -206,7 +206,6 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Spatie\Analytics\AnalyticsServiceProvider::class,
-        Magyarjeti\LaravelLipsum\LipsumServiceProvider::class,
         //
 
         /*
@@ -271,8 +270,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
-        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
-        'Lipsum' => Magyarjeti\LaravelLipsum\LipsumFacade::class,
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class
     ],
 
 ];

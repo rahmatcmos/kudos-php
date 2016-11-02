@@ -20,6 +20,9 @@
 @endsection
 
 @section('content')
+@if(!$products->count())
+  <div class="alert alert-info" role="alert">{{ trans('search.none') }}</div>
+@endif
 <ul class="row results">
   @foreach ($products as $product)
     <li class="col-md-2 text-center">
@@ -33,5 +36,5 @@
     </li>
   @endforeach
 </ul>
-<div id="paginate" data-page="{{ $products->currentPage() }}" data-limit="{{ $products->perPage() }}" data-count="{{ $products->count() }}" data-complete="false"></div>
+<div id="paginate" data-page="{{ $products->currentPage()+1 }}" data-limit="{{ $products->perPage() }}" data-count="{{ $products->count() }}" data-complete="false"></div>
 @endsection

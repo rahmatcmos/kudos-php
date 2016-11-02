@@ -25,18 +25,21 @@
 @endsection
 
 @section('content')
-  <ul class="row results">
-    @foreach ($products as $product)
-      <li class="col-md-2 text-center">
-        <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
-        <h2><a href="/products/{{ $product->slug }}">{{ $product->name }}</a></h2>
-        @if(!empty($product->salePrice))
-        <p class="price"><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</p>
-        @else
-        <p class="price"><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</p>
-        @endif
-      </li>
-    @endforeach
-  </ul>
-  <div id="paginate" data-page="{{ $products->currentPage() }}" data-limit="{{ $products->perPage() }}" data-count="{{ $products->count() }}" data-complete="false"></div>
+@if(!$products->count())
+  <div class="alert alert-info" role="alert">{{ trans('search.none') }}</div>
+@endif
+<ul class="row results">
+  @foreach ($products as $product)
+    <li class="col-md-2 text-center">
+      <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
+      <h2><a href="/products/{{ $product->slug }}">{{ $product->name }}</a></h2>
+      @if(!empty($product->salePrice))
+      <p class="price"><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</p>
+      @else
+      <p class="price"><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</p>
+      @endif
+    </li>
+  @endforeach
+</ul>
+<div id="paginate" data-page="{{ $products->currentPage() }}" data-limit="{{ $products->perPage() }}" data-count="{{ $products->count() }}" data-complete="false"></div>
 @endsection

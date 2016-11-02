@@ -11,12 +11,12 @@
           var limit = $('#paginate').data('limit') ;
           if($(window).scrollTop() + $(window).height() >= $(document).height() - 1000) {
             scrollBusy = true ;
-            $.ajax('/products/scroll?page'+page++)
+            $.ajax('/products/scroll?page='+page++)
             .done(function(data) {
               var count = $(data).filter('li').length;
               if(count<limit){
                 $('#paginate').data('complete', true) ;
-                // only show footer if results are complete
+                // only show footer if results are complete 
                 $('footer').show() ;
               }
               $('#paginate').data('page', page++) ;
