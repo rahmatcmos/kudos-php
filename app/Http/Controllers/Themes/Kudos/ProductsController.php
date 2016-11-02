@@ -181,6 +181,23 @@ class ProductsController extends ThemeController
       $products = $products->whereIn('categories', [$category] ) ;
     }
     $limit = $request->session()->get('limit') ;
+    
+    // filters
+    if($request->session()->has('filter') && !empty($request->session()->get('filter'))){
+      $found = false ;
+      foreach($request->session()->get('filter') as $key => $value){
+        $opv = OptionProductValue::where('filter', $key.'-'.$value)->first() ; 
+        if($opv){
+          $found = true ;
+          $products = $products->whereIn('_id', $opv ->products) ;
+        }
+      }
+      if(!$found) {
+        $request->session()->flash('danger',  trans('search.none'));
+        $products = $products->whereIn('_id', []) ;
+      }
+    }
+    
     $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
     return view('themes/kudos/products/search', ['products' => $products]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Themes\Kudos;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\OptionProductValue;
 
 class CategoriesController extends ThemeController
 {
@@ -30,8 +31,25 @@ class CategoriesController extends ThemeController
       : $request->session()->get('language').'.'.$request->session()->get($session_type.'.order_by') ;
        
     $limit = $request->session()->get('limit') ;
-    $products = Product::whereIn('_id', $category->products )
-      ->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
+    $products = Product::whereIn('_id', $category->products ) ; 
+    
+    // filters
+    if($request->session()->has('filter') && !empty($request->session()->get('filter'))){
+      $found = false ;
+      foreach($request->session()->get('filter') as $key => $value){
+        $opv = OptionProductValue::where('filter', $key.'-'.$value)->first() ; 
+        if($opv){
+          $found = true ;
+          $products = $products->whereIn('_id', $opv ->products) ;
+        }
+      }
+      if(!$found) {
+        $request->session()->flash('danger',  trans('search.none'));
+        $products = $products->whereIn('_id', []) ;
+      }
+    }
+    
+    $products = $products->orderBy($orderby, $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit) ;
 
     return view('themes/kudos/categories/show', ['category' => $category, 'products' => $products]);
