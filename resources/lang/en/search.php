@@ -2,5 +2,6 @@
 
 return [
   'search' => 'Search',
-  'searchingfor' => 'Searching for'
+  'searchingfor' => 'Searching for',
+  'none' => 'No results found'
 ];

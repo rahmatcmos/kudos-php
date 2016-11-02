@@ -5,6 +5,7 @@ use Illuminate\Routing\Route;
 use App\Models\Shop;
 use App\Models\Category;
 use App\Models\Currency;
+use App\Models\Option;
 
 class ThemeController extends \App\Http\Controllers\Controller
 {
@@ -52,6 +53,12 @@ class ThemeController extends \App\Http\Controllers\Controller
         if ( !$request->session()->has('categories')){
           $categories = Category::where('shop_id', $request->session()->get('shop'))->orderBy('order', 'asc')->get()->toArray() ; 
           $request->session()->put('categories', $categories) ;
+        } 
+        
+        // global list of product filters
+        if ( !$request->session()->has('filters')){
+          $options = Option::all()->toArray() ; // Serialization of 'MongoDB\BSON\ObjectID' is not allowed
+          $request->session()->put('filters', $options) ;
         } 
         
         // share globals

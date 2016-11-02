@@ -29,11 +29,13 @@ class BasketController extends ThemeController
   public function store(Request $request)
   {
     $basket = $request->session()->get('basket') ;
-    if(isset($basket['items'][$request->id])){
-      $basket['items'][$request->id]['qty'] += $request->qty ;
+    if(isset($basket['items'][$request->sku])){
+      $basket['items'][$request->sku]['qty'] += $request->qty ;
     } else {
-      $basket['items'][$request->id] = [
+      $basket['items'][$request->sku] = [
         'price' => $request->price,
+        'sku' => $request->sku,
+        'option_sku' => $request->parent_sku,
         'qty'   => $request->qty,
         'product' => Product::find($request->id)->toArray()
       ] ;

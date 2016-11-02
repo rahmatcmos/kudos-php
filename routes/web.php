@@ -27,6 +27,9 @@ Route::group(['namespace' => 'Themes\\'.ucfirst(config('app.theme'))], function(
   Route::get('products/scroll', 'ProductsController@scroll');
   Route::post('products/filter', 'ProductsController@filter');
   Route::post('products/{id}/optionize', 'ProductsController@optionize');
+  Route::post('products/{id}/getOptionData', 'ProductsController@getOptionData');
+  Route::post('products/option-filter', 'ProductsController@optionFilter');
+  Route::get('products/option-filter-clear', 'ProductsController@optionFilterClear') ;
   Route::resource('products', 'ProductsController');
   
   // basket

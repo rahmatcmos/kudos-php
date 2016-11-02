@@ -22,20 +22,20 @@
     </div>
     <div class="col-md-6">
       <h1>{{ $product->name }}</h1>
-      <small>{{ trans('products.sku') }}: {{ $product->sku }}</small>
+      <small>{{ trans('products.sku') }}: <span id="sku">{{ $product->sku }}</span></small>
       <p id="excerpt">{{ $product->excerpt }}</p>
       <div id="price">
         @if(isset($product->first['price']))
-          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->first['price'] }}</strong></p>
+          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><span id="price-tag">{{ $product->first['price'] }}</span></strong></p>
         @else
           @if(!empty($product->rrp) && $product->rrp > 0)
           <p>rrp: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><strike>{{ $product->rrp }}</strike></strong></p>
           @endif
           @if(!empty($product->salePrice) && $product->salePrice > 0)
           <p>was: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
-          <p class="price">now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->salePrice }}</strong></p>
+          <p class="price">now: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><span id="price-tag">{{ $product->salePrice }}</span></strong></p>
           @else
-          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ $product->price }}</strong></p>
+          <p class="price">price: <strong><i class="fa fa-{{ strtolower(session('currency')) }}"></i><span id="price-tag">{{ $product->price }}</span></strong></p>
           @endif
         @endif
       </div>
@@ -65,7 +65,7 @@
       
         {{ Form::hidden('id', $product['id']) }}
         {{ Form::hidden('sku', $product['sku']) }}
-        {{ Form::hidden('option_sku', $product->first['sku']) }}
+        {{ Form::hidden('parent_sku', $product->sku) }}
         {{ Form::hidden('price', 
           isset($product->first['price']) 
             ? $product->first['price'] 
@@ -87,14 +87,4 @@
     {!! $product->content !!}
   </div>
 </div>
-@endsection
-
-@section('foot')
-<script>
-  $(function(){
-    if($('#product-options').length){
-      //alert(1) ;
-    }
-  }) ;
-</script>
 @endsection

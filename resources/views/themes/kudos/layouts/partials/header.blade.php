@@ -79,15 +79,26 @@
       @endforeach
       @endif
     </ul>
-    <form class="form-inline">
+    @if(session()->has('filters'))
+    <form class="form-inline" action="/products/option-filter" id="option-filter" method="post">
+      {{ csrf_field() }}
       <p>
         <em>Filter by</em>
-        <select class="form-control"><option>Size</option></select>
-        <select class="form-control"><option>Color</option></select>
-        <select class="form-control"><option>Material</option></select>
-        <a href="#">clear filters</a>
+        @foreach(session()->get('filters') as $filter)
+          @php 
+            $lang = isset($filter[$language]) ? $language : 'default' ;
+          @endphp
+          <select class="form-control" name="{{ $filter['_id'] }}">
+            <option value="">{{ key($filter[$lang]) }}</option>
+            @foreach($filter[$lang][key($filter[$lang])] as $id => $option)
+            <option value="{{ $id }}" {{ session()->has('filter.'.$filter['_id']) && session()->get('filter.'.$filter['_id']) == $id ? 'selected' : '' }}>{{ $option }}</option>
+            @endforeach
+          </select>
+        @endforeach
+        <a href="/products/option-filter-clear">clear filters</a>
       </p>
     </form>
+    @endif
   </nav>
   
   <div class="container">

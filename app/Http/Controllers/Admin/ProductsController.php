@@ -473,6 +473,19 @@ class ProductsController extends AdminController
   {
     $product = Product::find($id);
     $productOptionValues = $product->option_values ;
+    
+    // also delete the filter value
+    foreach($productOptionValues[$povId]['options'] as $key => $value){
+      $opv = OptionProductValue::where('filter', $key.'-'.$value)->first() ;
+      $products = $opv->products ;
+      if(($k = array_search($id, $products)) !== false) {
+          unset($products[$k]);
+      }
+      $opv->products = $products ;
+      $opv->save() ;
+    }
+    
+    // and delete from the product itself
     unset($productOptionValues[$povId]);
     $product->option_values = $productOptionValues ;
     $product->save();
