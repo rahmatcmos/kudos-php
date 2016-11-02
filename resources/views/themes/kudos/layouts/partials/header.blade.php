@@ -86,7 +86,7 @@
         <em>Filter by</em>
         @foreach(session()->get('filters') as $filter)
           @php 
-            $lang = isset($filter[$language]) ? $language : 'default' ;
+            $lang = isset($filter[session()->get('language')]) ? session()->get('language') : 'default' ;
           @endphp
           <select class="form-control" name="{{ $filter['_id'] }}">
             <option value="">{{ key($filter[$lang]) }}</option>
