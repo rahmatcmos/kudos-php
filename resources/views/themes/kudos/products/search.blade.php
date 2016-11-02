@@ -26,7 +26,7 @@
 
 @section('content')
 @if(!$products->count())
-  <div class="alert alert-info" role="alert">{{ trans('search.none') }}</div>
+  <div class="alert alert-info" role="alert">{{ trans('search.none') }}</div><br>
 @endif
 <ul class="row results">
   @foreach ($products as $product)

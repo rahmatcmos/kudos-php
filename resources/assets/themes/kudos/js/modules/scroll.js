@@ -5,10 +5,12 @@
     if($('#paginate').length){
       var scrollBusy = false ;
       $('footer').hide() ;
+      var page = $('#paginate').data('page') ;
+      var limit = $('#paginate').data('limit') ;
+      var count = $('#paginate').data('count') ;
+      if(count<limit) $('footer').show() ;
       $(window).scroll(function() {
         if(!$('#paginate').data('complete') && !scrollBusy){
-          var page = $('#paginate').data('page') ;
-          var limit = $('#paginate').data('limit') ;
           if($(window).scrollTop() + $(window).height() >= $(document).height() - 1000) {
             scrollBusy = true ;
             $.ajax('/products/scroll?page='+page++)
