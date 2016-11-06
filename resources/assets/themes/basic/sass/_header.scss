@@ -1,5 +1,6 @@
 header{
-  line-height: 120px ;
+  line-height: 50px ;
+  padding: 10px 0 ;
   .badge{
     background: $green ;
   }
@@ -11,6 +12,14 @@ header{
           color: $color3 ;
         }
       }
+      &.search{
+        margin-top: 10px ;
+      }
+      &:last-of-type{
+        position: absolute ;
+        top: 10px ; 
+        right: 15px ;
+      }
     }
   }
 }
@@ -18,16 +27,23 @@ header{
 @media (min-width: 992px) {
   header{
     text-align: right ;
+    line-height: 120px ;
+    padding: 0 ;
     ul{
       li{
+        display: inline-block ;
         margin-left: 40px ;
         &:first-of-type{
           float: left ;
           margin-left: 0 ;
           font-size: 200% ;
         }
+        &:last-of-type{
+          position: static ;
+        }
         &.search{
           position: relative ;
+          margin-top: 0 ;
           input{
             height: 36px ;
             border-color: $color3  ;

@@ -6,7 +6,7 @@
       <a href="/storage/{{ str_replace('/large/', '/', $product->defaultImage) }}" target="_blank"><img src="/storage/{{ $product->defaultImage }}" class="img-responsive main"></a>
       <ul class="row">
       @foreach($product->files as $thumb)
-        <li class="col-md-4">
+        <li class="col-xs-4">
           <a href="/storage/{{ str_replace('/thumb/', '/', $thumb ) }}" target="_blank"><img src="/storage/{{ $thumb }}" class="img-responsive"></a>
         </li>
       @endforeach

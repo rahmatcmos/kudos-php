@@ -16,7 +16,7 @@
 <body class="{{ isset($body_class) ? $body_class : '' }}">
   
   <header class="container">
-    <ul class="list-inline">
+    <ul>
       <li><a href="/">Basic Theme</a></li>
       <li class="search">
         {{ Form::open(['url' => 'products/search', 'method' => 'get']) }}

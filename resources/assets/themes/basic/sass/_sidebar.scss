@@ -17,47 +17,69 @@ aside{
       color: $color5 ;
     }
   }
+  ul{
+    li{
+      background: lighten($color4,6%) ;
+      a{
+        line-height: 40px ;
+        display: block ; 
+        text-align: center ;
+        color: $color5 ;
+        font-size: 90% ;
+        border-bottom: 1px solid $color4 ;
+      }
+      &.logout{
+        .btn-link{
+           //width: 100% ;
+           text-align: center ;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 992px) {
- aside{
-   padding-top: 60px ;
-   padding-bottom: 60px ;
-   h2,
-   h3{
-     margin-right: 20px ;
-   }
-   ul{  
-     padding-right: 20px ;
-   }
-   ul{
-     li{
-       border-bottom: 1px solid $color4;
-       a{
-         line-height: 40px ;
-         display: block ;
-         color: $color5 ;
-         font-size: 90% ;
-         span{
-           float: right ;
-           color: $color3 ;
-         }
-       }
-     }
-     &.icons{
-       li{
-         border: 0 ;
-       }
-     }
-     &.visual{
-       margin: 20px 0 ;
-     }
-     &.account{
-       margin: 20px 0 ;
-     }
-     &.social{
-       margin-top: 15px ;
-     }
-   }
- } 
+  aside{
+    padding-top: 60px ;
+    padding-bottom: 60px ;
+    h2,
+    h3{
+      margin-right: 20px ;
+    }
+    ul{
+      padding-right: 20px ;
+      display: block ;
+      li{
+        border-bottom: 1px solid $color4;
+        background: none ;
+        a{
+          border: 0 ;
+          text-align: left ;
+          span{
+            float: right ;
+            color: $color3 ;
+          }
+        }
+        &.logout{
+          .btn-link{
+            width: auto  ;
+          }
+        }
+      }
+      &.icons{
+        li{
+          border: 0 ;
+        }
+      }
+      &.visual{
+        margin: 20px 0 ;
+      }
+      &.account{
+        margin: 20px 0 ;
+      }
+      &.social{
+        margin-top: 15px ;
+      }
+    }
+  } 
 }

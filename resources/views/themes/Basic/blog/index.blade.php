@@ -6,7 +6,7 @@
       <li class="col-md-6">
         <div class="row">
           <div class="col-md-4">
-            <a href="/blog/{{ $blog->slug }}"><img src="/storage/{{ $blog['defaultImage'] }}" class="img-responsive full"></a>
+            <a href="/blog/{{ $blog->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $blog->defaultImage) }}" class="img-responsive full"></a>
           </div>
           <div class="col-md-8">
             <h2><a href="/blog/{{ $blog->slug }}">{{ $blog[$language]['name'] }}</a></h2>

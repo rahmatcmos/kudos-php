@@ -6,22 +6,22 @@
     <p>{{ trans('basket.empty') }}</p>
   @else
     <ul class="row">
-      <li class="col-md-2 col-md-offset-7 text-right">
+      <li class="col-xs-2 col-xs-offset-7 text-right">
         {{ trans('basket.price') }}
       </li>
-      <li class="col-md-3 text-right">
+      <li class="col-xs-3 text-right">
         {{ trans('basket.quantity') }}
       </li>
     </ul>
     <hr>
     @foreach(session('basket')['items'] as $id => $item)
     <ul class="row">
-      <li class="col-md-2 text-right">
+      <li class="hidden-xs col-xs-2 text-right">
         <a href="/products/{{ $item['product']['slug'] }}">
           <img src="/storage/{{ str_replace('/large/', '/thumb/', $item['product']['defaultImage']) }}" class="img-responsive">
         </a>
       </li>
-      <li class="col-md-5">
+      <li class="col-xs-7 col-sm-5">
         <h2>
           <a href="/products/{{ $item['product']['slug'] }}">
             {{ isset($item['product'][$language]['name']) ? $item['product'][$language]['name'] : $item['product']['default']['name'] }}

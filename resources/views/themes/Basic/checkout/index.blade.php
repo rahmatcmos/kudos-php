@@ -37,7 +37,7 @@
       @endif
       <p><a href="/account/addresses/create" class="btn btn-primary">{{ trans('crud.add') }} {{ trans('address.address') }}</a></p>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 payment">
       <h1>{{ trans('checkout.checkout') }}</h1>
       <div class="form-row">
         <label>{{ trans('checkout.cardnumber') }}</label>

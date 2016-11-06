@@ -3,7 +3,7 @@
 @section('content')
 <ul class="row">
   @foreach ($products as $product)
-    <li class="col-md-3">
+    <li class="col-sm-6 col-md-3">
       <a href="/products/{{ $product->slug }}"><img src="/storage/{{ str_replace('/thumb/', '/medium/', $product->defaultImage) }}" class="img-responsive"></a>
       <h2><a href="/products/{{ $product->slug }}">{{ $product[$language]['name']}}</a></h2>
       @if(!empty($product->rrp))
