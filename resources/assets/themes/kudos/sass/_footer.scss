@@ -1,11 +1,12 @@
 footer{
   background: $color2 ;
   line-height: 40px ;
-  padding: 40px 0 ;
+  padding: 20px 0 ;
   ul{
     li{
       position: relative ;
       color: darken($grey, 25%) ;
+      display: block ;
       a{
         color: lighten($color2, 50%) ;
         text-decoration: none ;
@@ -14,8 +15,6 @@ footer{
         text-transform: uppercase ;
         font-size: 80% ;
         letter-spacing: 1px ;
-        
-        
       }
     }
   }
@@ -23,9 +22,12 @@ footer{
 
 @media (min-width: 992px) {
   footer{
+    padding: 40px 0 ;
     ul{
       text-align: center ;
       li{
+        display: inline-block ;
+        padding: 0 5px ;
         &:after{
         content: '/' ;
         position: absolute ;

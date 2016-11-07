@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>{{ trans('orders.id') }}</th>
+      <th class="hidden-xs">{{ trans('orders.id') }}</th>
       <th>{{ trans('orders.total') }}</th>
       <th>{{ trans('orders.date') }}</th>
     </tr>
@@ -13,7 +13,7 @@
   <tbody>
     @foreach ($orders as $order)
     <tr>
-      <td><a href="/account/orders/{{ $order->id }}">{{ $order->id }}</a></td>
+      <td class="hidden-xs"><a href="/account/orders/{{ $order->id }}">{{ $order->id }}</a></td>
       <td><a href="/account/orders/{{ $order->id }}"><i class="fa fa-{{ strtolower($order->currency) }}"></i>{{ number_format($order->total,2) }}</a></td>
       <td><a href="/account/orders/{{ $order->id }}">{{ $order->created_at }}</a></td>
     </tr>    

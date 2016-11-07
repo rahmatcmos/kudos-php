@@ -51,17 +51,22 @@
         </li>
         <li class="pull-right">
           <a href="#" id="basket-toggle">
-            {{ trans('basket.basket') }} ({{ session('basket')['count'] }})
+            <span class="hidden-xs">{{ trans('basket.basket') }}</span>
+            <span class="hidden-sm hidden-md hidden-lg"><i class="fa fa-shopping-cart"></i></span> ({{ session('basket')['count'] }})
           </a>
         </li>
         <li class="pull-right">
-          <a href="{{ url('account') }}">{{ trans('account.account') }}</a> &bull;
+          <a href="{{ url('account') }}" class="account">
+            <span class="hidden-xs">{{ trans('account.account') }}</span>
+            <span class="hidden-sm hidden-md hidden-lg"><i class="fa fa-lock"></i></span>
+          </a> 
+          <span class="hidden-xs">&bull;</span>
         </li>
       </ul>
     </form>
     <figure class="text-center">
       <a href="/"><img src="{{ url('/build/themes/kudos/img/logo.jpg') }}" alt="" width="178"></a>
-      <figcaption>KUDOS THEME <a href="/pages/info" title="">Theme info</a></figcaption>
+      <figcaption>KUDOS THEME <a href="/pages/kudos-theme-information" title="">Theme info</a></figcaption>
     </figure>
     {{ Form::open(['url' => 'products/search', 'method' => 'get', 'id' => 'search', 'class' => 'text-center']) }}
       <input type="text" name="query"class="form-control" placeholder="Enter Keyword(s)">
@@ -70,7 +75,15 @@
   </header>
   
   <nav class="text-center main">
-    <ul class="list-inline">
+    <ul class="row hidden-sm hidden-md hidden-lg text-center toggles">
+      <li class="col-xs-6">
+        <a href="#" class="category-toggle"><i class="fa fa-bars"></i> CATEGORIES</a>
+      </li>
+      <li class="col-xs-6">
+        <a href="#" class="filter-toggle"><i class="fa fa-filter"></i> FILTERS</a>
+      </li>
+    </ul>
+    <ul class="categories">
       @if(!session('categories'))
         <li><a href="/">{{ trans('shops.back')}}</a></li>
       @else

@@ -1,8 +1,14 @@
 body.ProductsController-show{
   #main{
+    padding-left: 0 ;
+    padding-right: 0 ;
     h1{
       font-size: 140% ;
       line-height: 30px ;
+      margin-top: 20px ;
+      @media (min-width: 992px) {
+        margin-top: 0 ;
+      }
     }
     .images{
       .main{

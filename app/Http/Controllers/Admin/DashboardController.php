@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Models\Blog;
 use App\Models\Order;
 use App\User;
+use Faker ;
 
 class DashboardController extends AdminController
 {  

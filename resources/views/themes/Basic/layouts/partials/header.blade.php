@@ -34,7 +34,7 @@
   <nav>
     <ul class="container list-inline text-center">
       <li><a href="/">Products</a></li>
-      <li><a href="/pages/info">Theme Info</a></li>
+      <li><a href="/pages/basic-theme-information">Theme Info</a></li>
       <li><a href="/blog">Blog</a></li>
       <li><a href="/account">Account</a></li>
     </ul>

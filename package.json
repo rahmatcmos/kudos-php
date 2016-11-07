@@ -15,7 +15,6 @@
     "font-awesome": "^4.6.1",
     "gulp": "^3.9.1",
     "jquery": "^2.2.3",
-    "jquery-match-height": "^0.7.0",
     "laravel-elixir": "^5.0.0",
     "swipebox": "^1.4.6"
   }

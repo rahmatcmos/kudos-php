@@ -1,6 +1,6 @@
 header{
   figure{
-    margin: 0 0 20px 0 ;
+    margin: 20px 0 20px 0 ;
     figcaption{
       font-size: 140% ;
       letter-spacing: 2px ;
@@ -26,6 +26,22 @@ header{
         }
         a{
           color: $color2 ;
+        }
+        .fa-lock,
+        .fa-shopping-cart{
+          font-size: 160% ;
+        }
+        &.pull-right{
+          line-height: 48px ;
+          margin-left: 10px ;
+          @media (min-width: 768px) {
+            margin-left: 0 ;
+          }
+          .account{
+            span{
+              margin-right: 5px ;
+            }
+          }
         }
       }
     }

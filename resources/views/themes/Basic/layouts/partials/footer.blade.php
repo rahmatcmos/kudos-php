@@ -9,7 +9,7 @@
         <dl class="col-md-4">
           <dt>NAVIGATION</dt>
           <dd><a href="/">Products</a></dd>
-          <dd><a href="/pages/info">Theme Info</a></dd>
+          <dd><a href="/pages/basic-theme-information">Theme Info</a></dd>
           <dd><a href="/blog">Blog</a></dd>
           <dd><a href="/account">Account</a></dd>
         </dl>
@@ -19,13 +19,13 @@
           <dd>
             <ul>
               <li>
-                Docs: <a href="http://kudos.shop">Kudos Shop</a>
+                Docs: <a href="http://kudos.store">Kudos Shop</a>
               </li>
               <li>
-                Need Hosting? <a href="http://stack.kudos.shop">Kudos Stack</a>
+                Need Hosting? <a href="http://stack.kudos.store">Kudos Stack</a>
               </li>
               <li>
-                Need more sales? <a href="http://spike.kudos.shop">Kudos Spike</a>
+                Need more sales? <a href="http://spike.kudos.store">Kudos Spike</a>
               </li>
             </ul>
           </dd>

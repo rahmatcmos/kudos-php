@@ -3,7 +3,7 @@
 @section('content')
 {{ Form::open(['url' => 'checkout', 'class' => 'form-inline']) }}
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-4">
       <h1>{{ trans('checkout.deliveryaddress') }}</h1>
       @if(!$addresses->isEmpty())
       <select class="form-control" name="shipping_id">
@@ -37,7 +37,7 @@
       @endif
       <p><a href="/account/addresses/create" class="btn btn-primary">{{ trans('crud.add') }} {{ trans('address.address') }}</a></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-sm-6 col-md-4 payment">
       <h1>{{ trans('checkout.checkout') }}</h1>
       <div class="form-row">
         <label>{{ trans('checkout.cardnumber') }}</label>
@@ -55,28 +55,28 @@
       <input type="submit" class="btn btn-success" value="{{ trans('checkout.checkout') }}">
     </div>
     <div class="col-md-4">
-      <ul class="row">
-        <li class="col-md-2 col-md-offset-7 text-right">
+      <ul class="row headers">
+        <li class="col-xs-2 col-xs-offset-7 text-right">
           {{ trans('basket.price') }}
         </li>
-        <li class="col-md-3 text-right">
+        <li class="col-xs-3 text-right">
           {{ trans('basket.quantity') }}
         </li>
       </ul>
       <hr>
       @foreach(session('basket')['items'] as $id => $item)
       <ul class="row">
-        <li class="col-md-6">
+        <li class="col-xs-6 col-md-4">
           <h2>
             <a href="/products/{{ $item['product']['slug'] }}">
               {{ isset($item['product'][session('language')]['name']) ? $item['product'][session('language')]['name'] : $item['product']['default']['name'] }}
             </a>
           </h2>
         </li>
-        <li class="col-md-3 text-right price">
+        <li class="col-xs-3 text-right price">
           <i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ number_format($item['price'],2) }}
         </li>
-        <li class="col-md-3 text-right">
+        <li class="col-xs-3 text-right">
           {{ $item['qty'] }}
         </li>
       </ul>

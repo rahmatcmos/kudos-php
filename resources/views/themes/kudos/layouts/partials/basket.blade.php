@@ -6,22 +6,22 @@
     <div class="row outer">
       <div class="col-md-8 left">
         <ul class="row">
-          <li class="col-md-2 col-md-offset-7 text-right">
+          <li class="col-xs-2 col-xs-offset-7 text-right">
             {{ trans('basket.price') }}
           </li>
-          <li class="col-md-3 text-right">
+          <li class="col-xs-3 text-right">
             {{ trans('basket.quantity') }}
           </li>
         </ul>
         <hr>
         @foreach(session('basket')['items'] as $id => $item)
         <ul class="row">
-          <li class="col-md-2 text-right">
+          <li class="col-md-2 text-right hidden-xs">
             <a href="/products/{{ $item['product']['slug'] }}">
               <img src="/storage/{{ str_replace('/large/', '/thumb/', $item['product']['defaultImage']) }}" class="img-responsive">
             </a>
           </li>
-          <li class="col-md-5">
+          <li class="col-xs-5 col-md-5">
             <h2>
               <a href="/products/{{ $item['product']['slug'] }}">
                 {{ isset($item['product'][session('language')]['name']) ? $item['product'][session('language')]['name'] : $item['product']['default']['name'] }}
@@ -31,17 +31,17 @@
               {{ Form::submit('delete', ['class' => 'btn btn-link orange']) }}
             {{ Form::close() }}
           </li>
-          <li class="col-md-2 text-right price">
+          <li class="col-xs-4 col-sm-2 text-right price">
             <i class="fa fa-{{ strtolower(session('currency')) }}"></i>{{ number_format($item['price'],2) }}
           </li>
-          <li class="col-md-3 text-right">
+          <li class="col-xs-3 text-right">
             @if($item['qty'] > 10)
               {{ $item['qty'] }}
             @else
               {{ Form::open(['method' => 'PUT', 'url' => 'basket/'.$id]) }}
                 @php $range = range(0,10) ; unset($range[0]) @endphp
                 {{ Form::select('qty', $range, $item['qty']) }}
-                {{ Form::submit('update', ['class' => 'btn btn-link green']) }}
+                {{ Form::submit('update', ['class' => 'btn btn-link green hidden-xs']) }}
               {{ Form::close() }}
             @endif
           </li>
