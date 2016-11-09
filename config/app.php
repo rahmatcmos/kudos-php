@@ -203,9 +203,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
-        Spatie\Analytics\AnalyticsServiceProvider::class,
         //
 
         /*
@@ -268,9 +266,7 @@ return [
         'Moloquent' => 'Jenssegers\Mongodb\Eloquent\Model',
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
-        'Analytics' => Spatie\Analytics\AnalyticsFacade::class
     ],
 
 ];

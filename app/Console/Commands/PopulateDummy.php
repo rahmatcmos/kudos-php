@@ -75,7 +75,7 @@ class PopulateDummy extends Command
         foreach($langs as $code => $lang){
           $data = [
             'name' => $$lang->name.' '.$i,
-            'content' => $lorem->sentence($nbWords = 6, $variableNbWords = true) ;
+            'content' => $lorem->sentence($nbWords = 6, $variableNbWords = true)
           ] ;
           $category->$code = $data ;
         }
@@ -86,7 +86,7 @@ class PopulateDummy extends Command
         for($x=1;$x<$products;$x++){
           // store
           $product = new Product;
-          $product->shop_id = $shopId;.
+          $product->shop_id = $shopId;
           $product->slug = 'product-'.$x.'category-'.$i;
           $product->categories = [$category->id];
           $product->price = number_format(rand(50, 275),2);
