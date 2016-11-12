@@ -16,6 +16,7 @@ Documentation for the framework can be found on the [Kudos Store website](http:/
 
 ## Installation
 
+```
 git clone https://github.com/kudosagency/kudos-php.git .
 cp .env.example .env
 composer install
@@ -24,6 +25,14 @@ php artisan key:generate
 sudo chown -R www-data:www-data /path/to/root
 sudo find /path/to/root -type f -exec chmod 644 {} \; 
 sudo find /path/to/root -type d -exec chmod 755 {} \;   
+
+php artisan migrate --seed
+```
+
+######You now have a an admin user
+
+u: admin@kudos
+p: password
 
 ## License
 
