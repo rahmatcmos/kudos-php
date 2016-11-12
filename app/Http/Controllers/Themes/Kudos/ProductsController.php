@@ -46,6 +46,7 @@ class ProductsController extends ThemeController
     }
 
     
+    
     $products = $products->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
 

@@ -13,6 +13,7 @@ class ThemeController extends \App\Http\Controllers\Controller
     public function __construct(Route $route)
     {    
       $this->middleware(function ($request, $next) {
+        
         // if session is not set get it from .env SHOP_CODE
         if ( !$request->session()->has('shop')){
           $shop = Shop::where('code', config('app.shop_code'))->first() ;

@@ -11,7 +11,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 images">
+      @if($product->defaultImage)
       <a href="/storage/{{ str_replace('/large/', '/', $product->defaultImage) }}" class="trigger-thumb"><img src="/storage/{{ $product->defaultImage }}" class="img-responsive main"></a>
+      @endif
       <ul class="row thumbs">
       @foreach($product->files as $thumb)
         <li class="col-xs-4">

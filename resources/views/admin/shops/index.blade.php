@@ -27,11 +27,6 @@
         @if(!empty($shops))
         <tbody>
           @foreach ($shops as $shop)
-          <pre>
-          <?php
-          print_r($shop->$language['name']) ;
-          die() ;  
-          ?>
           <tr>
             <td><a href="/admin/shops/{{ $shop->id }}/edit">{{ isset($shop->$language['name']) ? $shop->$language['name'] : $shop->default['name'] }}</a></td>
             <td><a href="{{ $shop->code }}">{{ $shop->code }}</a></td>
