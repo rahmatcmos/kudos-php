@@ -3,8 +3,8 @@
       <div class="row">
         <dl class="col-md-4">
           <dt>Basic theme</dt>
-          <dd>This is the most basic and simple theme for <a href="http://kudos.shop" target="_blank">Kudos Shop</a>. It uses no javascript and is intended for simple shops.</dd>
-          <dd>For a more feature rich example check out the <a href="http://kudos.kudos.shop">kudos theme demo</a>.</dd>
+          <dd>This is the most basic and simple theme for <a href="http://kudos.store" target="_blank">Kudos Shop</a>. It uses no javascript and is intended for simple shops.</dd>
+          <dd>For a more feature rich example check out the <a href="http://kudos.kudos.store">kudos theme demo</a>.</dd>
         </dl>
         <dl class="col-md-4">
           <dt>NAVIGATION</dt>
