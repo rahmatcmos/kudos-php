@@ -27,6 +27,7 @@ sudo find /path/to/root -type f -exec chmod 644 {} \;
 sudo find /path/to/root -type d -exec chmod 755 {} \;   
 
 php artisan storage:link
+php artisan update:currencies
 php artisan migrate --seed
 ```
 

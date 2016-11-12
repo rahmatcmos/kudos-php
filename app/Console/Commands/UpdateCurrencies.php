@@ -41,15 +41,19 @@ class UpdateCurrencies extends Command
       $url = 'http://api.fixer.io/latest?base='.env('APP_CURRENCY');
       $rates = json_decode(file_get_contents($url), true);
       if($rates){
+        echo env('APP_CURRENCY') ;
         $currency = Currency::firstOrNew([ 
           'currency'  => env('APP_CURRENCY'),
-          'rate'      => 1
+          'rate'      => '1'
         ]);
+        $currency->currency = env('APP_CURRENCY') ;
+        $currency->rate = 1 ;
         $currency->save() ;
         foreach($rates['rates'] as $code => $rate){
           $currency = Currency::firstOrNew([ 
             'currency'  => $code
           ]);
+          $currency->currency = $code ;
           $currency->rate = $rate ;
           $currency->save() ;
         }
