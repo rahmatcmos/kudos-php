@@ -230,7 +230,7 @@ class ProductsController extends ThemeController
    */
   public function getOptionData(Request $request, $id)
   {
-    $data = $request->except(['_token', 'price', 'qty', 'id', 'sku', 'parent_sku']) ;
+    $data = $request->except(['_token', 'price', 'qty', 'id', 'sku', 'parent_sku', 'q']) ;
     $product = Product::find($id) ;
     foreach($product->option_values as $option){
       if($option['options'] == $data){
