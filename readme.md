@@ -14,7 +14,7 @@ We wanted to create an ecommerce platform so simple that it has zero learning cu
 
 Documentation for the framework can be found on the [Kudos Store website](http://kudos.store/php/docs/).
 
-## Installation
+## Quick Installation
 
 ```
 git clone https://github.com/kudosagency/kudos-php.git .
@@ -26,12 +26,13 @@ sudo chown -R www-data:www-data /path/to/root
 sudo find /path/to/root -type f -exec chmod 644 {} \; 
 sudo find /path/to/root -type d -exec chmod 755 {} \;   
 
+php artisan storage:link
 php artisan migrate --seed
 ```
 
-######You now have a an admin user
-
-u: admin@kudos
+###You now have an admin user
+h: /admin<br>
+u: admin@kudos<br>
 p: password
 
 ## License
