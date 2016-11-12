@@ -1,0 +1,402 @@
+/**
+*  Theme Name: Basic
+*  Author: Trevor Sewell
+*  Author URI: http://kudos.agency
+*  Description: Styles for Basic theme
+*  Version: 1.0
+*  License: GNU General Public License v2 or later
+*  License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 26px;
+  font-size: 100%;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  overflow-x: hidden; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+strong {
+  font-weight: 400; }
+
+pre {
+  background: none; }
+
+a:hover {
+  color: inherit; }
+
+h1,
+h2,
+h3 {
+  line-height: 40px;
+  text-transform: uppercase;
+  font-weight: bold; }
+
+.content p,
+.content ul,
+.content ol {
+  margin: 0 0 15px 0; }
+
+.content strong {
+  font-weight: bold; }
+
+body {
+  font: 100% / 24px Arial;
+  background: #ffffff;
+  color: #4d4d4d; }
+
+#main {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  @media (min-width: 992px) {
+    #main {
+      padding-top: 60px;
+      padding-bottom: 60px; } }
+
+header {
+  line-height: 50px;
+  padding: 10px 0; }
+  header .badge {
+    background: #99C83D; }
+  header ul li a {
+    color: #32323A; }
+    header ul li a .fa-stack {
+      color: #36A9E1; }
+  header ul li.search {
+    margin-top: 10px; }
+  header ul li:last-of-type {
+    position: absolute;
+    top: 10px;
+    right: 15px; }
+
+@media (min-width: 992px) {
+  header {
+    text-align: right;
+    line-height: 120px;
+    padding: 0; }
+    header ul li {
+      display: inline-block;
+      margin-left: 40px; }
+      header ul li:first-of-type {
+        float: left;
+        margin-left: 0;
+        font-size: 200%; }
+      header ul li:last-of-type {
+        position: static; }
+      header ul li.search {
+        position: relative;
+        margin-top: 0; }
+        header ul li.search input {
+          height: 36px;
+          border-color: #36A9E1;
+          padding-right: 40px;
+          min-width: 300px; }
+        header ul li.search .fa-stack {
+          position: absolute;
+          top: -3px;
+          right: 0; }
+          header ul li.search .fa-stack .fa-square {
+            color: #36A9E1; } }
+
+footer {
+  padding: 20px 0 35px 0;
+  background: #32323A;
+  color: #ffffff; }
+  footer dl dt {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    margin-top: 30px; }
+  footer dl dd {
+    color: #cccccc;
+    font-size: 90%; }
+    footer dl dd > a {
+      color: #cccccc; }
+    footer dl dd ul {
+      margin: 10px 0; }
+
+@media (min-width: 992px) {
+  footer {
+    padding: 60px 0; }
+    footer dl dt {
+      margin-top: 0; }
+    footer dl:first-of-type dd {
+      padding-right: 80px; }
+      footer dl:first-of-type dd:first-of-type {
+        margin-bottom: 15px; }
+      footer dl:first-of-type dd a {
+        color: #ffffff; } }
+
+nav {
+  background: #32323A; }
+  nav ul li {
+    line-height: 40px; }
+    nav ul li a {
+      display: block;
+      color: #ffffff; }
+      nav ul li a:hover {
+        color: #ffffff; }
+
+@media (min-width: 992px) {
+  nav ul li a {
+    padding: 0 40px; }
+    nav ul li a:hover {
+      background: #555563;
+      text-decoration: none; } }
+
+aside {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  aside h2,
+  aside h3 {
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 40px;
+    text-transform: uppercase;
+    font-weight: bold; }
+  aside.account .btn-link {
+    width: 100%;
+    text-align: left;
+    line-height: 40px;
+    border: 0;
+    color: #4d4d4d; }
+  aside ul li {
+    background: #f4f4f4; }
+    aside ul li a {
+      line-height: 40px;
+      display: block;
+      text-align: center;
+      color: #4d4d4d;
+      font-size: 90%;
+      border-bottom: 1px solid #e5e5e5; }
+    aside ul li.logout .btn-link {
+      text-align: center; }
+
+@media (min-width: 992px) {
+  aside {
+    padding-top: 60px;
+    padding-bottom: 60px; }
+    aside h2,
+    aside h3 {
+      margin-right: 20px; }
+    aside ul {
+      padding-right: 20px;
+      display: block; }
+      aside ul li {
+        border-bottom: 1px solid #e5e5e5;
+        background: none; }
+        aside ul li a {
+          border: 0;
+          text-align: left; }
+          aside ul li a span {
+            float: right;
+            color: #36A9E1; }
+        aside ul li.logout .btn-link {
+          width: auto; }
+      aside ul.icons li {
+        border: 0; }
+      aside ul.visual {
+        margin: 20px 0; }
+      aside ul.account {
+        margin: 20px 0; }
+      aside ul.social {
+        margin-top: 15px; } }
+
+form label {
+  margin-bottom: 3px; }
+
+form input,
+form select {
+  margin-bottom: 15px; }
+
+.btn.btn-primary {
+  background: #36A9E1;
+  border-color: #36A9E1; }
+  .btn.btn-primary:hover {
+    background: #1e8fc6;
+    border-color: #1e8fc6; }
+
+.btn.btn-success {
+  background: #99C83D;
+  border-color: #99C83D; }
+  .btn.btn-success:hover {
+    background: #7ca42e;
+    border-color: #7ca42e; }
+
+.btn.btn-warning {
+  background: #FABB3D;
+  border-color: #FABB3D; }
+  .btn.btn-warning:hover {
+    background: #f9aa0b;
+    border-color: #f9aa0b; }
+
+.btn.btn-danger {
+  background: #FF5454;
+  border-color: #FF5454; }
+  .btn.btn-danger:hover {
+    background: #ff2121;
+    border-color: #ff2121; }
+
+.btn.btn-link {
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  color: #36A9E1; }
+
+.btn.full {
+  width: 100%;
+  text-align: center; }
+
+.btn.fat {
+  line-height: 60px; }
+
+.btn.red {
+  color: #FF5454; }
+
+.btn.orange {
+  color: #FABB3D; }
+
+.btn.green {
+  color: #99C83D; }
+
+.alert {
+  margin-bottom: 0; }
+
+.img-responsive.full {
+  width: 100%; }
+
+.img-responsive.half {
+  width: 50%; }
+
+.img-responsive.pull-left {
+  margin: 5px 15px 15px 0; }
+
+.img-responsive.pull-right {
+  margin: 5px 0 15px 15px; }
+
+body.BlogController-index #main {
+  padding-bottom: 0; }
+  body.BlogController-index #main ul li {
+    margin-bottom: 60px; }
+    body.BlogController-index #main ul li h2 {
+      line-height: 24px;
+      margin-top: 20px; }
+      @media (min-width: 992px) {
+        body.BlogController-index #main ul li h2 {
+          margin-top: 0; } }
+    body.BlogController-index #main ul li img {
+      margin-top: 2px; }
+    body.BlogController-index #main ul li p {
+      margin-top: 10px; }
+
+body.ProductsController-index #main ul li p,
+body.CategoriesController-show #main ul li p,
+body.ProductsController-search #main ul li p {
+  margin-bottom: 5px; }
+  body.ProductsController-index #main ul li p:last-of-type strong,
+  body.CategoriesController-show #main ul li p:last-of-type strong,
+  body.ProductsController-search #main ul li p:last-of-type strong {
+    color: #FF5454; }
+  body.ProductsController-index #main ul li p:nth-last-of-type(2) strong,
+  body.CategoriesController-show #main ul li p:nth-last-of-type(2) strong,
+  body.ProductsController-search #main ul li p:nth-last-of-type(2) strong {
+    color: #FABB3D; }
+  body.ProductsController-index #main ul li p:nth-last-of-type(3) strong,
+  body.CategoriesController-show #main ul li p:nth-last-of-type(3) strong,
+  body.ProductsController-search #main ul li p:nth-last-of-type(3) strong {
+    color: #aed365; }
+
+body.ProductsController-index #main ul li .btn,
+body.CategoriesController-show #main ul li .btn,
+body.ProductsController-search #main ul li .btn {
+  margin-top: 5px; }
+
+body.ProductsController-show #main h1 {
+  font-size: 140%;
+  line-height: 30px;
+  margin-top: 30px; }
+  @media (min-width: 992px) {
+    body.ProductsController-show #main h1 {
+      margin-top: 0; } }
+
+body.ProductsController-show #main .images .main {
+  margin-bottom: 15px; }
+
+body.ProductsController-show #main #excerpt {
+  margin: 10px 0 15px;
+  font-size: 90%; }
+
+body.ProductsController-show #main form {
+  margin-top: 15px; }
+
+body.ProductsController-show #main #price p {
+  margin-bottom: 5px; }
+  body.ProductsController-show #main #price p:last-of-type strong {
+    color: #FF5454; }
+  body.ProductsController-show #main #price p:nth-last-of-type(2) strong {
+    color: #FABB3D; }
+  body.ProductsController-show #main #price p:nth-last-of-type(3) strong {
+    color: #aed365; }
+
+body.BasketController-index .subtotal strong {
+  color: #FF5454;
+  font-size: 120%; }
+
+body.BasketController-index .btn-checkout {
+  margin-top: 50px;
+  padding: 15px 50px;
+  font-size: 120%; }
+
+body.CheckoutController-index .payment {
+  margin-top: 30px; }
+  @media (min-width: 992px) {
+    body.CheckoutController-index .payment {
+      margin-top: 0; } }
+
+body.AddressesController-index #main address {
+  margin-top: 30px; }
+  body.AddressesController-index #main address form {
+    margin-top: 10px; }
+
+/*# sourceMappingURL=app.css.map */
