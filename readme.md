@@ -14,6 +14,17 @@ We wanted to create an ecommerce platform so simple that it has zero learning cu
 
 Documentation for the framework can be found on the [Kudos Store website](http://kudos.store/php/docs/).
 
+## Installation
+
+git clone https://github.com/kudosagency/kudos-php.git .
+cp .env.example .env
+composer install
+php artisan key:generate
+
+sudo chown -R www-data:www-data /path/to/root
+sudo find /path/to/root -type f -exec chmod 644 {} \; 
+sudo find /path/to/root -type d -exec chmod 755 {} \;   
+
 ## License
 
 Kudos Store is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
