@@ -15,7 +15,7 @@
 
 <body class="{{ isset($body_class) ? $body_class : '' }}">
   
-  @include('themes.kudos.layouts.partials.basket')
+  @include('themes.Kudos.layouts.partials.basket')
 
   <header>
     <form>

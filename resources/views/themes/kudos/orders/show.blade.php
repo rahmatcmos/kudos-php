@@ -1,4 +1,4 @@
-@extends('themes.kudos.layouts.account')
+@extends('themes.Kudos.layouts.account')
 
 @section('content')
   <h1>{{ trans('orders.order') }}: {{ $order->id }}</h1>

@@ -1,4 +1,4 @@
-@extends('themes.basic.layouts.account')
+@extends('themes.Basic.layouts.account')
 
 @section('content')
 <section class="container-fluid">

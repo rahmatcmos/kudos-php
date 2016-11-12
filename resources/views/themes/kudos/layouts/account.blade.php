@@ -1,4 +1,4 @@
-@include('themes.kudos.layouts.partials.header') 
+@include('themes.Kudos.layouts.partials.header') 
   
   <div class="container">
     <div class="row">
@@ -22,4 +22,4 @@
     </div>
   </div>
   
-@include('themes.kudos.layouts.partials.footer') 
+@include('themes.Kudos.layouts.partials.footer') 
