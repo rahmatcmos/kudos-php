@@ -45,8 +45,6 @@ class ProductsController extends ThemeController
       }
     }
 
-    
-    
     $products = $products->orderBy($request->session()->get($session_type.'.order_by'), $request->session()->get($session_type.'.order_dir'))
       ->paginate($limit);
 
@@ -222,7 +220,6 @@ class ProductsController extends ThemeController
       $keys[$key] = $data[$key][0] ; 
       if($key == $initiated) $init = true ;
     }
-    //print_r($data) ;
     return response()->json($data);
   }
   

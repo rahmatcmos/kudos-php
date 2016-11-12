@@ -8,8 +8,11 @@
       data.push({name: 'initiated', value: $(this).attr('name')});
       $(this).nextAll('select').prop("disabled", true) ;
       $('#add-to-cart').prop("disabled", true) ;
+      
       $.post('/products/'+pid+'/optionize', data)
       .done(function(data){
+        
+        console.log(data) ;
         
         // update the options
         $.each(data, function(i, item) {
@@ -19,7 +22,7 @@
               $('select[name='+i+'] option[value="'+y+'"]').prop('disabled', false).show() ;
             }) ;
             $('select[name='+i+']').find('option:enabled:first').prop('selected',true);
-          }
+          } 
         });
         $('#product-options select').prop("disabled", false) ;
         
