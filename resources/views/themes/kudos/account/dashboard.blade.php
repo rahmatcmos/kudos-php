@@ -1,1 +1,1 @@
-@extends('themes.Kudos.layouts.account')
+@extends('themes.kudos.layouts.account')

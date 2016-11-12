@@ -1,4 +1,4 @@
-@include('themes.Basic.layouts.partials.header') 
+@include('themes.basic.layouts.partials.header') 
   
   <div class="container">
     <div class="row">
@@ -22,4 +22,4 @@
     </div>
   </div>
   
-@include('themes.Basic.layouts.partials.footer') 
+@include('themes.basic.layouts.partials.footer') 

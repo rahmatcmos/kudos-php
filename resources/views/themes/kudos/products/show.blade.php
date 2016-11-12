@@ -1,4 +1,4 @@
-@extends('themes.Kudos.layouts.app')
+@extends('themes.kudos.layouts.app')
 
 @section('crumbs')
 <ul class="container">

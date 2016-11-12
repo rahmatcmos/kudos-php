@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.account')
+@extends('themes.basic.layouts.account')
 
 @section('content')
   {{ Form::open(['url' => 'account/addresses']) }}

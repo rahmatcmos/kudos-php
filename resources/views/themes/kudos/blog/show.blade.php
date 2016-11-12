@@ -1,4 +1,4 @@
-@extends('themes.Kudos.layouts.full')
+@extends('themes.kudos.layouts.full')
 
 @section('content')
 <h2>{{ $blog[$language]['name'] }}</h2>

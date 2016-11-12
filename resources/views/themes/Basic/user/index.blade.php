@@ -1,4 +1,4 @@
-@extends('themes.Basic.layouts.account')
+@extends('themes.basic.layouts.account')
 
 @section('content')
   <h1>{{ trans('settings.settings') }}</h1>

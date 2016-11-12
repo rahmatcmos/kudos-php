@@ -1,1 +1,1 @@
-@extends('themes.Basic.layouts.account')
+@extends('themes.basic.layouts.account')

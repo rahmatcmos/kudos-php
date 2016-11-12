@@ -1,4 +1,4 @@
-@include('themes.Kudos.layouts.partials.header') 
+@include('themes.kudos.layouts.partials.header') 
   
   <div class="container" id="main">
     <div id="crumbs" class="hidden-xs hidden-sm">
@@ -7,4 +7,4 @@
     @yield('content')
   </div>
   
-@include('themes.Kudos.layouts.partials.footer') 
+@include('themes.kudos.layouts.partials.footer') 
