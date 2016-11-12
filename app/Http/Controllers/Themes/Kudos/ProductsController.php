@@ -205,7 +205,7 @@ class ProductsController extends ThemeController
    */
   public function optionize(Request $request, $id)
   {
-    $data = $request->except(['_token', 'price', 'qty', 'id', 'sku', 'parent_sku']) ;
+    $data = $request->except(['_token', 'price', 'qty', 'id', 'sku', 'parent_sku', 'q']) ;
     $initiated = $data['initiated'] ;
     unset($data['initiated']) ;
     

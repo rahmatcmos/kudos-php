@@ -11,9 +11,7 @@
       
       $.post('/products/'+pid+'/optionize', data)
       .done(function(data){
-        
-        console.log(data) ;
-        
+
         // update the options
         $.each(data, function(i, item) {
           if($.isArray(data[i])){
